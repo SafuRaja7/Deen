@@ -1,11 +1,15 @@
 import 'dart:ui';
+import 'package:deen/core/constants/prayer_time.dart';
+import 'package:deen/core/models/prayer_timings.dart';
+import 'package:deen/core/theme/app_colors.dart';
 import 'package:deen/core/theme/app_text_styles.dart';
 import 'package:deen/core/utils/statis_assets.dart';
+import 'package:deen/features/home/presentation/providers/prayer_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/constants/prayer_time.dart';
-import '../providers/prayer_provider.dart';
+
+part '../widgets/time_container.dart';
+part '../widgets/view_prayer_timings_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -71,9 +75,9 @@ class HomeScreen extends StatelessWidget {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Colors.black.withOpacity(0.55),
-                        Colors.black.withOpacity(0.55),
-                        Colors.black.withOpacity(0.55),
+                        Colors.black.withValues(alpha: 0.55),
+                        Colors.black.withValues(alpha: 0.55),
+                        Colors.black.withValues(alpha: 0.55),
                       ],
                     ),
                   ),
@@ -130,7 +134,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  top: 80,
+                  top: 75,
                   child: Container(
                     padding:
                         const EdgeInsets.all(5) +
@@ -157,7 +161,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  top: 220,
+                  top: 200,
                   child: Text(
                     prayerProvider.currentPrayer,
                     style: AppTextStyles.headingBold.copyWith(
@@ -166,7 +170,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  top: 260,
+                  top: 240,
                   child: Text(
                     currentTimeStr,
                     style: AppTextStyles.headingBold.copyWith(
@@ -175,7 +179,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  bottom: 180,
+                  bottom: 200,
                   child: Text(
                     timeLeftStr,
                     style: AppTextStyles.bodySmall.copyWith(
@@ -185,108 +189,49 @@ class HomeScreen extends StatelessWidget {
                 ),
 
                 Positioned(
-                  bottom: 140,
-                  child: Container(
-                    padding:
-                        const EdgeInsets.all(5) +
-                        const EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
-                      color: AppColors.textGrey.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.pin_drop_outlined,
-                          color: AppColors.pureWhite,
-                          size: 16,
-                        ),
-                        const SizedBox(width: 5),
-                        Text(
-                          prayerProvider.address,
-                          style: AppTextStyles.bodySmall.copyWith(
-                            color: AppColors.pureWhite,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 20,
-                  left: 20,
-                  right: 20,
+                  bottom: 160,
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(50),
                     child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                      filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                       child: Container(
-                        padding: const EdgeInsets.all(15),
+                        padding:
+                            const EdgeInsets.all(5) +
+                            const EdgeInsets.symmetric(horizontal: 10),
                         decoration: BoxDecoration(
-                          color: AppColors.pureWhite.withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(20),
+                          color: AppColors.textGrey.withValues(alpha: 0.3),
+                          borderRadius: BorderRadius.circular(50),
                           border: Border.all(
-                            color: AppColors.pureWhite.withValues(alpha: 0.2),
+                            color: AppColors.pureWhite.withValues(alpha: 0.1),
                           ),
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha']
-                              .asMap()
-                              .entries
-                              .expand((entry) {
-                                final key = entry.value;
-                                final isLast = entry.key == 4;
-                                final time = timings?.timings[key] ?? "--:--";
-                                final prayerEnum = PrayerTime.fromString(key);
-
-                                return [
-                                  Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Image(
-                                        image: AssetImage(prayerEnum.img),
-                                        height: 26,
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        prayerEnum.displayName,
-                                        style: AppTextStyles.bodyNormal
-                                            .copyWith(
-                                              color: AppColors.pureWhite,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 12,
-                                            ),
-                                      ),
-                                      Text(
-                                        time,
-                                        style: AppTextStyles.bodySmall.copyWith(
-                                          color: AppColors.pureWhite,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 10,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  if (!isLast)
-                                    Container(
-                                      height: 20,
-                                      width: 2,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.pureWhite.withValues(
-                                          alpha: 0.5,
-                                        ),
-                                        borderRadius: BorderRadius.circular(50),
-                                      ),
-                                    ),
-                                ];
-                              })
-                              .toList(),
+                          children: [
+                            const Icon(
+                              Icons.pin_drop_outlined,
+                              color: AppColors.pureWhite,
+                              size: 16,
+                            ),
+                            const SizedBox(width: 5),
+                            Text(
+                              prayerProvider.address,
+                              style: AppTextStyles.bodySmall.copyWith(
+                                color: AppColors.pureWhite,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ),
                 ),
+                Positioned(
+                  bottom: 60,
+                  left: 20,
+                  right: 20,
+                  child: TimeContainer(timings: timings),
+                ),
+                ViewPrayerTimingsCard(),
               ],
             ),
           ),

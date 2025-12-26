@@ -18,4 +18,6 @@ class StaticAssets {
   static const String partialyCloudyNight =
       'assets/prayer_timings/partly-cloudy-night.png';
   static const String stars = 'assets/prayer_timings/stars.png';
+  static const String prayingPerson =
+      'assets/prayer_timings/praying_person.png';
 }
