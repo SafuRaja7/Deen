@@ -6,6 +6,7 @@ import 'package:deen/core/theme/app_text_styles.dart';
 import 'package:deen/core/utils/statis_assets.dart';
 import 'package:deen/features/home/presentation/providers/prayer_provider.dart';
 import 'package:deen/features/home/presentation/providers/verse_provider.dart';
+import 'package:deen/features/home/presentation/providers/reflection_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,7 @@ part '../widgets/top_card.dart';
 part '../widgets/quran_track_card.dart';
 part '../widgets/home_features_row.dart';
 part '../widgets/verse_of_the_day_card.dart';
+part '../widgets/reflection_of_peace_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -43,6 +45,19 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             const VerseOfTheDayCard(),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                "Reflection of Peace",
+                style: AppTextStyles.bodyNormal.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            const ReflectionOfPeaceCard(),
             const SizedBox(height: 20),
           ],
         ),

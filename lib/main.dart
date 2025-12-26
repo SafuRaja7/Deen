@@ -4,6 +4,7 @@ import 'core/theme/app_theme.dart';
 import 'features/home/presentation/pages/home_screen.dart';
 import 'features/home/presentation/providers/prayer_provider.dart';
 import 'features/home/presentation/providers/verse_provider.dart';
+import 'features/home/presentation/providers/reflection_provider.dart';
 
 void main() {
   runApp(
@@ -11,6 +12,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => PrayerProvider()),
         ChangeNotifierProvider(create: (_) => VerseProvider()),
+        ChangeNotifierProvider(create: (_) => ReflectionProvider()),
       ],
       child: const DeenApp(),
     ),
