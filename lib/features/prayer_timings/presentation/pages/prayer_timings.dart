@@ -261,7 +261,6 @@ class PrayerTimingsPage extends StatelessWidget {
                       ),
                     ),
                     const Divider(height: 1),
-                    // Table Content
                     if (appProvider.isMonthlyLoading)
                       const Padding(
                         padding: EdgeInsets.all(20.0),
@@ -280,7 +279,6 @@ class PrayerTimingsPage extends StatelessWidget {
                             const Divider(height: 1, indent: 10, endIndent: 10),
                         itemBuilder: (context, index) {
                           final dayTimings = appProvider.monthlyTimings[index];
-                          // Format day like "01, Su"
                           final dayNum = (index + 1).toString().padLeft(2, '0');
                           final date = DateTime(
                             appProvider.selectedYear,
