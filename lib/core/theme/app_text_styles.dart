@@ -4,7 +4,7 @@ import 'app_colors.dart';
 
 class AppTextStyles {
   static TextStyle get headingBold => GoogleFonts.inter(
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: FontWeight.bold,
     color: AppColors.textDark,
   );
@@ -22,7 +22,7 @@ class AppTextStyles {
   );
 
   static TextStyle get bodySmall => GoogleFonts.inter(
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: FontWeight.normal,
     color: AppColors.textLight,
   );

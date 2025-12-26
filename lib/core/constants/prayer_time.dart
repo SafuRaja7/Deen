@@ -1,3 +1,4 @@
+import 'package:deen/core/utils/statis_assets.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 
@@ -35,6 +36,41 @@ enum PrayerTime {
         return 'Maghrib';
       case PrayerTime.isha:
         return 'Isha';
+    }
+  }
+
+  String get img {
+    switch (this) {
+      case PrayerTime.fajar:
+        return StaticAssets.partialyCloudyNight;
+      case PrayerTime.zuhr:
+        return StaticAssets.sunny;
+      case PrayerTime.asar:
+        return StaticAssets.sunny;
+      case PrayerTime.maghrib:
+        return StaticAssets.maghribSun;
+      case PrayerTime.isha:
+        return StaticAssets.ishaNightMoon;
+    }
+  }
+
+  static PrayerTime fromString(String name) {
+    switch (name.toLowerCase()) {
+      case 'fajr':
+      case 'fajar':
+        return PrayerTime.fajar;
+      case 'dhuhr':
+      case 'zuhr':
+        return PrayerTime.zuhr;
+      case 'asr':
+      case 'asar':
+        return PrayerTime.asar;
+      case 'maghrib':
+        return PrayerTime.maghrib;
+      case 'isha':
+        return PrayerTime.isha;
+      default:
+        return PrayerTime.fajar;
     }
   }
 }

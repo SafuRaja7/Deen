@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'core/theme/app_theme.dart';
 import 'features/home/presentation/pages/home_screen.dart';
+import 'features/home/presentation/providers/prayer_provider.dart';
 
 void main() {
-  runApp(const DeenApp());
+  runApp(
+    MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => PrayerProvider())],
+      child: const DeenApp(),
+    ),
+  );
 }
 
 class DeenApp extends StatelessWidget {
