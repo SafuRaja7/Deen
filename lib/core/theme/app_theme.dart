@@ -11,14 +11,11 @@ class AppTheme {
         seedColor: AppColors.primaryGold,
         primary: AppColors.primaryGold,
         secondary: AppColors.secondaryDark,
-        background: AppColors.backgroundBeige,
       ),
       cardTheme: CardThemeData(
         color: AppColors.pureWhite,
         elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
     );
   }

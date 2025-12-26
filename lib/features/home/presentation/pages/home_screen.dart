@@ -5,6 +5,7 @@ import 'package:deen/core/theme/app_colors.dart';
 import 'package:deen/core/theme/app_text_styles.dart';
 import 'package:deen/core/utils/statis_assets.dart';
 import 'package:deen/features/home/presentation/providers/prayer_provider.dart';
+import 'package:deen/features/home/presentation/providers/verse_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +14,7 @@ part '../widgets/view_prayer_timings_card.dart';
 part '../widgets/top_card.dart';
 part '../widgets/quran_track_card.dart';
 part '../widgets/home_features_row.dart';
+part '../widgets/verse_of_the_day_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -21,24 +23,29 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundBeige,
-      body: Column(
-        crossAxisAlignment: .start,
-        children: [
-          TopCard(),
-          QuranTrackCard(),
-          const SizedBox(height: 10),
-          const HomeFeaturesRow(),
-          const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-              "Verse of the Day",
-              style: AppTextStyles.bodyNormal.copyWith(
-                fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TopCard(),
+            QuranTrackCard(),
+            const SizedBox(height: 10),
+            const HomeFeaturesRow(),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                "Verse of the Day",
+                style: AppTextStyles.bodyNormal.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          ),
-        ],
+            const SizedBox(height: 10),
+            const VerseOfTheDayCard(),
+            const SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }

@@ -3,11 +3,15 @@ import 'package:provider/provider.dart';
 import 'core/theme/app_theme.dart';
 import 'features/home/presentation/pages/home_screen.dart';
 import 'features/home/presentation/providers/prayer_provider.dart';
+import 'features/home/presentation/providers/verse_provider.dart';
 
 void main() {
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => PrayerProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => PrayerProvider()),
+        ChangeNotifierProvider(create: (_) => VerseProvider()),
+      ],
       child: const DeenApp(),
     ),
   );

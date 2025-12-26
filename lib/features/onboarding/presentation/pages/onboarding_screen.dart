@@ -97,7 +97,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           decoration: BoxDecoration(
                             color: _currentPage == i
                                 ? AppColors.primaryGold
-                                : AppColors.textLight.withOpacity(0.5),
+                                : AppColors.textLight.withValues(alpha: 0.5),
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),

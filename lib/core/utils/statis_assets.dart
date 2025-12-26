@@ -7,6 +7,8 @@ class StaticAssets {
   static const String qibla = 'assets/images/kaaba.png';
   static const String dua = 'assets/images/dua.png';
   static const String prayer = 'assets/images/prayer.png';
+  static const String dividerFrame = 'assets/images/divider_frame.png';
+  static const String frame = 'assets/images/frame.png';
 
   // Prayer Timings
   static const String mosque = 'assets/prayer_timings/mosque.png';
