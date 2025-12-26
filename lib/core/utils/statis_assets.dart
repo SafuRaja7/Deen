@@ -9,6 +9,8 @@ class StaticAssets {
   static const String prayer = 'assets/images/prayer.png';
   static const String dividerFrame = 'assets/images/divider_frame.png';
   static const String frame = 'assets/images/frame.png';
+  static const String faith1 = 'assets/images/faith-1.png';
+  static const String faith2 = 'assets/images/faith-2.png';
 
   // Prayer Timings
   static const String mosque = 'assets/prayer_timings/mosque.png';
