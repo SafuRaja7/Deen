@@ -82,7 +82,6 @@ class ReflectionOfPeaceCard extends StatelessWidget {
     }
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 15),
       child: IntrinsicHeight(
         child: Stack(
           children: [

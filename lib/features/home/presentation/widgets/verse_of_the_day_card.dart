@@ -9,7 +9,6 @@ class VerseOfTheDayCard extends StatelessWidget {
 
     if (verseProvider.isLoading) {
       return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 15),
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: AppColors.pureWhite,
@@ -30,7 +29,6 @@ class VerseOfTheDayCard extends StatelessWidget {
 
     if (verseProvider.error != null) {
       return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 15),
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: AppColors.pureWhite,
@@ -81,66 +79,63 @@ class VerseOfTheDayCard extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 15),
-      child: IntrinsicHeight(
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: Image.asset(StaticAssets.frame, fit: BoxFit.fill),
+    return IntrinsicHeight(
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(StaticAssets.frame, fit: BoxFit.fill),
+          ),
+          Container(
+            margin: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: AppColors.pureWhite,
+              borderRadius: BorderRadius.circular(10),
             ),
-            Container(
-              margin: const EdgeInsets.all(12),
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: AppColors.pureWhite,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        verse.surah.englishName,
-                        style: AppTextStyles.bodyNormal.copyWith(
-                          color: AppColors.primaryGold,
-                          fontWeight: FontWeight.bold,
-                        ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      verse.surah.englishName,
+                      style: AppTextStyles.bodyNormal.copyWith(
+                        color: AppColors.primaryGold,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Text(
-                        '${verse.surah.number}:${verse.numberInSurah}',
-                        style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.textGrey,
-                        ),
+                    ),
+                    Text(
+                      '${verse.surah.number}:${verse.numberInSurah}',
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: AppColors.textGrey,
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 15),
-                  Text(
-                    verse.arabicText,
-                    textAlign: TextAlign.right,
-                    style: AppTextStyles.arabicText.copyWith(
-                      color: AppColors.textDark,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
                     ),
+                  ],
+                ),
+                const SizedBox(height: 15),
+                Text(
+                  verse.arabicText,
+                  textAlign: TextAlign.right,
+                  style: AppTextStyles.arabicText.copyWith(
+                    color: AppColors.textDark,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
                   ),
-                  const SizedBox(height: 15),
-                  Image.asset(StaticAssets.dividerFrame),
-                  const SizedBox(height: 15),
-                  Text(
-                    verse.englishTranslation,
-                    style: AppTextStyles.bodyNormal.copyWith(
-                      color: AppColors.textDark,
-                    ),
+                ),
+                const SizedBox(height: 15),
+                Image.asset(StaticAssets.dividerFrame),
+                const SizedBox(height: 15),
+                Text(
+                  verse.englishTranslation,
+                  style: AppTextStyles.bodyNormal.copyWith(
+                    color: AppColors.textDark,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

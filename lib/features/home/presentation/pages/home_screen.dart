@@ -35,30 +35,32 @@ class HomeScreen extends StatelessWidget {
             const HomeFeaturesRow(),
             const SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                "Verse of the Day",
-                style: AppTextStyles.bodyNormal.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Column(
+                crossAxisAlignment: .start,
+                children: [
+                  Text(
+                    "Verse of the Day",
+                    style: AppTextStyles.bodyNormal.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  const VerseOfTheDayCard(),
+                  const SizedBox(height: 20),
+                  Text(
+                    "Reflection of Peace",
+                    style: AppTextStyles.bodyNormal.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  const ReflectionOfPeaceCard(),
+                  const SizedBox(height: 20),
+                ],
               ),
             ),
-            const SizedBox(height: 10),
-            const VerseOfTheDayCard(),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                "Reflection of Peace",
-                style: AppTextStyles.bodyNormal.copyWith(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            const ReflectionOfPeaceCard(),
-            const SizedBox(height: 20),
           ],
         ),
       ),
