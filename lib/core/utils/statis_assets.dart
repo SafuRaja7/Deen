@@ -3,6 +3,10 @@ class StaticAssets {
   static const String onboarding1 = 'assets/images/onboarding_1.png';
   static const String onboarding2 = 'assets/images/onboarding_2.png';
   static const String onboarding3 = 'assets/images/onboarding_3.png';
+  static const String quranRehal = 'assets/images/quran_rehal.png';
+  static const String qibla = 'assets/images/kaaba.png';
+  static const String dua = 'assets/images/dua.png';
+  static const String prayer = 'assets/images/prayer.png';
 
   // Prayer Timings
   static const String mosque = 'assets/prayer_timings/mosque.png';
