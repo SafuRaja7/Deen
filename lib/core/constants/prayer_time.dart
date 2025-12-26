@@ -1,4 +1,4 @@
-import 'package:deen/core/utils/statis_assets.dart';
+import 'package:deen/core/utils/static_assets.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 

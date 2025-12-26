@@ -31,13 +31,10 @@ class VerseOfTheDayRepository {
         'http://api.alquran.cloud/v1/ayah/$verseNumber/editions/quran-uthmani,en.asad',
       );
 
-      log('Fetching verse $verseNumber from API...');
       final response = await http.get(url);
-      log('Response status: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
-        log('Response body: ${json.toString()}');
 
         if (json['data'] == null) {
           throw Exception('API returned null data');
@@ -45,11 +42,9 @@ class VerseOfTheDayRepository {
 
         return Ayah.fromJson(json['data']);
       } else {
-        log('API error: ${response.statusCode} - ${response.body}');
         throw Exception('Failed to fetch verse: ${response.statusCode}');
       }
     } catch (e) {
-      log('Error fetching verse: $e');
       rethrow;
     }
   }

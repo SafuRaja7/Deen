@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:deen/core/models/ayah.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,7 +7,6 @@ class ReflectionRepository {
   static const String _cacheKey = 'cached_reflection';
   static const String _cacheDateKey = 'cached_reflection_date';
 
-  // Curated list of verse references about peace, patience, and spiritual strength
   static const List<String> verseReferences = [
     '2:153',
     '2:155',
@@ -50,7 +48,6 @@ class ReflectionRepository {
     final epoch = DateTime(2025, 1, 1);
     final daysSinceEpoch = now.difference(epoch).inDays;
 
-    // Cycle through verse references
     return daysSinceEpoch % verseReferences.length;
   }
 
@@ -60,13 +57,10 @@ class ReflectionRepository {
         'http://api.alquran.cloud/v1/ayah/$verseReference/editions/quran-uthmani,en.asad',
       );
 
-      log('Fetching reflection for verse: $verseReference');
       final response = await http.get(url);
-      log('Response status: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
-        log('Response body: ${json.toString()}');
 
         if (json['data'] == null) {
           throw Exception('API returned null data');
@@ -74,11 +68,9 @@ class ReflectionRepository {
 
         return Ayah.fromJson(json['data']);
       } else {
-        log('API error: ${response.statusCode} - ${response.body}');
         throw Exception('Failed to fetch reflection: ${response.statusCode}');
       }
     } catch (e) {
-      log('Error fetching reflection: $e');
       rethrow;
     }
   }
@@ -109,12 +101,10 @@ class ReflectionRepository {
       }
     }
 
-    // Fetch new reflection for today
     final verseIndex = _getVerseIndexForToday();
     final verseReference = verseReferences[verseIndex];
     final reflection = await _fetchReflectionFromApi(verseReference);
 
-    // Cache the reflection
     await _cacheReflection(verseReference, todayDate);
 
     return reflection;

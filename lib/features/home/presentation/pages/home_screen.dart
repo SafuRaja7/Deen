@@ -3,12 +3,13 @@ import 'package:deen/core/constants/prayer_time.dart';
 import 'package:deen/core/models/prayer_timings.dart';
 import 'package:deen/core/theme/app_colors.dart';
 import 'package:deen/core/theme/app_text_styles.dart';
-import 'package:deen/core/utils/statis_assets.dart';
+import 'package:deen/core/utils/static_assets.dart';
 import 'package:deen/features/home/presentation/providers/prayer_provider.dart';
 import 'package:deen/features/home/presentation/providers/verse_provider.dart';
 import 'package:deen/features/home/presentation/providers/reflection_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:deen/features/prayer_timings/presentation/pages/prayer_timings.dart';
 
 part '../widgets/time_container.dart';
 part '../widgets/view_prayer_timings_card.dart';

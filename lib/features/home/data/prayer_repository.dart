@@ -37,7 +37,6 @@ class PrayerRepository {
         return "${place.locality}, ${place.country}";
       }
     } catch (e) {
-      // Fallback if geocoding fails
       return "Current Location";
     }
     return "Current Location";
