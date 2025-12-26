@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:deen/core/models/ayah.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,9 +13,7 @@ class VerseOfTheDayRepository {
     final daysSinceEpoch = now.difference(epoch).inDays;
 
     final verseNumber = (daysSinceEpoch % totalVerses) + 1;
-    log(
-      'Calculated verse number for today: $verseNumber (days since epoch: $daysSinceEpoch)',
-    );
+
     return verseNumber;
   }
 

@@ -3,10 +3,9 @@ import 'package:deen/core/constants/prayer_time.dart';
 import 'package:deen/core/models/prayer_timings.dart';
 import 'package:deen/core/theme/app_colors.dart';
 import 'package:deen/core/theme/app_text_styles.dart';
+import 'package:deen/core/utils/app_utils.dart';
 import 'package:deen/core/utils/static_assets.dart';
-import 'package:deen/features/home/presentation/providers/prayer_provider.dart';
-import 'package:deen/features/home/presentation/providers/verse_provider.dart';
-import 'package:deen/features/home/presentation/providers/reflection_provider.dart';
+import 'package:deen/core/providers/app_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:deen/features/prayer_timings/presentation/pages/prayer_timings.dart';
@@ -25,20 +24,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> list = [
-      {
-        "image": StaticAssets.faith1,
-        "title": "Understanding the Five Pillars of Islam",
-        "desc":
-            "Dive into the foundational principles of Islam, from the declaration of faith to prayer, almsgiving, fasting, and pilgrimage, and their role in a Muslim's life.",
-      },
-      {
-        "image": StaticAssets.faith2,
-        "title": "Exploring the Quran: The Holy Book\nof Islam",
-        "desc":
-            "Uncover the profound teachings of the Quran, its historical context, and its impact on the lives of Muslims around the world.",
-      },
-    ];
     return Scaffold(
       backgroundColor: AppColors.backgroundBeige,
       body: SingleChildScrollView(
@@ -82,7 +67,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  ...list.asMap().entries.map((e) {
+                  ...AppUtils.list.asMap().entries.map((e) {
                     return FaithCard(
                       e.value["image"],
                       e.value["title"],

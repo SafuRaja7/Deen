@@ -7,9 +7,12 @@ class ViewPrayerTimingsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        final timings = context.read<AppProvider>().timings;
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const PrayerTimingsPage()),
+          MaterialPageRoute(
+            builder: (context) => PrayerTimingsPage(timings: timings),
+          ),
         );
       },
       child: ClipRRect(

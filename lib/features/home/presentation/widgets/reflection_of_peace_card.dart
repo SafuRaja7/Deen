@@ -5,9 +5,9 @@ class ReflectionOfPeaceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final reflectionProvider = context.watch<ReflectionProvider>();
+    final appProvider = context.watch<AppProvider>();
 
-    if (reflectionProvider.isLoading) {
+    if (appProvider.isReflectionLoading) {
       return Container(
         margin: const EdgeInsets.symmetric(horizontal: 15),
         padding: const EdgeInsets.all(20),
@@ -28,7 +28,7 @@ class ReflectionOfPeaceCard extends StatelessWidget {
       );
     }
 
-    if (reflectionProvider.error != null) {
+    if (appProvider.reflectionError != null) {
       return Container(
         margin: const EdgeInsets.symmetric(horizontal: 15),
         padding: const EdgeInsets.all(20),
@@ -56,7 +56,7 @@ class ReflectionOfPeaceCard extends StatelessWidget {
             ),
             const SizedBox(height: 5),
             Text(
-              reflectionProvider.error ?? 'Unknown error',
+              appProvider.reflectionError ?? 'Unknown error',
               style: AppTextStyles.bodySmall.copyWith(
                 color: AppColors.textGrey,
               ),
@@ -64,7 +64,7 @@ class ReflectionOfPeaceCard extends StatelessWidget {
             ),
             const SizedBox(height: 15),
             ElevatedButton(
-              onPressed: () => reflectionProvider.fetchReflectionOfTheDay(),
+              onPressed: () => appProvider.fetchReflectionOfTheDay(),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primaryGold,
                 foregroundColor: AppColors.pureWhite,
@@ -76,70 +76,68 @@ class ReflectionOfPeaceCard extends StatelessWidget {
       );
     }
 
-    final reflection = reflectionProvider.reflectionOfTheDay;
+    final reflection = appProvider.reflectionOfTheDay;
     if (reflection == null) {
       return const SizedBox.shrink();
     }
 
-    return Container(
-      child: IntrinsicHeight(
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: Image.asset(StaticAssets.frame, fit: BoxFit.fill),
+    return IntrinsicHeight(
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(StaticAssets.frame, fit: BoxFit.fill),
+          ),
+          Container(
+            margin: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: AppColors.pureWhite,
+              borderRadius: BorderRadius.circular(10),
             ),
-            Container(
-              margin: const EdgeInsets.all(12),
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: AppColors.pureWhite,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        reflection.surah.englishName,
-                        style: AppTextStyles.bodyNormal.copyWith(
-                          color: AppColors.primaryGold,
-                          fontWeight: FontWeight.bold,
-                        ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      reflection.surah.englishName,
+                      style: AppTextStyles.bodyNormal.copyWith(
+                        color: AppColors.primaryGold,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Text(
-                        '${reflection.surah.number}:${reflection.numberInSurah}',
-                        style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.textGrey,
-                        ),
+                    ),
+                    Text(
+                      '${reflection.surah.number}:${reflection.numberInSurah}',
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: AppColors.textGrey,
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 15),
-                  Text(
-                    reflection.arabicText,
-                    textAlign: TextAlign.right,
-                    style: AppTextStyles.arabicText.copyWith(
-                      color: AppColors.textDark,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
                     ),
+                  ],
+                ),
+                const SizedBox(height: 15),
+                Text(
+                  reflection.arabicText,
+                  textAlign: TextAlign.right,
+                  style: AppTextStyles.arabicText.copyWith(
+                    color: AppColors.textDark,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
                   ),
-                  const SizedBox(height: 15),
-                  Image.asset(StaticAssets.dividerFrame),
-                  const SizedBox(height: 15),
-                  Text(
-                    reflection.englishTranslation,
-                    style: AppTextStyles.bodyNormal.copyWith(
-                      color: AppColors.textDark,
-                    ),
+                ),
+                const SizedBox(height: 15),
+                Image.asset(StaticAssets.dividerFrame),
+                const SizedBox(height: 15),
+                Text(
+                  reflection.englishTranslation,
+                  style: AppTextStyles.bodyNormal.copyWith(
+                    color: AppColors.textDark,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

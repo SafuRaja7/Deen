@@ -2,18 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'core/theme/app_theme.dart';
 import 'features/home/presentation/pages/home_screen.dart';
-import 'features/home/presentation/providers/prayer_provider.dart';
-import 'features/home/presentation/providers/verse_provider.dart';
-import 'features/home/presentation/providers/reflection_provider.dart';
+import 'core/providers/app_provider.dart';
 
 void main() {
   runApp(
     MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => PrayerProvider()),
-        ChangeNotifierProvider(create: (_) => VerseProvider()),
-        ChangeNotifierProvider(create: (_) => ReflectionProvider()),
-      ],
+      providers: [ChangeNotifierProvider(create: (_) => AppProvider())],
       child: const DeenApp(),
     ),
   );

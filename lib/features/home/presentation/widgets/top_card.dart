@@ -7,12 +7,10 @@ class TopCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
-    final prayerProvider = context.watch<PrayerProvider>();
-    final currentPrayerEnum = PrayerTime.fromString(
-      prayerProvider.currentPrayer,
-    );
+    final appProvider = context.watch<AppProvider>();
+    final currentPrayerEnum = PrayerTime.fromString(appProvider.currentPrayer);
 
-    if (prayerProvider.error != null && prayerProvider.timings == null) {
+    if (appProvider.prayerError != null && appProvider.timings == null) {
       return Scaffold(
         backgroundColor: AppColors.backgroundBeige,
         body: Center(
@@ -20,11 +18,11 @@ class TopCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Error: ${prayerProvider.error}",
+                "Error: ${appProvider.prayerError}",
                 textAlign: TextAlign.center,
               ),
               ElevatedButton(
-                onPressed: () => prayerProvider.fetchTimings(),
+                onPressed: () => appProvider.fetchPrayerTimings(),
                 child: const Text("Retry"),
               ),
             ],
@@ -33,18 +31,18 @@ class TopCard extends StatelessWidget {
       );
     }
 
-    final timings = prayerProvider.timings;
+    final timings = appProvider.timings;
     final hijri = timings?.hijri;
     final currentTimeStr =
-        timings?.timings[prayerProvider.currentPrayer] ?? "--:--";
+        timings?.timings[appProvider.currentPrayer] ?? "--:--";
 
     // Format duration for "Ends in X Minutes / Hours"
     String timeLeftStr = "";
-    if (prayerProvider.timeLeft.inHours > 0) {
+    if (appProvider.timeLeft.inHours > 0) {
       timeLeftStr =
-          "Ends in ${prayerProvider.timeLeft.inHours}h ${prayerProvider.timeLeft.inMinutes % 60}m";
+          "Ends in ${appProvider.timeLeft.inHours}h ${appProvider.timeLeft.inMinutes % 60}m";
     } else {
-      timeLeftStr = "Ends in ${prayerProvider.timeLeft.inMinutes} Minutes";
+      timeLeftStr = "Ends in ${appProvider.timeLeft.inMinutes} Minutes";
     }
     return Container(
       height: MediaQuery.sizeOf(context).height * 0.55,
@@ -110,7 +108,6 @@ class TopCard extends StatelessWidget {
           ),
           const Positioned(
             top: 130,
-
             child: Image(image: AssetImage(StaticAssets.stars), height: 120),
           ),
           Positioned(
@@ -140,7 +137,7 @@ class TopCard extends StatelessWidget {
           Positioned(
             top: 200,
             child: Text(
-              prayerProvider.currentPrayer,
+              appProvider.currentPrayer,
               style: AppTextStyles.headingBold.copyWith(
                 color: AppColors.pureWhite,
               ),
@@ -191,7 +188,7 @@ class TopCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 5),
                       Text(
-                        prayerProvider.address,
+                        appProvider.address,
                         style: AppTextStyles.bodySmall.copyWith(
                           color: AppColors.pureWhite,
                         ),

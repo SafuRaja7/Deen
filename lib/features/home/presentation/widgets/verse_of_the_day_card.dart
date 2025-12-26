@@ -5,9 +5,9 @@ class VerseOfTheDayCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final verseProvider = context.watch<VerseProvider>();
+    final appProvider = context.watch<AppProvider>();
 
-    if (verseProvider.isLoading) {
+    if (appProvider.isVerseLoading) {
       return Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
@@ -27,7 +27,7 @@ class VerseOfTheDayCard extends StatelessWidget {
       );
     }
 
-    if (verseProvider.error != null) {
+    if (appProvider.verseError != null) {
       return Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
@@ -54,7 +54,7 @@ class VerseOfTheDayCard extends StatelessWidget {
             ),
             const SizedBox(height: 5),
             Text(
-              verseProvider.error ?? 'Unknown error',
+              appProvider.verseError ?? 'Unknown error',
               style: AppTextStyles.bodySmall.copyWith(
                 color: AppColors.textGrey,
               ),
@@ -62,7 +62,7 @@ class VerseOfTheDayCard extends StatelessWidget {
             ),
             const SizedBox(height: 15),
             ElevatedButton(
-              onPressed: () => verseProvider.fetchVerseOfTheDay(),
+              onPressed: () => appProvider.fetchVerseOfTheDay(),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primaryGold,
                 foregroundColor: AppColors.pureWhite,
@@ -74,7 +74,7 @@ class VerseOfTheDayCard extends StatelessWidget {
       );
     }
 
-    final verse = verseProvider.verseOfTheDay;
+    final verse = appProvider.verseOfTheDay;
     if (verse == null) {
       return const SizedBox.shrink();
     }

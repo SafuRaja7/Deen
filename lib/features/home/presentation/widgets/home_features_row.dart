@@ -5,18 +5,11 @@ class HomeFeaturesRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> features = [
-      {'title': 'Qibla', 'image': StaticAssets.qibla},
-      {'title': 'Quran', 'image': StaticAssets.logo},
-      {'title': 'Dua', 'image': StaticAssets.dua},
-      {'title': 'Prayer', 'image': StaticAssets.prayer},
-    ];
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: features.map((feature) {
+        children: AppUtils.homeFeaturesRow.map((feature) {
           return Column(
             children: [
               Container(
