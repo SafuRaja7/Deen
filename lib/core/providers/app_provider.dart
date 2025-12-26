@@ -4,11 +4,14 @@ import 'package:intl/intl.dart';
 import 'package:deen/core/models/prayer_timings.dart';
 import 'package:deen/core/models/ayah.dart';
 import 'package:deen/features/home/data/prayer_repository.dart';
+import 'package:deen/features/prayer_timings/data/prayer_timings_repo.dart';
 import 'package:deen/features/home/data/verse_repository.dart';
 import 'package:deen/features/home/data/reflection_repository.dart';
 
 class AppProvider extends ChangeNotifier {
   final PrayerRepository _prayerRepository = PrayerRepository();
+  final PrayerTimingsRepository _prayerTimingsRepository =
+      PrayerTimingsRepository();
   final VerseOfTheDayRepository _verseRepository = VerseOfTheDayRepository();
   final ReflectionRepository _reflectionRepository = ReflectionRepository();
 
@@ -20,6 +23,12 @@ class AppProvider extends ChangeNotifier {
   String _currentPrayer = "Fajr";
   Duration _timeLeft = Duration.zero;
   Timer? _prayerTimer;
+
+  // Monthly Prayer Timings State
+  List<PrayerTimings> _monthlyTimings = [];
+  int _selectedMonth = DateTime.now().month;
+  int _selectedYear = DateTime.now().year;
+  bool _isMonthlyLoading = false;
 
   // Verse State
   Ayah? _verseOfTheDay;
@@ -47,6 +56,11 @@ class AppProvider extends ChangeNotifier {
   bool get isReflectionLoading => _isReflectionLoading;
   String? get reflectionError => _reflectionError;
 
+  List<PrayerTimings> get monthlyTimings => _monthlyTimings;
+  int get selectedMonth => _selectedMonth;
+  int get selectedYear => _selectedYear;
+  bool get isMonthlyLoading => _isMonthlyLoading;
+
   AppProvider() {
     _init();
   }
@@ -54,6 +68,7 @@ class AppProvider extends ChangeNotifier {
   Future<void> _init() async {
     await Future.wait([
       fetchPrayerTimings(),
+      fetchMonthlyTimings(_selectedMonth, _selectedYear),
       fetchVerseOfTheDay(),
       fetchReflectionOfTheDay(),
     ]);
@@ -76,6 +91,42 @@ class AppProvider extends ChangeNotifier {
       _isPrayerLoading = false;
       notifyListeners();
     }
+  }
+
+  Future<void> fetchMonthlyTimings(int month, int year) async {
+    _isMonthlyLoading = true;
+    _prayerError = null;
+    notifyListeners();
+
+    try {
+      if (_address == "Fetching location...") {
+        _address = await _prayerRepository.getCurrentAddress();
+      }
+      _monthlyTimings = await _prayerTimingsRepository
+          .fetchMonthlyPrayerTimings(_address, month, year);
+    } catch (e) {
+      _prayerError = e.toString();
+    } finally {
+      _isMonthlyLoading = false;
+      notifyListeners();
+    }
+  }
+
+  void changeMonth(int delta) {
+    int newMonth = _selectedMonth + delta;
+    int newYear = _selectedYear;
+
+    if (newMonth > 12) {
+      newMonth = 1;
+      newYear++;
+    } else if (newMonth < 1) {
+      newMonth = 12;
+      newYear--;
+    }
+
+    _selectedMonth = newMonth;
+    _selectedYear = newYear;
+    fetchMonthlyTimings(_selectedMonth, _selectedYear);
   }
 
   void _startPrayerTimer() {
