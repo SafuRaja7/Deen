@@ -1,7 +1,22 @@
 import 'package:deen/core/utils/static_assets.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AppUtils {
+  static String convertTo12Hour(String time24) {
+    if (time24 == '--:--') return time24;
+    try {
+      final dateTime = DateFormat("HH:mm").parse(time24);
+      return DateFormat("hh:mm a").format(dateTime);
+    } catch (e) {
+      return time24;
+    }
+  }
+
+  static String getFormattedDate() {
+    return DateFormat("d MMMM yyyy").format(DateTime.now());
+  }
+
   static final List<String> prayerNames = [
     'Fajr',
     'Sunrise',
@@ -11,22 +26,22 @@ class AppUtils {
     'Isha',
   ];
 
-  static IconData getIconForPrayer(String name) {
+  static String getIconForPrayer(String name) {
     switch (name.toLowerCase()) {
       case 'fajr':
-        return Icons.wb_twilight;
+        return StaticAssets.partialyCloudyNight;
       case 'sunrise':
-        return Icons.wb_sunny_outlined;
+        return StaticAssets.maghribSun;
       case 'dhuhr':
-        return Icons.wb_sunny;
+        return StaticAssets.sunny;
       case 'asr':
-        return Icons.wb_cloudy_outlined;
+        return StaticAssets.sunny;
       case 'maghrib':
-        return Icons.wb_twilight_rounded;
+        return StaticAssets.maghribSun;
       case 'isha':
-        return Icons.nightlight_round;
+        return StaticAssets.ishaNightMoon;
       default:
-        return Icons.access_time;
+        return StaticAssets.sunny;
     }
   }
 

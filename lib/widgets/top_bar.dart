@@ -1,4 +1,5 @@
 import 'package:deen/core/theme/app_colors.dart';
+import 'package:deen/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class TopBar extends StatelessWidget {
@@ -11,10 +12,20 @@ class TopBar extends StatelessWidget {
     return Container(
       color: AppColors.backgroundBeige,
       child: Row(
+        crossAxisAlignment: .end,
         children: [
-          Icon(Icons.arrow_back_ios, color: AppColors.textDark),
-          Image.asset(image),
-          Text(title),
+          GestureDetector(
+            onTap: () => Navigator.pop(context),
+            child: Icon(Icons.arrow_back_ios, color: AppColors.textDark),
+          ),
+          Image.asset(image, height: 30),
+          SizedBox(width: 10),
+          Text(
+            title,
+            style: AppTextStyles.headingMedium.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ],
       ),
     );

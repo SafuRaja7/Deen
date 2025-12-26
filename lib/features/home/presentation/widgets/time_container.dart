@@ -45,7 +45,7 @@ class TimeContainer extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          time,
+                          AppUtils.convertTo12Hour(time),
                           style: AppTextStyles.bodySmall.copyWith(
                             color: AppColors.pureWhite,
                             fontWeight: FontWeight.bold,

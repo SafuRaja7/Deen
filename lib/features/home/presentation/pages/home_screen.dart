@@ -6,6 +6,7 @@ import 'package:deen/core/theme/app_text_styles.dart';
 import 'package:deen/core/utils/app_utils.dart';
 import 'package:deen/core/utils/static_assets.dart';
 import 'package:deen/core/providers/app_provider.dart';
+import 'package:deen/widgets/address_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:deen/features/prayer_timings/presentation/pages/prayer_timings.dart';
