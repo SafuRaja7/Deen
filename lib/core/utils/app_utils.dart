@@ -98,6 +98,12 @@ class AppUtils {
     {'title': 'Prayer', 'image': StaticAssets.prayer},
   ];
 
+  static final List<Map<String, IconData>> suarhDetailsFeature = [
+    {'icon': Icons.play_arrow},
+    {'icon': Icons.star},
+    {'icon': Icons.bookmark},
+  ];
+
   static final List<String> quranScreenListItems = [
     "Surah",
     "Parah",

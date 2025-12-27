@@ -3,9 +3,13 @@ import 'package:deen/features/home/presentation/home_screen.dart';
 import 'package:deen/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:deen/features/prayer_timings/presentation/prayer_timings_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:deen/features/surah_details/presentation/surah_details_screen.dart';
+
 import 'package:deen/features/quran/presentation/quran_screen.dart';
 
 final appRoutes = {
+  AppRoutes.surahDetails: (_) => const SurahDetailsScreen(),
+
   AppRoutes.quran: (_) => const QuranScreen(),
 
   AppRoutes.home: (_) => const HomeScreen(),

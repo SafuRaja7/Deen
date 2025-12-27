@@ -31,7 +31,7 @@ class QuranBody extends StatelessWidget {
         }
 
         return SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: Space.a.t20,
           child: Column(
             children: [
               TopBar(image: StaticAssets.logo, title: 'Al - Quran'),

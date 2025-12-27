@@ -1,5 +1,6 @@
 import 'package:deen/core/configs/configs.dart';
 import 'package:deen/core/models/surah.dart';
+import 'package:deen/core/router/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:deen/features/quran/bloc/quran_bloc.dart';
