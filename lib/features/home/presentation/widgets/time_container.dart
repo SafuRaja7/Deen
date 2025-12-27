@@ -1,4 +1,4 @@
-part of '../pages/home_screen.dart';
+part of '../home_screen.dart';
 
 class TimeContainer extends StatelessWidget {
   final PrayerTimings? timings;

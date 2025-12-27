@@ -1,8 +1,4 @@
-import 'dart:convert';
-import 'package:deen/core/models/ayah.dart';
-import 'package:deen/core/utils/app_utils.dart';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
+part of '../presentation/home_screen.dart';
 
 class ReflectionRepository {
   static const String _cacheKey = 'cached_reflection';
