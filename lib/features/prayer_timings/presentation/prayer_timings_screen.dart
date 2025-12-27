@@ -16,33 +16,28 @@ import 'package:deen/features/prayer_timings/data/prayer_timings_repo.dart';
 part 'widgets/prayer_timings_body.dart';
 
 class PrayerTimingsScreen extends StatelessWidget {
-  final PrayerTimings? initialTimings;
-  final String address;
-
-  const PrayerTimingsScreen({
-    super.key,
-    this.initialTimings,
-    required this.address,
-  });
+  const PrayerTimingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     return BlocProvider(
       create: (context) =>
           PrayerTimingsBloc(
             repository: PrayerTimingsRepository(),
             initialMonth: now.month,
             initialYear: now.year,
-            initialAddress: address,
+            initialAddress: args['address'],
           )..add(
             LoadMonthlyTimings(
-              address: address,
+              address: args['address'],
               month: now.month,
               year: now.year,
             ),
           ),
-      child: Scaffold(body: PrayerTimingsBody(timings: initialTimings)),
+      child: Scaffold(body: PrayerTimingsBody(timings: args['timings'])),
     );
   }
 }
