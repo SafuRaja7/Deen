@@ -5,7 +5,7 @@ abstract class AppColors {
   static const tertiary = Color(0xFFE5B152);
 
   //
-  static const textSub = Color(0xFF717171);
+  static const textSub = Color.fromARGB(255, 90, 88, 88);
   static const textDark = Color(0xFF0B1120);
 
   static const background = Color(0xffF9F4ED);

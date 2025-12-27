@@ -14,9 +14,7 @@ class Ayah {
   });
 
   factory Ayah.fromJson(List<dynamic> data) {
-    // First item is Arabic (quran-uthmani)
     final arabicData = data[0];
-    // Second item is English translation
     final englishData = data[1];
 
     return Ayah(

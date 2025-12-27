@@ -1,3 +1,4 @@
+import 'package:deen/core/router/router.dart';
 import 'package:deen/features/home/presentation/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class DeenApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(useMaterial3: true),
       home: const HomeScreen(),
-      routes: {'/main': (context) => const HomeScreen()},
+      routes: appRoutes,
     );
   }
 }

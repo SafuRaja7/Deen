@@ -8,9 +8,7 @@ class HomeBody extends StatelessWidget {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         if (state.status == HomeStatus.loading && state.timings == null) {
-          return const Center(
-            child: CircularProgressIndicator(color: AppColors.primary),
-          );
+          return const HomeSkeleton();
         }
 
         if (state.status == HomeStatus.failure && state.timings == null) {

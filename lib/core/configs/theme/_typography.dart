@@ -17,17 +17,17 @@ abstract class AppText {
   static void init() {
     final base = TextStyle(fontFamily: fontFamily);
 
-    h1 = base.copyWith(fontSize: 20).ratioHeight();
-    h2 = base.copyWith(fontSize: 18).ratioHeight();
-    h3 = base.copyWith(fontSize: 16).ratioHeight();
+    h1 = base.copyWith(fontSize: 32).ratioHeight();
+    h2 = base.copyWith(fontSize: 24).ratioHeight();
+    h3 = base.copyWith(fontSize: 20).ratioHeight();
 
     //
-    b1 = base.copyWith(fontSize: 14).ratioHeight();
-    b2 = base.copyWith(fontSize: 12).ratioHeight();
-    b3 = base.copyWith(fontSize: 10).ratioHeight();
+    b1 = base.copyWith(fontSize: 16).ratioHeight();
+    b2 = base.copyWith(fontSize: 14).ratioHeight();
+    b3 = base.copyWith(fontSize: 12).ratioHeight();
 
     //
-    s1 = base.copyWith(fontSize: 9).ratioHeight();
-    s2 = base.copyWith(fontSize: 8).ratioHeight();
+    s1 = base.copyWith(fontSize: 11).ratioHeight();
+    s2 = base.copyWith(fontSize: 10).ratioHeight();
   }
 }

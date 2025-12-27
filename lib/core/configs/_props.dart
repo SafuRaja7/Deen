@@ -18,7 +18,7 @@ abstract class AppProps {
   ];
 
   static final card = BoxDecoration(
-    color: AppTheme.c.background,
+    color: AppTheme.c.white,
     borderRadius: 15.radius(),
     boxShadow: [
       BoxShadow(

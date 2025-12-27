@@ -66,8 +66,9 @@ class AppButton extends StatelessWidget {
                   Icon(leadingIcon, size: 20),
                   Text(
                     text,
-                    style: AppText.b2.copyWith(
+                    style: AppText.b1.copyWith(
                       color: isFilled ? AppColors.white : AppColors.primary,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   if (trailingIcon != null) ...[

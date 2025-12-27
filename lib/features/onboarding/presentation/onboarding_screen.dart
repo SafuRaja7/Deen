@@ -1,4 +1,6 @@
 import 'package:deen/core/configs/configs.dart';
+import 'package:deen/core/router/router.dart';
+import 'package:deen/core/router/routes.dart';
 import 'package:deen/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +11,10 @@ class OnboardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: const OnboardingScreen());
+    App.init(context);
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      body: SafeArea(child: const OnboardingBody()),
+    );
   }
 }
