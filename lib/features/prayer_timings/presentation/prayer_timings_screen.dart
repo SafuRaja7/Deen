@@ -1,0 +1,48 @@
+import 'package:deen/core/models/prayer_timings.dart';
+import 'package:deen/core/theme/app_colors.dart';
+import 'package:deen/core/theme/app_text_styles.dart';
+import 'package:deen/core/utils/app_utils.dart';
+import 'package:deen/core/utils/static_assets.dart';
+import 'package:deen/widgets/address_card.dart';
+import 'package:deen/widgets/top_bar.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:deen/features/prayer_timings/bloc/prayer_timings_bloc.dart';
+import 'package:deen/features/prayer_timings/bloc/prayer_timings_event.dart';
+import 'package:deen/features/prayer_timings/bloc/prayer_timings_state.dart';
+import 'package:deen/features/prayer_timings/data/prayer_timings_repo.dart';
+
+part 'widgets/prayer_timings_body.dart';
+
+class PrayerTimingsScreen extends StatelessWidget {
+  final PrayerTimings? initialTimings;
+  final String address;
+
+  const PrayerTimingsScreen({
+    super.key,
+    this.initialTimings,
+    required this.address,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final now = DateTime.now();
+    return BlocProvider(
+      create: (context) =>
+          PrayerTimingsBloc(
+            repository: PrayerTimingsRepository(),
+            initialMonth: now.month,
+            initialYear: now.year,
+            initialAddress: address,
+          )..add(
+            LoadMonthlyTimings(
+              address: address,
+              month: now.month,
+              year: now.year,
+            ),
+          ),
+      child: Scaffold(body: PrayerTimingsBody(timings: initialTimings)),
+    );
+  }
+}

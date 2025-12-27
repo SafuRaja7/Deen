@@ -1,16 +1,9 @@
+import 'package:deen/features/home/presentation/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:deen/core/theme/app_theme.dart';
-import 'package:deen/features/home/presentation/pages/home_screen.dart';
-import 'package:deen/core/providers/app_provider.dart';
 
 void main() {
-  runApp(
-    MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => AppProvider())],
-      child: const DeenApp(),
-    ),
-  );
+  runApp(const DeenApp());
 }
 
 class DeenApp extends StatelessWidget {

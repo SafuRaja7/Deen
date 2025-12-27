@@ -1,17 +1,14 @@
 import 'dart:ui';
-
-import 'package:deen/core/providers/app_provider.dart';
 import 'package:deen/core/theme/app_colors.dart';
 import 'package:deen/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class AddressCard extends StatelessWidget {
-  const AddressCard({super.key});
+  final String address;
+  const AddressCard({super.key, required this.address});
 
   @override
   Widget build(BuildContext context) {
-    final appProvider = context.read<AppProvider>();
     return ClipRRect(
       borderRadius: BorderRadius.circular(50),
       child: BackdropFilter(
@@ -28,6 +25,7 @@ class AddressCard extends StatelessWidget {
             ),
           ),
           child: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               const Icon(
                 Icons.pin_drop_outlined,
@@ -35,10 +33,14 @@ class AddressCard extends StatelessWidget {
                 size: 16,
               ),
               const SizedBox(width: 5),
-              Text(
-                appProvider.address,
-                style: AppTextStyles.bodySmall.copyWith(
-                  color: AppColors.pureWhite,
+              Flexible(
+                child: Text(
+                  address,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: AppColors.pureWhite,
+                  ),
                 ),
               ),
             ],

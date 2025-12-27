@@ -1,7 +1,4 @@
-import 'dart:convert';
-import 'package:deen/core/models/ayah.dart';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
+part of '../presentation/home_screen.dart';
 
 class VerseOfTheDayRepository {
   static const String _cacheKey = 'cached_verse';

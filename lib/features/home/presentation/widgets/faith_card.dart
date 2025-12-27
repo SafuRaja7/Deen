@@ -1,4 +1,4 @@
-part of '../pages/home_screen.dart';
+part of '../home_screen.dart';
 
 class FaithCard extends StatelessWidget {
   final String image;

@@ -1,55 +1,63 @@
-part of '../pages/home_screen.dart';
+part of '../home_screen.dart';
 
 class ViewPrayerTimingsCard extends StatelessWidget {
   const ViewPrayerTimingsCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        final timings = context.read<AppProvider>().timings;
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => PrayerTimingsPage(timings: timings),
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        return GestureDetector(
+          onTap: () {
+            if (state.timings != null) {
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => PrayerTimingsScreen(
+              //       initialTimings: state.timings,
+              //       address: state.address,
+              //     ),
+              //   ),
+              // );
+            }
+          },
+          child: ClipRRect(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: Container(
+                height: 40,
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                decoration: BoxDecoration(
+                  color: AppColors.pureWhite.withValues(alpha: 0.1),
+                ),
+                child: Row(
+                  children: [
+                    Image(
+                      image: AssetImage(StaticAssets.prayingPerson),
+                      height: 30,
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      'View All Prayer Timings',
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: AppColors.pureWhite,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ),
+                    const Spacer(),
+                    const Icon(
+                      Icons.arrow_forward_ios,
+                      color: AppColors.pureWhite,
+                      size: 16,
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         );
       },
-      child: ClipRRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: Container(
-            height: 40,
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            decoration: BoxDecoration(
-              color: AppColors.pureWhite.withValues(alpha: 0.1),
-            ),
-            child: Row(
-              children: [
-                Image(
-                  image: AssetImage(StaticAssets.prayingPerson),
-                  height: 30,
-                ),
-                SizedBox(width: 10),
-                Text(
-                  'View All Prayer Timings',
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.pureWhite,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
-                ),
-                Spacer(),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  color: AppColors.pureWhite,
-                  size: 16,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

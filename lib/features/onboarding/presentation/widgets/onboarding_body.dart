@@ -1,16 +1,13 @@
-import 'package:flutter/material.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_text_styles.dart';
-import '../../../../core/widgets/app_button.dart';
+part of '../onboarding_screen.dart';
 
-class OnboardingScreen extends StatefulWidget {
-  const OnboardingScreen({super.key});
+class OnboardingBody extends StatefulWidget {
+  const OnboardingBody({super.key});
 
   @override
-  State<OnboardingScreen> createState() => _OnboardingScreenState();
+  State<OnboardingBody> createState() => _OnboardingBodyState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
+class _OnboardingBodyState extends State<OnboardingBody> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 

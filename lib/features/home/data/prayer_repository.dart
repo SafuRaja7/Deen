@@ -1,8 +1,4 @@
-import 'dart:convert';
-import 'package:deen/core/models/prayer_timings.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:http/http.dart' as http;
+part of '../presentation/home_screen.dart';
 
 class PrayerRepository {
   Future<String> getCurrentAddress() async {
