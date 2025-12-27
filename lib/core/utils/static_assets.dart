@@ -11,6 +11,8 @@ class StaticAssets {
   static const String frame = 'assets/images/frame.png';
   static const String faith1 = 'assets/images/faith-1.png';
   static const String faith2 = 'assets/images/faith-2.png';
+  static const String compass = 'assets/images/compass.png';
+  static const String compassQibla = 'assets/images/compas_qibla.png';
 
   // Prayer Timings
   static const String mosque = 'assets/prayer_timings/mosque.png';
