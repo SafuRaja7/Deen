@@ -9,7 +9,7 @@ class PrayerTimingsBody extends StatelessWidget {
     return BlocBuilder<PrayerTimingsBloc, PrayerTimingsState>(
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: AppColors.backgroundBeige,
+          backgroundColor: AppColors.background,
           body: SafeArea(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -28,20 +28,12 @@ class PrayerTimingsBody extends StatelessWidget {
                       Column(
                         children: [
                           Image.asset(StaticAssets.sunny, height: 40),
-                          Text(
-                            'Sunrise',
-                            style: AppTextStyles.bodyNormal.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                          Text('Sunrise', style: AppText.b2),
                           Text(
                             AppUtils.convertTo12Hour(
                               timings?.timings['Sunrise'] ?? '--:--',
                             ),
-                            style: AppTextStyles.bodySmall.copyWith(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
+                            style: AppText.b2,
                           ),
                         ],
                       ),
@@ -49,37 +41,19 @@ class PrayerTimingsBody extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           AddressCard(address: state.address),
-                          Text(
-                            "",
-                            style: AppTextStyles.bodyNormal.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            "Zawal Time",
-                            style: AppTextStyles.bodyNormal.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                          Text("", style: AppText.b2),
+                          Text("Zawal Time", style: AppText.b2),
                         ],
                       ),
                       Column(
                         children: [
                           Image.asset(StaticAssets.sunny, height: 40),
-                          Text(
-                            'Sunset',
-                            style: AppTextStyles.bodyNormal.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                          Text('Sunset', style: AppText.b2),
                           Text(
                             AppUtils.convertTo12Hour(
                               timings?.timings['Sunset'] ?? '--:--',
                             ),
-                            style: AppTextStyles.bodySmall.copyWith(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
+                            style: AppText.b2,
                           ),
                         ],
                       ),
@@ -93,7 +67,7 @@ class PrayerTimingsBody extends StatelessWidget {
                         horizontal: 20,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.pureWhite,
+                        color: AppColors.white,
                         borderRadius: BorderRadius.circular(15),
                         boxShadow: [
                           BoxShadow(
@@ -112,7 +86,7 @@ class PrayerTimingsBody extends StatelessWidget {
                             ),
                             child: const Icon(
                               Icons.arrow_back_ios,
-                              color: AppColors.primaryGold,
+                              color: AppColors.primary,
                               size: 20,
                             ),
                           ),
@@ -126,17 +100,11 @@ class PrayerTimingsBody extends StatelessWidget {
                                     state.selectedMonth,
                                   ),
                                 ),
-                                style: AppTextStyles.bodyNormal.copyWith(
-                                  color: AppColors.textDark,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: AppText.b2,
                               ),
                               Text(
                                 '${timings!.hijri.day} ${timings!.hijri.month}, ${timings!.hijri.year}',
-                                style: AppTextStyles.bodySmall.copyWith(
-                                  color: AppColors.textDark,
-                                  fontSize: 14,
-                                ),
+                                style: AppText.b2,
                               ),
                             ],
                           ),
@@ -146,7 +114,7 @@ class PrayerTimingsBody extends StatelessWidget {
                             ),
                             child: const Icon(
                               Icons.arrow_forward_ios,
-                              color: AppColors.primaryGold,
+                              color: AppColors.primary,
                               size: 20,
                             ),
                           ),
@@ -170,7 +138,7 @@ class PrayerTimingsBody extends StatelessWidget {
                           vertical: 10,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.pureWhite,
+                          color: AppColors.white,
                           borderRadius: BorderRadius.circular(15),
                           boxShadow: [
                             BoxShadow(
@@ -185,31 +153,21 @@ class PrayerTimingsBody extends StatelessWidget {
                             Container(
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
-                                color: AppColors.primaryGold.withValues(
-                                  alpha: 0.1,
-                                ),
+                                color: AppColors.primary.withValues(alpha: 0.1),
                                 shape: BoxShape.circle,
                               ),
                               child: Image.asset(
                                 AppUtils.getIconForPrayer(name),
-                                color: AppColors.primaryGold,
+                                color: AppColors.primary,
                                 height: 25,
                               ),
                             ),
                             const SizedBox(width: 15),
-                            Text(
-                              name,
-                              style: AppTextStyles.bodyNormal.copyWith(
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
+                            Text(name, style: AppText.b2),
                             const Spacer(),
                             Text(
                               AppUtils.convertTo12Hour(time),
-                              style: AppTextStyles.bodyNormal.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.textDark,
-                              ),
+                              style: AppText.b2,
                             ),
                           ],
                         ),
@@ -219,14 +177,12 @@ class PrayerTimingsBody extends StatelessWidget {
                   const SizedBox(height: 20),
                   Text(
                     "Prayer Times in ${state.address.split(',').first} for ${DateFormat("MMMM yyyy").format(DateTime(state.selectedYear, state.selectedMonth))}",
-                    style: AppTextStyles.bodyNormal.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: AppText.b2,
                   ),
                   const SizedBox(height: 10),
                   Container(
                     decoration: BoxDecoration(
-                      color: AppColors.pureWhite,
+                      color: AppColors.white,
                       borderRadius: BorderRadius.circular(15),
                       boxShadow: [
                         BoxShadow(
@@ -262,7 +218,7 @@ class PrayerTimingsBody extends StatelessWidget {
                             padding: EdgeInsets.all(20.0),
                             child: Center(
                               child: CircularProgressIndicator(
-                                color: AppColors.primaryGold,
+                                color: AppColors.primary,
                               ),
                             ),
                           )
@@ -374,29 +330,14 @@ class PrayerTimingsBody extends StatelessWidget {
   Widget _buildHeaderCell(String label, double width) {
     return SizedBox(
       width: width,
-      child: Text(
-        label,
-        textAlign: TextAlign.center,
-        style: AppTextStyles.bodySmall.copyWith(
-          fontWeight: FontWeight.bold,
-          color: AppColors.textDark,
-          fontSize: 11,
-        ),
-      ),
+      child: Text(label, textAlign: TextAlign.center, style: AppText.b2),
     );
   }
 
   Widget _buildDataCell(String value, double width) {
     return SizedBox(
       width: width,
-      child: Text(
-        value,
-        textAlign: TextAlign.center,
-        style: AppTextStyles.bodySmall.copyWith(
-          fontSize: 10,
-          color: AppColors.textDark,
-        ),
-      ),
+      child: Text(value, textAlign: TextAlign.center, style: AppText.b2),
     );
   }
 }

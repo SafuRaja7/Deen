@@ -1,5 +1,4 @@
-import 'package:deen/core/theme/app_colors.dart';
-import 'package:deen/core/theme/app_text_styles.dart';
+import 'package:deen/core/configs/configs.dart';
 import 'package:deen/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 

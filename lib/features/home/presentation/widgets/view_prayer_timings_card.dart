@@ -28,7 +28,7 @@ class ViewPrayerTimingsCard extends StatelessWidget {
                 height: 40,
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 decoration: BoxDecoration(
-                  color: AppColors.pureWhite.withValues(alpha: 0.1),
+                  color: AppColors.white.withValues(alpha: 0.1),
                 ),
                 child: Row(
                   children: [
@@ -37,18 +37,11 @@ class ViewPrayerTimingsCard extends StatelessWidget {
                       height: 30,
                     ),
                     const SizedBox(width: 10),
-                    Text(
-                      'View All Prayer Timings',
-                      style: AppTextStyles.bodySmall.copyWith(
-                        color: AppColors.pureWhite,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                    ),
+                    Text('View All Prayer Timings', style: AppText.b2),
                     const Spacer(),
                     const Icon(
                       Icons.arrow_forward_ios,
-                      color: AppColors.pureWhite,
+                      color: AppColors.white,
                       size: 16,
                     ),
                   ],

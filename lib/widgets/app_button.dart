@@ -1,6 +1,5 @@
+import 'package:deen/core/configs/configs.dart';
 import 'package:flutter/material.dart';
-import '../core/theme/app_colors.dart';
-import '../core/theme/app_text_styles.dart';
 
 enum AppButtonVariant { filled, bordered }
 
@@ -40,16 +39,14 @@ class AppButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: isFilled
-              ? AppColors.primaryGold
-              : Colors.transparent,
+          backgroundColor: isFilled ? AppColors.primary : Colors.transparent,
 
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius),
             side: isFilled
                 ? BorderSide.none
-                : const BorderSide(color: AppColors.primaryGold, width: 1.5),
+                : const BorderSide(color: AppColors.primary, width: 1.5),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24),
         ),
@@ -69,19 +66,15 @@ class AppButton extends StatelessWidget {
                   Icon(leadingIcon, size: 20),
                   Text(
                     text,
-                    style: AppTextStyles.buttonText.copyWith(
-                      color: isFilled
-                          ? AppColors.pureWhite
-                          : AppColors.primaryGold,
+                    style: AppText.b2.copyWith(
+                      color: isFilled ? AppColors.white : AppColors.primary,
                     ),
                   ),
                   if (trailingIcon != null) ...[
                     Icon(
                       trailingIcon,
                       size: 20,
-                      color: isFilled
-                          ? AppColors.pureWhite
-                          : AppColors.primaryGold,
+                      color: isFilled ? AppColors.white : AppColors.primary,
                     ),
                   ],
                 ],

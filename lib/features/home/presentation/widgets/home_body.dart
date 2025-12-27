@@ -9,7 +9,7 @@ class HomeBody extends StatelessWidget {
       builder: (context, state) {
         if (state.status == HomeStatus.loading && state.timings == null) {
           return const Center(
-            child: CircularProgressIndicator(color: AppColors.primaryGold),
+            child: CircularProgressIndicator(color: AppColors.primary),
           );
         }
 
@@ -42,32 +42,15 @@ class HomeBody extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Verse of the Day",
-                      style: AppTextStyles.bodyNormal.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    Text("Verse of the Day", style: AppText.b2),
                     const SizedBox(height: 10),
                     const VerseOfTheDayCard(),
                     const SizedBox(height: 20),
-                    Text(
-                      "Reflection of Peace",
-                      style: AppTextStyles.bodyNormal.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
+                    Text("Reflection of Peace", style: AppText.b2),
                     const SizedBox(height: 10),
                     const ReflectionOfPeaceCard(),
                     const SizedBox(height: 20),
-                    Text(
-                      "Revive Your Faith",
-                      style: AppTextStyles.bodyNormal.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
+                    Text("Revive Your Faith", style: AppText.b2),
                     const SizedBox(height: 10),
                     ...AppUtils.list.asMap().entries.map((e) {
                       return FaithCard(

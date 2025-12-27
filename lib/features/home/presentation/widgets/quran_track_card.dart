@@ -10,7 +10,7 @@ class QuranTrackCard extends StatelessWidget {
       padding: EdgeInsets.only(top: 15, left: 15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: AppColors.pureWhite,
+        color: AppColors.white,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.2),
@@ -25,36 +25,16 @@ class QuranTrackCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Continue Reading Qur'an",
-                style: AppTextStyles.bodyNormal.copyWith(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textDark,
-                ),
-              ),
-              Text(
-                "Surah' Al Bakarah 117",
-                style: AppTextStyles.bodyNormal.copyWith(
-                  color: AppColors.textDark,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+              Text("Continue Reading Qur'an", style: AppText.b2),
+              Text("Surah' Al Bakarah 117", style: AppText.b2),
               SizedBox(height: 10),
               Row(
                 children: [
-                  Text(
-                    "Tap to Continue",
-                    style: AppTextStyles.bodySmall.copyWith(
-                      color: AppColors.primaryGold,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                  ),
+                  Text("Tap to Continue", style: AppText.b2),
                   SizedBox(width: 10),
                   Icon(
                     Icons.arrow_forward_ios,
-                    color: AppColors.primaryGold,
+                    color: AppColors.primary,
                     size: 15,
                   ),
                 ],

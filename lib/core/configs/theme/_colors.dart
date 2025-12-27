@@ -1,18 +1,18 @@
-import 'package:flutter/material.dart';
+part of '../configs.dart';
 
-class AppColors {
-  static const Color primaryGold = Color(0xFFC58C24);
-  static const Color secondaryDark = Color(0xFF0B1120);
-  static const Color backgroundBeige = Color(0xFFF5F5F3);
-  static const Color pureWhite = Color(0xFFFFFFFF);
+abstract class AppColors {
+  static const primary = Color(0xFFC58C24);
+  static const tertiary = Color(0xFFE5B152);
 
-  static const Color textDark = Color(0xFF0B1120);
-  static const Color textGrey = Color(0xFF717171);
-  static const Color textLight = Color(0xFFACACAC);
+  //
+  static const textSub = Color(0xFF717171);
+  static const textDark = Color(0xFF0B1120);
 
-  static const Color cardBlue = Color(0xFF141D33);
-  static const Color accentGold = Color(0xFFE5B152);
-  static const Color overlayGrey = Color(0xFFF4F4F4);
+  static const background = Color(0xffF9F4ED);
+
+  //
+  static const black = Color(0xFF000000);
+  static const white = Color(0xFFFFFFFF);
 
   // Prayer Gradients
   static const LinearGradient fajarGradient = LinearGradient(

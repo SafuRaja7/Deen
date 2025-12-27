@@ -13,11 +13,9 @@ class TimeContainer extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
-            color: AppColors.pureWhite.withValues(alpha: 0.1),
+            color: AppColors.white.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-              color: AppColors.pureWhite.withValues(alpha: 0.2),
-            ),
+            border: Border.all(color: AppColors.white.withValues(alpha: 0.2)),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -36,22 +34,8 @@ class TimeContainer extends StatelessWidget {
                       children: [
                         Image(image: AssetImage(prayerEnum.img), height: 26),
                         const SizedBox(height: 4),
-                        Text(
-                          prayerEnum.displayName,
-                          style: AppTextStyles.bodyNormal.copyWith(
-                            color: AppColors.pureWhite,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                          ),
-                        ),
-                        Text(
-                          AppUtils.convertTo12Hour(time),
-                          style: AppTextStyles.bodySmall.copyWith(
-                            color: AppColors.pureWhite,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10,
-                          ),
-                        ),
+                        Text(prayerEnum.displayName, style: AppText.b2),
+                        Text(AppUtils.convertTo12Hour(time), style: AppText.b2),
                       ],
                     ),
                     if (!isLast)
@@ -59,7 +43,7 @@ class TimeContainer extends StatelessWidget {
                         height: 20,
                         width: 2,
                         decoration: BoxDecoration(
-                          color: AppColors.pureWhite.withValues(alpha: 0.5),
+                          color: AppColors.white.withValues(alpha: 0.5),
                           borderRadius: BorderRadius.circular(50),
                         ),
                       ),

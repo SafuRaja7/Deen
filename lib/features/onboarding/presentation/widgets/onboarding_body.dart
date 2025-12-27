@@ -38,7 +38,7 @@ class _OnboardingBodyState extends State<OnboardingBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundBeige,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Column(
           children: [
@@ -57,17 +57,14 @@ class _OnboardingBodyState extends State<OnboardingBody> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                _pages[index].title,
-                                style: AppTextStyles.headingMedium,
-                              ),
+                              Text(_pages[index].title, style: AppText.h2),
                               Text(
                                 _pages[index].highlightWord,
-                                style: AppTextStyles.highlightText,
+                                style: AppText.h2,
                               ),
                               Text(
                                 _pages[index].description,
-                                style: AppTextStyles.bodyNormal,
+                                style: AppText.b2,
                               ),
                             ],
                           ),
@@ -93,8 +90,8 @@ class _OnboardingBodyState extends State<OnboardingBody> {
                           width: _currentPage == i ? 24 : 8,
                           decoration: BoxDecoration(
                             color: _currentPage == i
-                                ? AppColors.primaryGold
-                                : AppColors.textLight.withValues(alpha: 0.5),
+                                ? AppColors.primary
+                                : AppColors.white.withValues(alpha: 0.5),
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),

@@ -13,7 +13,7 @@ class TopCard extends StatelessWidget {
           return Container(
             height: MediaQuery.sizeOf(context).height * 0.55,
             width: double.infinity,
-            color: AppColors.backgroundBeige,
+            color: AppColors.background,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -124,7 +124,7 @@ class TopCard extends StatelessWidget {
                       const EdgeInsets.all(5) +
                       const EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
-                    color: AppColors.primaryGold,
+                    color: AppColors.primary,
                     borderRadius: BorderRadius.circular(50),
                   ),
                   child: Center(
@@ -146,30 +146,18 @@ class TopCard extends StatelessWidget {
               ),
               Positioned(
                 top: 200,
-                child: Text(
-                  state.currentPrayer,
-                  style: AppTextStyles.headingBold.copyWith(
-                    color: AppColors.pureWhite,
-                  ),
-                ),
+                child: Text(state.currentPrayer, style: AppText.b2),
               ),
               Positioned(
                 top: 240,
                 child: Text(
                   AppUtils.convertTo12Hour(currentTimeStr),
-                  style: AppTextStyles.headingBold.copyWith(
-                    color: AppColors.pureWhite,
-                  ),
+                  style: AppText.b2,
                 ),
               ),
               Positioned(
                 bottom: 200,
-                child: Text(
-                  timeLeftStr,
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.pureWhite,
-                  ),
-                ),
+                child: Text(timeLeftStr, style: AppText.b2),
               ),
               Positioned(
                 bottom: 160,

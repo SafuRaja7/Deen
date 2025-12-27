@@ -1,6 +1,5 @@
 import 'dart:ui';
-import 'package:deen/core/theme/app_colors.dart';
-import 'package:deen/core/theme/app_text_styles.dart';
+import 'package:deen/core/configs/configs.dart';
 import 'package:flutter/material.dart';
 
 class AddressCard extends StatelessWidget {
@@ -18,18 +17,16 @@ class AddressCard extends StatelessWidget {
               const EdgeInsets.all(5) +
               const EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
-            color: AppColors.textGrey.withValues(alpha: 0.3),
+            color: AppColors.textSub.withValues(alpha: 0.3),
             borderRadius: BorderRadius.circular(50),
-            border: Border.all(
-              color: AppColors.pureWhite.withValues(alpha: 0.1),
-            ),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               const Icon(
                 Icons.pin_drop_outlined,
-                color: AppColors.pureWhite,
+                color: AppColors.white,
                 size: 16,
               ),
               const SizedBox(width: 5),
@@ -38,9 +35,7 @@ class AddressCard extends StatelessWidget {
                   address,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.pureWhite,
-                  ),
+                  style: AppText.b2.copyWith(color: AppColors.white),
                 ),
               ),
             ],

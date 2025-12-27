@@ -11,7 +11,7 @@ class VerseOfTheDayCard extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: AppColors.pureWhite,
+              color: AppColors.white,
               borderRadius: BorderRadius.circular(15),
               boxShadow: [
                 BoxShadow(
@@ -22,7 +22,7 @@ class VerseOfTheDayCard extends StatelessWidget {
               ],
             ),
             child: const Center(
-              child: CircularProgressIndicator(color: AppColors.primaryGold),
+              child: CircularProgressIndicator(color: AppColors.primary),
             ),
           );
         }
@@ -31,7 +31,7 @@ class VerseOfTheDayCard extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: AppColors.pureWhite,
+              color: AppColors.white,
               borderRadius: BorderRadius.circular(15),
               boxShadow: [
                 BoxShadow(
@@ -45,19 +45,13 @@ class VerseOfTheDayCard extends StatelessWidget {
               children: [
                 const Icon(Icons.error_outline, color: Colors.red, size: 48),
                 const SizedBox(height: 10),
-                Text(
-                  'Failed to load verse',
-                  style: AppTextStyles.bodyNormal.copyWith(
-                    color: AppColors.textDark,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                Text('Failed to load verse', style: AppText.b2),
                 const SizedBox(height: 15),
                 ElevatedButton(
                   onPressed: () => context.read<HomeBloc>().add(LoadHomeData()),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primaryGold,
-                    foregroundColor: AppColors.pureWhite,
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: AppColors.white,
                   ),
                   child: const Text('Retry'),
                 ),
@@ -81,7 +75,7 @@ class VerseOfTheDayCard extends StatelessWidget {
                 margin: const EdgeInsets.all(12),
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: AppColors.pureWhite,
+                  color: AppColors.white,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
@@ -90,18 +84,10 @@ class VerseOfTheDayCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          verse.surah.englishName,
-                          style: AppTextStyles.bodyNormal.copyWith(
-                            color: AppColors.primaryGold,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        Text(verse.surah.englishName, style: AppText.b2),
                         Text(
                           '${verse.surah.number}:${verse.numberInSurah}',
-                          style: AppTextStyles.bodySmall.copyWith(
-                            color: AppColors.textGrey,
-                          ),
+                          style: AppText.b2,
                         ),
                       ],
                     ),
@@ -109,21 +95,12 @@ class VerseOfTheDayCard extends StatelessWidget {
                     Text(
                       verse.arabicText,
                       textAlign: TextAlign.right,
-                      style: AppTextStyles.arabicText.copyWith(
-                        color: AppColors.textDark,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: AppText.b2,
                     ),
                     const SizedBox(height: 15),
                     Image.asset(StaticAssets.dividerFrame),
                     const SizedBox(height: 15),
-                    Text(
-                      verse.englishTranslation,
-                      style: AppTextStyles.bodyNormal.copyWith(
-                        color: AppColors.textDark,
-                      ),
-                    ),
+                    Text(verse.englishTranslation, style: AppText.b2),
                   ],
                 ),
               ),

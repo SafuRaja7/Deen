@@ -17,7 +17,7 @@ class HomeFeaturesRow extends StatelessWidget {
                 height: 80,
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: AppColors.pureWhite,
+                  color: AppColors.white,
                   borderRadius: BorderRadius.circular(15),
                   boxShadow: [
                     BoxShadow(
@@ -31,13 +31,7 @@ class HomeFeaturesRow extends StatelessWidget {
                   children: [
                     Image.asset(feature['image']!, height: 30),
                     const SizedBox(height: 8),
-                    Text(
-                      feature['title']!,
-                      style: AppTextStyles.bodySmall.copyWith(
-                        color: AppColors.textDark,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    Text(feature['title']!, style: AppText.b2),
                   ],
                 ),
               ),

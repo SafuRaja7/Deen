@@ -12,7 +12,7 @@ class ReflectionOfPeaceCard extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: AppColors.pureWhite,
+              color: AppColors.white,
               borderRadius: BorderRadius.circular(15),
               boxShadow: [
                 BoxShadow(
@@ -23,7 +23,7 @@ class ReflectionOfPeaceCard extends StatelessWidget {
               ],
             ),
             child: const Center(
-              child: CircularProgressIndicator(color: AppColors.primaryGold),
+              child: CircularProgressIndicator(color: AppColors.primary),
             ),
           );
         }
@@ -32,7 +32,7 @@ class ReflectionOfPeaceCard extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: AppColors.pureWhite,
+              color: AppColors.white,
               borderRadius: BorderRadius.circular(15),
               boxShadow: [
                 BoxShadow(
@@ -46,19 +46,13 @@ class ReflectionOfPeaceCard extends StatelessWidget {
               children: [
                 const Icon(Icons.error_outline, color: Colors.red, size: 48),
                 const SizedBox(height: 10),
-                Text(
-                  'Failed to load reflection',
-                  style: AppTextStyles.bodyNormal.copyWith(
-                    color: AppColors.textDark,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                Text('Failed to load reflection', style: AppText.b2),
                 const SizedBox(height: 15),
                 ElevatedButton(
                   onPressed: () => context.read<HomeBloc>().add(LoadHomeData()),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primaryGold,
-                    foregroundColor: AppColors.pureWhite,
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: AppColors.white,
                   ),
                   child: const Text('Retry'),
                 ),
@@ -82,7 +76,7 @@ class ReflectionOfPeaceCard extends StatelessWidget {
                 margin: const EdgeInsets.all(12),
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: AppColors.pureWhite,
+                  color: AppColors.white,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
@@ -91,18 +85,10 @@ class ReflectionOfPeaceCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          reflection.surah.englishName,
-                          style: AppTextStyles.bodyNormal.copyWith(
-                            color: AppColors.primaryGold,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        Text(reflection.surah.englishName, style: AppText.b2),
                         Text(
                           '${reflection.surah.number}:${reflection.numberInSurah}',
-                          style: AppTextStyles.bodySmall.copyWith(
-                            color: AppColors.textGrey,
-                          ),
+                          style: AppText.b2,
                         ),
                       ],
                     ),
@@ -110,21 +96,12 @@ class ReflectionOfPeaceCard extends StatelessWidget {
                     Text(
                       reflection.arabicText,
                       textAlign: TextAlign.right,
-                      style: AppTextStyles.arabicText.copyWith(
-                        color: AppColors.textDark,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: AppText.b2,
                     ),
                     const SizedBox(height: 15),
                     Image.asset(StaticAssets.dividerFrame),
                     const SizedBox(height: 15),
-                    Text(
-                      reflection.englishTranslation,
-                      style: AppTextStyles.bodyNormal.copyWith(
-                        color: AppColors.textDark,
-                      ),
-                    ),
+                    Text(reflection.englishTranslation, style: AppText.b2),
                   ],
                 ),
               ),
