@@ -43,8 +43,14 @@ class _SurahDetailsBodyState extends State<SurahDetailsBody> {
         if (state.status == SurahDetailsStatus.loading &&
             (state.surahDetail == null ||
                 state.surahDetail!.number != state.surahNumber)) {
-          return const Center(
-            child: CircularProgressIndicator(color: AppColors.primary),
+          return Column(
+            children: [
+              CustomTopBar(
+                title: "...",
+                currentSurahNumber: state.surahNumber ?? 1,
+              ),
+              const Expanded(child: SurahDetailsSkeleton()),
+            ],
           );
         }
 
@@ -77,7 +83,7 @@ class _SurahDetailsBodyState extends State<SurahDetailsBody> {
                         Image.asset(StaticAssets.design1),
                         Space.y.t30,
                         Text(
-                          surah.englishName,
+                          surah.name,
                           style: AppText.h1.copyWith(
                             color: AppColors.black,
                             fontWeight: FontWeight.bold,
