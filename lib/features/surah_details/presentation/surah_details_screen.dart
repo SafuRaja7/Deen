@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'dart:math' hide log;
 import 'dart:typed_data';
 
 import 'package:path_provider/path_provider.dart';
@@ -54,13 +55,15 @@ class SurahDetailsScreen extends StatelessWidget {
     App.init(context);
     final args = ModalRoute.of(context)?.settings.arguments;
     int surahNumber = 1;
-    int? initialAyahNumber;
+    int? initialGlobalAyahNumber;
+    int? initialAyahNumberInSurah;
 
     if (args is int) {
       surahNumber = args;
     } else if (args is Map<String, dynamic>) {
       surahNumber = args['surahNumber'] ?? 1;
-      initialAyahNumber = args['initialAyahNumber'];
+      initialGlobalAyahNumber = args['initialAyahNumber'];
+      initialAyahNumberInSurah = args['initialAyahNumberInSurah'];
     }
 
     return BlocProvider(
@@ -68,7 +71,8 @@ class SurahDetailsScreen extends StatelessWidget {
         ..add(
           LoadSurahDetailsData(
             surahNumber,
-            initialAyahNumber: initialAyahNumber,
+            initialAyahNumber: initialGlobalAyahNumber,
+            initialAyahNumberInSurah: initialAyahNumberInSurah,
           ),
         ),
       child: Scaffold(

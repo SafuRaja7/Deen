@@ -10,10 +10,19 @@ abstract class SurahDetailsEvent extends Equatable {
 class LoadSurahDetailsData extends SurahDetailsEvent {
   final int surahNumber;
   final int? initialAyahNumber;
-  const LoadSurahDetailsData(this.surahNumber, {this.initialAyahNumber});
+  final int? initialAyahNumberInSurah;
+  const LoadSurahDetailsData(
+    this.surahNumber, {
+    this.initialAyahNumber,
+    this.initialAyahNumberInSurah,
+  });
 
   @override
-  List<Object?> get props => [surahNumber, initialAyahNumber];
+  List<Object?> get props => [
+    surahNumber,
+    initialAyahNumber,
+    initialAyahNumberInSurah,
+  ];
 }
 
 class LoadMoreAyahs extends SurahDetailsEvent {}

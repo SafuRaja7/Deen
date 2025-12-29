@@ -10,10 +10,12 @@ class SurahDetailsState extends Equatable {
   final bool loadingMore;
   final String? error;
   final int? playingAyahNumber;
+  final int? initialAyahNumberInSurah;
   final bool isPlaying;
   final Duration position;
   final Duration duration;
   final bool isAudioLoading;
+  final bool isDownloading;
   final String? audioFilePath;
   final int? numberInSurah;
 
@@ -25,13 +27,17 @@ class SurahDetailsState extends Equatable {
     this.loadingMore = false,
     this.error,
     this.playingAyahNumber,
+    this.initialAyahNumberInSurah,
     this.isPlaying = false,
     this.position = Duration.zero,
     this.duration = Duration.zero,
     this.isAudioLoading = false,
+    this.isDownloading = false,
     this.audioFilePath,
     this.numberInSurah,
   });
+
+  bool get isAnyLoading => isAudioLoading || isDownloading;
 
   SurahDetailsState copyWith({
     int? surahNumber,
@@ -41,10 +47,12 @@ class SurahDetailsState extends Equatable {
     bool? loadingMore,
     String? error,
     int? playingAyahNumber,
+    int? initialAyahNumberInSurah,
     bool? isPlaying,
     Duration? position,
     Duration? duration,
     bool? isAudioLoading,
+    bool? isDownloading,
     String? audioFilePath,
     int? numberInSurah,
   }) {
@@ -56,10 +64,13 @@ class SurahDetailsState extends Equatable {
       loadingMore: loadingMore ?? this.loadingMore,
       error: error ?? this.error,
       playingAyahNumber: playingAyahNumber ?? this.playingAyahNumber,
+      initialAyahNumberInSurah:
+          initialAyahNumberInSurah ?? this.initialAyahNumberInSurah,
       isPlaying: isPlaying ?? this.isPlaying,
       position: position ?? this.position,
       duration: duration ?? this.duration,
       isAudioLoading: isAudioLoading ?? this.isAudioLoading,
+      isDownloading: isDownloading ?? this.isDownloading,
       audioFilePath: audioFilePath ?? this.audioFilePath,
       numberInSurah: numberInSurah ?? this.numberInSurah,
     );
@@ -74,10 +85,12 @@ class SurahDetailsState extends Equatable {
       loadingMore: loadingMore,
       error: error,
       playingAyahNumber: null,
+      initialAyahNumberInSurah: null,
       isPlaying: false,
       position: Duration.zero,
       duration: Duration.zero,
       isAudioLoading: false,
+      isDownloading: false,
       audioFilePath: null,
       numberInSurah: numberInSurah,
     );
@@ -92,10 +105,12 @@ class SurahDetailsState extends Equatable {
     loadingMore,
     error,
     playingAyahNumber,
+    initialAyahNumberInSurah,
     isPlaying,
     position,
     duration,
     isAudioLoading,
+    isDownloading,
     audioFilePath,
     numberInSurah,
   ];

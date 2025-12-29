@@ -211,20 +211,22 @@ class SurahDetailsBloc extends Bloc<SurahDetailsEvent, SurahDetailsState> {
       state.copyWith(
         status: SurahDetailsStatus.loading,
         surahNumber: event.surahNumber,
+        initialAyahNumberInSurah: event.initialAyahNumberInSurah,
         hasMore: true,
       ),
     );
     try {
+      final int loadLimit = max(event.initialAyahNumberInSurah ?? 5, 5);
       final surahDetail = await _repository.fetchSurahDetail(
         event.surahNumber,
         offset: 0,
-        limit: 5,
+        limit: loadLimit,
       );
       emit(
         state.copyWith(
           status: SurahDetailsStatus.success,
           surahDetail: surahDetail,
-          hasMore: surahDetail.ayahs.length == 5,
+          hasMore: surahDetail.ayahs.length == loadLimit,
         ),
       );
 

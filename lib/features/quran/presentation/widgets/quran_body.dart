@@ -65,6 +65,7 @@ class QuranBody extends StatelessWidget {
                             arguments: {
                               'surahNumber': lastPlayedSurahNumber,
                               'initialAyahNumber': lastPlayedGlobalAyahNumber,
+                              'initialAyahNumberInSurah': lastPlayedAyahNumber,
                             },
                           ).then((_) {
                             if (context.mounted) {
