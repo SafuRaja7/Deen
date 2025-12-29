@@ -29,6 +29,8 @@ class QuranBody extends StatelessWidget {
 
         final lastPlayedSurahName = state.lastPlayedSurahName ?? "None";
         final lastPlayedSurahNumber = state.lastPlayedSurahNumber;
+        final lastPlayedAyahNumber = state.lastPlayedAyahNumber;
+        final lastPlayedGlobalAyahNumber = state.lastPlayedGlobalAyahNumber;
 
         return SingleChildScrollView(
           padding: Space.a.t20,
@@ -51,8 +53,8 @@ class QuranBody extends StatelessWidget {
                     flex: 1,
                     child: PrevRecordCard(
                       title: "Last Played",
-                      subtitle: lastPlayedSurahNumber != null
-                          ? '$lastPlayedSurahName $lastPlayedSurahNumber'
+                      subtitle: lastPlayedSurahName != "None"
+                          ? '$lastPlayedSurahName $lastPlayedAyahNumber'
                           : "None",
                       onTap: () {
                         if (lastPlayedSurahNumber != null &&
@@ -62,10 +64,9 @@ class QuranBody extends StatelessWidget {
                             AppRoutes.surahDetails,
                             arguments: {
                               'surahNumber': lastPlayedSurahNumber,
-                              'initialAyahNumber': state.lastPlayedAyahNumber,
+                              'initialAyahNumber': lastPlayedGlobalAyahNumber,
                             },
                           ).then((_) {
-                            // Refresh data when returning
                             if (context.mounted) {
                               context.read<QuranBloc>().add(LoadQuranData());
                             }

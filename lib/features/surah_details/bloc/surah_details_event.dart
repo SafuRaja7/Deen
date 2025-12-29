@@ -20,10 +20,12 @@ class LoadMoreAyahs extends SurahDetailsEvent {}
 
 class PlayAyahAudio extends SurahDetailsEvent {
   final int ayahNumber;
-  const PlayAyahAudio(this.ayahNumber);
+  final int? numberInSurah;
+
+  const PlayAyahAudio(this.ayahNumber, {this.numberInSurah});
 
   @override
-  List<Object?> get props => [ayahNumber];
+  List<Object?> get props => [ayahNumber, numberInSurah];
 }
 
 class ToggleAyahAudio extends SurahDetailsEvent {}

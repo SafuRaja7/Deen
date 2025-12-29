@@ -138,34 +138,33 @@ class SurahDetailsBloc extends Bloc<SurahDetailsEvent, SurahDetailsState> {
       );
 
       final prefs = await SharedPreferences.getInstance();
-      final cachedNumber = prefs.getInt('cached_ayah_number');
-      final cachedData = prefs.getString('cached_audio_base64');
-
       Uint8List? audioBytes;
+      int? numberInSurah = event.numberInSurah;
 
-      if (cachedNumber == event.ayahNumber && cachedData != null) {
-        log("✅ Loading Ayah ${event.ayahNumber} from SharedPreferences");
-        audioBytes = base64Decode(cachedData);
+      final cachedGlobalNumber = prefs.getInt('cached_global_ayah_number');
+      final cachedBase64 = prefs.getString('cached_audio_base64');
+
+      if (cachedGlobalNumber == event.ayahNumber && cachedBase64 != null) {
+        audioBytes = base64Decode(cachedBase64);
+        numberInSurah ??= prefs.getInt('cached_ayah_number');
       } else {
         final audioInfo = await _repository.fetchAyahAudio(event.ayahNumber);
         final audioUrl = audioInfo['audio'] ?? audioInfo['audioSecondary'];
 
         if (audioUrl == null) {
-          log("No audio URL found for Ayah ${event.ayahNumber}");
           emit(state.copyWith(isAudioLoading: false));
           return;
         }
 
-        log("🌐 Downloading Ayah ${event.ayahNumber}...");
+        numberInSurah ??= audioInfo['numberInSurah'];
+
         final response = await http.get(Uri.parse(audioUrl));
 
         if (response.statusCode == 200) {
           audioBytes = response.bodyBytes;
 
-          // Save to SharedPreferences (Replaces previous)
-          log("💾 Saving Ayah ${event.ayahNumber} to SharedPreferences");
-          await prefs.setInt('cached_ayah_number', event.ayahNumber);
-          await prefs.setInt('cached_surah_number', state.surahNumber ?? 0);
+          await prefs.setInt('cached_ayah_number', numberInSurah ?? 0);
+          await prefs.setInt('cached_global_ayah_number', event.ayahNumber);
           await prefs.setString(
             'cached_surah_name',
             state.surahDetail?.englishName ?? "",
@@ -184,9 +183,14 @@ class SurahDetailsBloc extends Bloc<SurahDetailsEvent, SurahDetailsState> {
       await _audioPlayer.setFilePath(filePath);
       await _audioPlayer.play();
 
-      emit(state.copyWith(audioFilePath: filePath));
+      emit(
+        state.copyWith(
+          audioFilePath: filePath,
+          isAudioLoading: false,
+          numberInSurah: numberInSurah,
+        ),
+      );
     } catch (e) {
-      log("Error playing audio: $e");
       emit(state.copyWith(isAudioLoading: false));
     }
   }
@@ -196,15 +200,7 @@ class SurahDetailsBloc extends Bloc<SurahDetailsEvent, SurahDetailsState> {
     Emitter<SurahDetailsState> emit,
   ) {
     _audioPlayer.stop();
-    emit(
-      state.copyWith(
-        playingAyahNumber: null,
-        isPlaying: false,
-        position: Duration.zero,
-        duration: Duration.zero,
-        audioFilePath: null,
-      ),
-    );
+    emit(state.clearPlayer());
   }
 
   Future<void> _onLoadSurahDetailsData(

@@ -15,6 +15,7 @@ class SurahDetailsState extends Equatable {
   final Duration duration;
   final bool isAudioLoading;
   final String? audioFilePath;
+  final int? numberInSurah;
 
   const SurahDetailsState({
     this.surahNumber,
@@ -29,6 +30,7 @@ class SurahDetailsState extends Equatable {
     this.duration = Duration.zero,
     this.isAudioLoading = false,
     this.audioFilePath,
+    this.numberInSurah,
   });
 
   SurahDetailsState copyWith({
@@ -44,6 +46,7 @@ class SurahDetailsState extends Equatable {
     Duration? duration,
     bool? isAudioLoading,
     String? audioFilePath,
+    int? numberInSurah,
   }) {
     return SurahDetailsState(
       surahNumber: surahNumber ?? this.surahNumber,
@@ -58,6 +61,25 @@ class SurahDetailsState extends Equatable {
       duration: duration ?? this.duration,
       isAudioLoading: isAudioLoading ?? this.isAudioLoading,
       audioFilePath: audioFilePath ?? this.audioFilePath,
+      numberInSurah: numberInSurah ?? this.numberInSurah,
+    );
+  }
+
+  SurahDetailsState clearPlayer() {
+    return SurahDetailsState(
+      surahNumber: surahNumber,
+      surahDetail: surahDetail,
+      status: status,
+      hasMore: hasMore,
+      loadingMore: loadingMore,
+      error: error,
+      playingAyahNumber: null,
+      isPlaying: false,
+      position: Duration.zero,
+      duration: Duration.zero,
+      isAudioLoading: false,
+      audioFilePath: null,
+      numberInSurah: numberInSurah,
     );
   }
 
@@ -75,5 +97,6 @@ class SurahDetailsState extends Equatable {
     duration,
     isAudioLoading,
     audioFilePath,
+    numberInSurah,
   ];
 }

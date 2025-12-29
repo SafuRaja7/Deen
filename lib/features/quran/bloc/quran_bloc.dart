@@ -26,10 +26,23 @@ class QuranBloc extends Bloc<QuranEvent, QuranState> {
     try {
       final prefs = await SharedPreferences.getInstance();
       final lastPlayedSurahName = prefs.getString('cached_surah_name');
-      final lastPlayedSurahNumber = prefs.getInt('cached_surah_number');
       final lastPlayedAyahNumber = prefs.getInt('cached_ayah_number');
+      final lastPlayedGlobalAyahNumber = prefs.getInt(
+        'cached_global_ayah_number',
+      );
 
       final surahs = await _quranRepository.fetchSurahs();
+
+      int? lastPlayedSurahNumber;
+      if (lastPlayedSurahName != null) {
+        final matchedSurah = surahs
+            .where((s) => s.englishName == lastPlayedSurahName)
+            .firstOrNull;
+        if (matchedSurah != null) {
+          lastPlayedSurahNumber = matchedSurah.number;
+        }
+      }
+
       emit(
         state.copyWith(
           status: QuranStatus.success,
@@ -37,6 +50,7 @@ class QuranBloc extends Bloc<QuranEvent, QuranState> {
           lastPlayedSurahName: lastPlayedSurahName,
           lastPlayedSurahNumber: lastPlayedSurahNumber,
           lastPlayedAyahNumber: lastPlayedAyahNumber,
+          lastPlayedGlobalAyahNumber: lastPlayedGlobalAyahNumber,
         ),
       );
     } catch (e) {

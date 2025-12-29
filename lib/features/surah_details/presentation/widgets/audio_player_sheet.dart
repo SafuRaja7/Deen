@@ -20,143 +20,140 @@ class _AudioPlayerSheetState extends State<AudioPlayerSheet> {
         final duration = state.duration.inMilliseconds.toDouble();
 
         return Container(
-          padding: Space.a.t20,
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.1),
-                blurRadius: 10,
-                offset: const Offset(0, -5),
-              ),
-            ],
+          padding: Space.a.t30,
+          decoration: const BoxDecoration(
+            color: AppColors.background,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(45)),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Ayah ${state.playingAyahNumber}",
-                        style: AppText.h3.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primary,
-                        ),
-                      ),
-                      Text(
-                        "${state.surahDetail?.englishName}",
-                        style: AppText.b2.copyWith(color: AppColors.black),
-                      ),
-                    ],
+                  Text(
+                    state.surahDetail?.englishName ?? "",
+                    style: AppText.h2.copyWith(fontWeight: FontWeight.bold),
                   ),
-                  IconButton(
-                    onPressed: () {
+
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () {
                       context.read<SurahDetailsBloc>().add(CloseAudioPlayer());
                     },
-                    icon: const Icon(Icons.close),
+                    child: Container(
+                      padding: Space.a.t05,
+                      decoration: BoxDecoration(
+                        color: AppColors.primary.withValues(alpha: 0.1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.close,
+                        size: 20,
+                        color: AppColors.primary,
+                      ),
+                    ),
                   ),
                 ],
               ),
               Space.y.t15,
-              SizedBox(
-                height: 4,
-                child: state.isAudioLoading
-                    ? const LinearProgressIndicator(color: AppColors.primary)
-                    : const SizedBox.shrink(),
-              ),
-              Column(
-                children: [
-                  SliderTheme(
-                    data: SliderTheme.of(context).copyWith(
-                      trackHeight: 4,
-                      thumbShape: const RoundSliderThumbShape(
-                        enabledThumbRadius: 8,
-                      ),
-                      activeTrackColor: AppColors.primary,
-                      inactiveTrackColor: AppColors.primary.withValues(
-                        alpha: 0.2,
-                      ),
-                      thumbColor: AppColors.primary,
-                    ),
-                    child: Slider(
-                      value: position.clamp(0, duration > 0 ? duration : 1.0),
-                      max: duration > 0 ? duration : 1.0,
-                      onChanged: (val) {
-                        setState(() {
-                          _dragValue = val;
-                        });
-                      },
-                      onChangeEnd: (val) {
-                        context.read<SurahDetailsBloc>().add(
-                          SeekAudio(Duration(milliseconds: val.toInt())),
-                        );
-                        setState(() {
-                          _dragValue = null;
-                        });
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: Space.h.t10,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          _formatDuration(
-                            Duration(milliseconds: position.toInt()),
-                          ),
-                          style: AppText.b2,
-                        ),
-                        Text(
-                          _formatDuration(state.duration),
-                          style: AppText.b2,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Space.y.t10,
+              const Divider(thickness: 1),
+              Space.y.t20,
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  IconButton(
-                    icon: const Icon(Icons.skip_previous, size: 30),
-                    onPressed: () {},
-                  ),
-                  Space.x.t20,
                   GestureDetector(
-                    onTap: () {
-                      context.read<SurahDetailsBloc>().add(ToggleAyahAudio());
-                    },
+                    onTap: () =>
+                        context.read<SurahDetailsBloc>().add(ToggleAyahAudio()),
                     child: Container(
-                      padding: Space.a.t15,
-                      decoration: const BoxDecoration(
-                        color: AppColors.primary,
+                      padding: Space.a.t20,
+                      decoration: BoxDecoration(
+                        color: AppColors.primary.withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(
-                        (state.isPlaying || state.isAudioLoading)
-                            ? Icons.pause
-                            : Icons.play_arrow,
-                        color: AppColors.white,
-                        size: 30,
-                      ),
+                      child: state.isAudioLoading
+                          ? const SizedBox(
+                              child: CircularProgressIndicator(
+                                strokeWidth: 3,
+                                color: AppColors.primary,
+                              ),
+                            )
+                          : Icon(
+                              state.isPlaying ? Icons.pause : Icons.play_arrow,
+                              color: AppColors.primary,
+                              size: 35,
+                            ),
                     ),
                   ),
-                  Space.x.t20,
-                  IconButton(
-                    icon: const Icon(Icons.skip_next, size: 30),
-                    onPressed: () {},
+                  Space.x.t15,
+                  Expanded(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return GestureDetector(
+                          onHorizontalDragUpdate: (details) {
+                            if (state.isAudioLoading) return;
+                            final double width = constraints.maxWidth;
+                            final double relativeX = details.localPosition.dx;
+                            final double newProgress = (relativeX / width)
+                                .clamp(0.0, 1.0);
+                            setState(() {
+                              _dragValue = newProgress * duration;
+                            });
+                          },
+                          onHorizontalDragEnd: (details) {
+                            if (_dragValue != null) {
+                              context.read<SurahDetailsBloc>().add(
+                                SeekAudio(
+                                  Duration(milliseconds: _dragValue!.toInt()),
+                                ),
+                              );
+                              setState(() {
+                                _dragValue = null;
+                              });
+                            }
+                          },
+                          child: state.isAudioLoading
+                              ? Shimmer.fromColors(
+                                  baseColor: AppColors.black.withValues(
+                                    alpha: 0.1,
+                                  ),
+                                  highlightColor: AppColors.black.withValues(
+                                    alpha: 0.05,
+                                  ),
+                                  child: const _WaveformVisual(progress: 0),
+                                )
+                              : _WaveformVisual(
+                                  progress: duration > 0
+                                      ? position / duration
+                                      : 0,
+                                ),
+                        );
+                      },
+                    ),
                   ),
+                  Space.x.t10,
+                  state.isAudioLoading
+                      ? Shimmer.fromColors(
+                          baseColor: AppColors.black.withValues(alpha: 0.1),
+                          highlightColor: AppColors.black.withValues(
+                            alpha: 0.05,
+                          ),
+                          child: Container(
+                            height: 20,
+                            width: 80,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                          ),
+                        )
+                      : Text(
+                          "${_formatDuration(Duration(milliseconds: position.toInt()))}/${_formatDuration(state.duration)}",
+                          style: AppText.b1.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                 ],
               ),
-              Space.y.t20,
+              Space.y.t15,
             ],
           ),
         );
@@ -169,5 +166,40 @@ class _AudioPlayerSheetState extends State<AudioPlayerSheet> {
     String minutes = twoDigits(duration.inMinutes.remainder(60));
     String seconds = twoDigits(duration.inSeconds.remainder(60));
     return "$minutes:$seconds";
+  }
+}
+
+class _WaveformVisual extends StatelessWidget {
+  final double progress;
+  const _WaveformVisual({required this.progress});
+
+  @override
+  Widget build(BuildContext context) {
+    final List<double> heights = [
+      15, 25, 20, 15, 30, 40, 25, 15, 20, 15, //
+      15, 25, 20, 15, 30, 40, 25, 15, 20, 15, //
+      15, 25, 20, 15, 30, 40, 25, 15, 20, 15, //
+      15, 25, 20, 15, 30, 40, 25, 15, 20, 15, //
+    ];
+
+    return SizedBox(
+      height: 45,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: List.generate(heights.length, (index) {
+          final isActive = index / heights.length < progress;
+          return Container(
+            width: 3,
+            height: heights[index],
+            decoration: BoxDecoration(
+              color: isActive
+                  ? AppColors.primary
+                  : AppColors.black.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(2),
+            ),
+          );
+        }),
+      ),
+    );
   }
 }

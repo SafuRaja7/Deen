@@ -22,7 +22,7 @@ class SurahDetailsRepository {
     }
   }
 
-  Future<Map<String, String?>> fetchAyahAudio(int ayahNumber) async {
+  Future<Map<String, dynamic>> fetchAyahAudio(int ayahNumber) async {
     final response = await http.get(
       Uri.parse('$_baseUrl/ayah/$ayahNumber/ar.alafasy'),
     );
@@ -35,6 +35,7 @@ class SurahDetailsRepository {
         'audioSecondary': (ayahData['audioSecondary'] as List).isNotEmpty
             ? ayahData['audioSecondary'][0]
             : null,
+        'numberInSurah': ayahData['numberInSurah'],
       };
     } else {
       throw Exception('Failed to load ayah audio');
