@@ -155,7 +155,7 @@ class _SurahDetailsBodyState extends State<SurahDetailsBody> {
                                   Future.delayed(
                                     const Duration(milliseconds: 300),
                                     () {
-                                      if (mounted) {
+                                      if (mounted && context.mounted) {
                                         Scrollable.ensureVisible(
                                           context,
                                           duration: const Duration(
