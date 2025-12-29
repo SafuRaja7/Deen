@@ -45,6 +45,9 @@ dependencies:
   flutter_bloc: ^9.1.1
   equatable: ^2.0.7
   shimmer: ^3.0.0
+  just_audio: ^0.9.38
+  audio_waveforms: ^2.0.1
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:

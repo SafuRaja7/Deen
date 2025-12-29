@@ -12,7 +12,11 @@ class SurahCard extends StatelessWidget {
           context,
           AppRoutes.surahDetails,
           arguments: surah.number,
-        );
+        ).then((_) {
+          if (context.mounted) {
+            context.read<QuranBloc>().add(LoadQuranData());
+          }
+        });
       },
       child: Container(
         padding: Space.a.t20,

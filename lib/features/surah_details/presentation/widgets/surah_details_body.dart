@@ -46,7 +46,7 @@ class _SurahDetailsBodyState extends State<SurahDetailsBody> {
           return Column(
             children: [
               CustomTopBar(
-                title: "...",
+                title: "",
                 currentSurahNumber: state.surahNumber ?? 1,
               ),
               const Expanded(child: SurahDetailsSkeleton()),
@@ -156,21 +156,44 @@ class _SurahDetailsBodyState extends State<SurahDetailsBody> {
                           Divider(
                             color: AppColors.black.withValues(alpha: 0.2),
                           ),
+
                           Row(
                             children: [
                               ...AppUtils.suarhDetailsFeature.map(
-                                (e) => Container(
-                                  margin: Space.a.t15,
-                                  decoration: BoxDecoration(
-                                    color: AppTheme.c.primary.withValues(
-                                      alpha: .3,
+                                (e) => InkWell(
+                                  onTap: () {
+                                    if (e['icon'] == Icons.play_arrow) {
+                                      if (state.playingAyahNumber ==
+                                          ayah.number) {
+                                        context.read<SurahDetailsBloc>().add(
+                                          ToggleAyahAudio(),
+                                        );
+                                      } else {
+                                        context.read<SurahDetailsBloc>().add(
+                                          PlayAyahAudio(ayah.number),
+                                        );
+                                      }
+                                    }
+                                  },
+                                  child: Container(
+                                    margin: Space.a.t15,
+                                    decoration: BoxDecoration(
+                                      color: AppTheme.c.primary.withValues(
+                                        alpha: .3,
+                                      ),
+                                      borderRadius: BorderRadius.circular(5),
                                     ),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  padding: Space.a.t10,
-                                  child: Icon(
-                                    e['icon'],
-                                    color: AppColors.primary,
+                                    padding: Space.a.t10,
+                                    child: Icon(
+                                      (e['icon'] == Icons.play_arrow &&
+                                              state.playingAyahNumber ==
+                                                  ayah.number &&
+                                              (state.isPlaying ||
+                                                  state.isAudioLoading))
+                                          ? Icons.pause
+                                          : e['icon'],
+                                      color: AppColors.primary,
+                                    ),
                                   ),
                                 ),
                               ),

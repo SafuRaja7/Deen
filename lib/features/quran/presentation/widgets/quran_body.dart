@@ -1,3 +1,4 @@
+import 'package:deen/core/router/routes.dart';
 import 'package:deen/core/configs/configs.dart';
 import 'package:deen/core/utils/app_utils.dart';
 import 'package:deen/core/utils/static_assets.dart';
@@ -15,10 +16,6 @@ class QuranBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     App.init(context);
-    final List<Map<String, dynamic>> dummyRecord = [
-      {"title": "Last Read", "subtitle": "Al Bakarah 117"},
-      {"title": "Last Played", "subtitle": "Al-Ma'idah"},
-    ];
 
     return BlocBuilder<QuranBloc, QuranState>(
       builder: (context, state) {
@@ -30,6 +27,9 @@ class QuranBody extends StatelessWidget {
           return Center(child: Text('Error: ${state.error}'));
         }
 
+        final lastPlayedSurahName = state.lastPlayedSurahName ?? "None";
+        final lastPlayedSurahNumber = state.lastPlayedSurahNumber;
+
         return SingleChildScrollView(
           padding: Space.a.t20,
           child: Column(
@@ -39,13 +39,39 @@ class QuranBody extends StatelessWidget {
               Row(
                 spacing: 10,
                 children: [
-                  ...dummyRecord.asMap().entries.map(
-                    (e) => Flexible(
-                      flex: 1,
-                      child: PrevRecordCard(
-                        title: e.value['title'],
-                        subtitle: e.value['subtitle'],
-                      ),
+                  Flexible(
+                    flex: 1,
+                    child: PrevRecordCard(
+                      title: "Last Read",
+                      subtitle: "Al Bakarah 117",
+                      onTap: () {},
+                    ),
+                  ),
+                  Flexible(
+                    flex: 1,
+                    child: PrevRecordCard(
+                      title: "Last Played",
+                      subtitle: lastPlayedSurahNumber != null
+                          ? '$lastPlayedSurahName $lastPlayedSurahNumber'
+                          : "None",
+                      onTap: () {
+                        if (lastPlayedSurahNumber != null &&
+                            lastPlayedSurahNumber > 0) {
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.surahDetails,
+                            arguments: {
+                              'surahNumber': lastPlayedSurahNumber,
+                              'initialAyahNumber': state.lastPlayedAyahNumber,
+                            },
+                          ).then((_) {
+                            // Refresh data when returning
+                            if (context.mounted) {
+                              context.read<QuranBloc>().add(LoadQuranData());
+                            }
+                          });
+                        }
+                      },
                     ),
                   ),
                 ],

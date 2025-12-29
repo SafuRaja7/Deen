@@ -107,6 +107,8 @@ class AyahDetail {
   final String translation;
   final int numberInSurah;
   final int juz;
+  final String? audio;
+  final String? audioSecondary;
 
   AyahDetail({
     required this.number,
@@ -114,5 +116,7 @@ class AyahDetail {
     required this.translation,
     required this.numberInSurah,
     required this.juz,
+    this.audio,
+    this.audioSecondary,
   });
 }
