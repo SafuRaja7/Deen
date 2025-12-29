@@ -93,7 +93,9 @@ class _SurahDetailsBodyState extends State<SurahDetailsBody> {
               Expanded(
                 child: ListView.builder(
                   controller: _scrollController,
-                  padding: Space.h.t20,
+                  padding: Space.h.t20.copyWith(
+                    bottom: state.playingAyahNumber != null ? 70.un() : 40.un(),
+                  ),
                   itemCount: surah.ayahs.length + 2,
                   itemBuilder: (context, index) {
                     if (index == 0) {
@@ -258,9 +260,6 @@ class _SurahDetailsBodyState extends State<SurahDetailsBody> {
                   },
                 ),
               ),
-              Space.y.t100,
-              Space.y.t100,
-              Space.y.t100,
             ],
           );
         },

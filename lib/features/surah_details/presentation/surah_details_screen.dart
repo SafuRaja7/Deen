@@ -77,8 +77,12 @@ class SurahDetailsScreen extends StatelessWidget {
         ),
       child: Scaffold(
         backgroundColor: AppColors.background,
-        body: const SurahDetailsBody(),
-        bottomSheet: const AudioPlayerSheet(),
+        body: const Stack(
+          children: [
+            SurahDetailsBody(),
+            Align(alignment: Alignment.bottomCenter, child: AudioPlayerSheet()),
+          ],
+        ),
       ),
     );
   }
