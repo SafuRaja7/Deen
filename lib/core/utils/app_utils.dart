@@ -1,3 +1,4 @@
+import 'package:deen/core/router/routes.dart';
 import 'package:deen/core/utils/static_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -89,10 +90,18 @@ class AppUtils {
   ];
 
   static final List<Map<String, String>> homeFeaturesRow = [
-    {'title': 'Qibla', 'image': StaticAssets.qibla},
-    {'title': 'Quran', 'image': StaticAssets.logo},
-    {'title': 'Dua', 'image': StaticAssets.dua},
-    {'title': 'Prayer', 'image': StaticAssets.prayer},
+    {
+      'title': 'Qibla',
+      'image': StaticAssets.qibla,
+      "onTap": AppRoutes.onboarding,
+    },
+    {'title': 'Quran', 'image': StaticAssets.logo, "onTap": AppRoutes.quran},
+    {'title': 'Dua', 'image': StaticAssets.dua, "onTap": AppRoutes.onboarding},
+    {
+      'title': 'Prayer',
+      'image': StaticAssets.prayer,
+      "onTap": AppRoutes.onboarding,
+    },
   ];
 
   static final List<Map<String, IconData>> suarhDetailsFeature = [

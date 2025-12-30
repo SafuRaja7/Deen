@@ -50,8 +50,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       _startTimer();
       add(UpdatePrayerTimer());
+      FlutterNativeSplash.remove();
     } catch (e) {
       emit(state.copyWith(status: HomeStatus.failure, error: e.toString()));
+      FlutterNativeSplash.remove();
     }
   }
 

@@ -20,6 +20,7 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 part 'widgets/faith_card.dart';
 part 'widgets/home_body.dart';
