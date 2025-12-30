@@ -13,6 +13,9 @@ import 'package:deen/features/prayer_timings/bloc/prayer_timings_state.dart';
 import 'package:deen/features/prayer_timings/data/prayer_timings_repo.dart';
 
 part 'widgets/prayer_timings_body.dart';
+part 'widgets/time_card.dart';
+part 'widgets/prayer_times_month_card.dart';
+part 'widgets/date_card.dart';
 
 class PrayerTimingsScreen extends StatelessWidget {
   const PrayerTimingsScreen({super.key});
@@ -37,7 +40,12 @@ class PrayerTimingsScreen extends StatelessWidget {
               year: now.year,
             ),
           ),
-      child: Scaffold(body: PrayerTimingsBody(timings: args['timings'])),
+      child: Scaffold(
+        backgroundColor: AppColors.background,
+        body: SafeArea(
+          child: PrayerTimingsBody(timings: args['initialTimings']),
+        ),
+      ),
     );
   }
 }

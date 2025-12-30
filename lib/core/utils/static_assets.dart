@@ -32,4 +32,5 @@ class StaticAssets {
   static const String stars = 'assets/prayer_timings/stars.png';
   static const String prayingPerson =
       'assets/prayer_timings/praying_person.png';
+  static const String calendar = 'assets/prayer_timings/calendar.png';
 }

@@ -19,7 +19,6 @@ class AppUtils {
 
   static final List<String> prayerNames = [
     'Fajr',
-    'Sunrise',
     'Dhuhr',
     'Asr',
     'Maghrib',
@@ -30,8 +29,6 @@ class AppUtils {
     switch (name.toLowerCase()) {
       case 'fajr':
         return StaticAssets.partialyCloudyNight;
-      case 'sunrise':
-        return StaticAssets.maghribSun;
       case 'dhuhr':
         return StaticAssets.sunny;
       case 'asr':

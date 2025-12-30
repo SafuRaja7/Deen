@@ -10,16 +10,21 @@ class TopBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.background,
+      padding: Space.h.t20,
       child: Row(
         crossAxisAlignment: .end,
         children: [
           GestureDetector(
             onTap: () => Navigator.pop(context),
-            child: Icon(Icons.arrow_back_ios, color: AppColors.textDark),
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: AppColors.textDark,
+              size: 8.un(),
+            ),
           ),
-          Image.asset(image, height: 30),
-          SizedBox(width: 10),
-          Text(title, style: AppText.h2.copyWith(fontWeight: FontWeight.bold)),
+          Image.asset(image, height: 10.un()),
+          Space.x.t15,
+          Text(title, style: AppText.b1.copyWith(fontWeight: FontWeight.bold)),
         ],
       ),
     );
