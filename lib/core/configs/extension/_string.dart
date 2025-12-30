@@ -33,6 +33,11 @@ extension SuperString on String {
   }
 
   String? get error => split(': ').lastOrNull;
+
+  String get capitalize {
+    if (isEmpty) return this;
+    return this[0].toUpperCase() + substring(1);
+  }
 }
 
 class RoutingData {

@@ -15,17 +15,7 @@ class ReflectionOfPeaceCard extends StatelessWidget {
         if (state.error != null && state.reflectionOfTheDay == null) {
           return Container(
             padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: 15.radius(),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.05),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
+            decoration: AppProps.card,
             child: Column(
               children: [
                 const Icon(Icons.error_outline, color: Colors.red, size: 48),
@@ -57,8 +47,8 @@ class ReflectionOfPeaceCard extends StatelessWidget {
                 child: Image.asset(StaticAssets.frame, fit: BoxFit.fill),
               ),
               Container(
-                margin: const EdgeInsets.all(12),
-                padding: const EdgeInsets.all(20),
+                margin: Space.a.t20,
+                padding: Space.a.t25,
                 decoration: BoxDecoration(
                   color: AppColors.white,
                   borderRadius: 10.radius(),
@@ -69,10 +59,13 @@ class ReflectionOfPeaceCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(reflection.surah.englishName, style: AppText.b2),
+                        Text(
+                          reflection.surah.englishName,
+                          style: AppText.b3 + FontWeight.bold,
+                        ),
                         Text(
                           '${reflection.surah.number}:${reflection.numberInSurah}',
-                          style: AppText.b2,
+                          style: AppText.b3 + FontWeight.bold,
                         ),
                       ],
                     ),
@@ -80,12 +73,15 @@ class ReflectionOfPeaceCard extends StatelessWidget {
                     Text(
                       reflection.arabicText,
                       textAlign: TextAlign.right,
-                      style: AppText.b2,
+                      style: AppText.h2 + FontWeight.bold,
                     ),
                     const SizedBox(height: 15),
                     Image.asset(StaticAssets.dividerFrame),
                     const SizedBox(height: 15),
-                    Text(reflection.englishTranslation, style: AppText.b2),
+                    Text(
+                      reflection.englishTranslation.capitalize,
+                      style: AppText.b1 + FontWeight.w500,
+                    ),
                   ],
                 ),
               ),

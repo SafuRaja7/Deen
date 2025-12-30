@@ -6,32 +6,25 @@ class HomeFeaturesRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: Space.h.t30,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: AppUtils.homeFeaturesRow.map((feature) {
           return Column(
             children: [
               Container(
-                width: 80,
-                height: 80,
+                width: 33.un(),
+                height: 29.un(),
                 padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: 15.radius(),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.2),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
+                decoration: AppProps.card,
                 child: Column(
                   children: [
-                    Image.asset(feature['image']!, height: 30),
-                    const SizedBox(height: 8),
-                    Text(feature['title']!, style: AppText.b2),
+                    Image.asset(feature['image']!, height: 10.un()),
+                    Space.y.t05,
+                    Text(
+                      feature['title']!,
+                      style: AppText.b3 + AppColors.black,
+                    ),
                   ],
                 ),
               ),

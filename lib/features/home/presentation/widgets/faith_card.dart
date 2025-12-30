@@ -10,25 +10,29 @@ class FaithCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(15),
+      margin: EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.only(top: 15, left: 15, right: 15),
       decoration: AppProps.card,
       child: Column(
         crossAxisAlignment: .start,
         children: [
           ClipRRect(borderRadius: 15.radius(), child: Image.asset(image)),
-          SizedBox(height: 15),
-          Text(title, style: AppText.b2),
-          Text(desc, style: AppText.b2),
-          SizedBox(height: 15),
+          Space.y.t20,
+          Text(title, style: AppText.b1 + FontWeight.bold),
+          Space.y.t20,
+          Text(desc, style: AppText.b1 + AppColors.textSub),
+          Space.y.t20,
           Row(
             children: [
-              Text("Tap to Read", style: AppText.b2),
-              SizedBox(width: 10),
+              Text(
+                "Tap to Read",
+                style: AppText.b2 + FontWeight.bold + AppColors.primary,
+              ),
+              Space.x.t10,
               Icon(Icons.arrow_forward_ios, color: AppColors.primary, size: 15),
             ],
           ),
-          SizedBox(height: 15),
+          Space.y.t20,
         ],
       ),
     );

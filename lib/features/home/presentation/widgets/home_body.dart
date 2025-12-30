@@ -32,24 +32,33 @@ class HomeBody extends StatelessWidget {
             children: [
               const TopCard(),
               const QuranTrackCard(),
-              const SizedBox(height: 10),
+              Space.y.t15,
               const HomeFeaturesRow(),
-              const SizedBox(height: 20),
+              Space.y.t20,
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
+                padding: Space.h.t30,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Verse of the Day", style: AppText.b2),
-                    const SizedBox(height: 10),
+                    Text(
+                      "Verse of the Day",
+                      style: AppText.b2 + FontWeight.bold,
+                    ),
+                    Space.y.t20,
                     const VerseOfTheDayCard(),
-                    const SizedBox(height: 20),
-                    Text("Reflection of Peace", style: AppText.b2),
-                    const SizedBox(height: 10),
+                    Space.y.t20,
+                    Text(
+                      "Reflection of Peace",
+                      style: AppText.b2 + FontWeight.bold,
+                    ),
+                    Space.y.t20,
                     const ReflectionOfPeaceCard(),
-                    const SizedBox(height: 20),
-                    Text("Revive Your Faith", style: AppText.b2),
-                    const SizedBox(height: 10),
+                    Space.y.t20,
+                    Text(
+                      "Revive Your Faith",
+                      style: AppText.b2 + FontWeight.bold,
+                    ),
+
                     ...AppUtils.list.asMap().entries.map((e) {
                       return FaithCard(
                         e.value["image"],
@@ -58,7 +67,7 @@ class HomeBody extends StatelessWidget {
                         () {},
                       );
                     }),
-                    const SizedBox(height: 40),
+                    Space.y.t20,
                   ],
                 ),
               ),
