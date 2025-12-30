@@ -97,7 +97,7 @@ class QuranBody extends StatelessWidget {
                           color: isSelected
                               ? AppColors.primary
                               : AppColors.primary.withValues(alpha: .15),
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: 10.radius(),
                         ),
                         alignment: Alignment.center,
                         child: Text(

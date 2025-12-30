@@ -9,17 +9,15 @@ class AddressCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(50),
+      borderRadius: 50.radius(),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
         child: Container(
-          padding:
-              const EdgeInsets.all(5) +
-              const EdgeInsets.symmetric(horizontal: 10),
+          padding: Space.a.t10 + Space.h.t10,
           decoration: BoxDecoration(
             color: AppColors.textSub.withValues(alpha: 0.3),
-            borderRadius: BorderRadius.circular(50),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
+            borderRadius: 50.radius(),
+            border: Border.all(color: AppColors.white.withValues(alpha: 0.1)),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -29,13 +27,13 @@ class AddressCard extends StatelessWidget {
                 color: AppColors.white,
                 size: 16,
               ),
-              const SizedBox(width: 5),
+              Space.x.t10,
               Flexible(
                 child: Text(
                   address,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppText.b2.copyWith(color: AppColors.white),
+                  style: AppText.b3 + AppColors.white,
                 ),
               ),
             ],

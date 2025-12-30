@@ -231,9 +231,7 @@ class _SurahDetailsBodyState extends State<SurahDetailsBody> {
                                           decoration: BoxDecoration(
                                             color: AppTheme.c.primary
                                                 .withValues(alpha: .3),
-                                            borderRadius: BorderRadius.circular(
-                                              5,
-                                            ),
+                                            borderRadius: 5.radius(),
                                           ),
                                           padding: Space.a.t10,
                                           child: Icon(

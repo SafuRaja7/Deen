@@ -68,7 +68,7 @@ class PrayerTimingsBody extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: AppColors.white,
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: 15.radius(),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withValues(alpha: 0.2),
@@ -139,7 +139,7 @@ class PrayerTimingsBody extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           color: AppColors.white,
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: 15.radius(),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withValues(alpha: 0.2),
@@ -183,7 +183,7 @@ class PrayerTimingsBody extends StatelessWidget {
                   Container(
                     decoration: BoxDecoration(
                       color: AppColors.white,
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: 15.radius(),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withValues(alpha: 0.1),

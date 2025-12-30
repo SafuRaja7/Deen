@@ -22,9 +22,9 @@ abstract class AppText {
     h3 = base.copyWith(fontSize: 20).ratioHeight();
 
     //
-    b1 = base.copyWith(fontSize: 16).ratioHeight();
-    b2 = base.copyWith(fontSize: 14).ratioHeight();
-    b3 = base.copyWith(fontSize: 12).ratioHeight();
+    b1 = base.copyWith(fontSize: 18).ratioHeight();
+    b2 = base.copyWith(fontSize: 16).ratioHeight();
+    b3 = base.copyWith(fontSize: 14).ratioHeight();
 
     //
     s1 = base.copyWith(fontSize: 11).ratioHeight();

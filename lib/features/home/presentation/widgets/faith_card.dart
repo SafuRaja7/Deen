@@ -16,10 +16,7 @@ class FaithCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: .start,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(15),
-            child: Image.asset(image),
-          ),
+          ClipRRect(borderRadius: 15.radius(), child: Image.asset(image)),
           SizedBox(height: 15),
           Text(title, style: AppText.b2),
           Text(desc, style: AppText.b2),

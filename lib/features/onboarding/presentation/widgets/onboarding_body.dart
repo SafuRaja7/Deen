@@ -95,7 +95,7 @@ class _OnboardingBodyState extends State<OnboardingBody> {
                         color: _currentPage == i
                             ? AppColors.primary
                             : AppColors.white.withValues(alpha: 0.5),
-                        borderRadius: BorderRadius.circular(4),
+                        borderRadius: 4.radius(),
                       ),
                     ),
                 ],

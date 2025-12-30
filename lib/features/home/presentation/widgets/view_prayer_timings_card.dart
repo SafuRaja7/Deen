@@ -10,22 +10,20 @@ class ViewPrayerTimingsCard extends StatelessWidget {
         return GestureDetector(
           onTap: () {
             if (state.timings != null) {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => PrayerTimingsScreen(
-              //       initialTimings: state.timings,
-              //       address: state.address,
-              //     ),
-              //   ),
-              // );
+              AppRoutes.prayerTimings.push(
+                context,
+                arguments: {
+                  'address': state.address,
+                  'initialTimings': state.timings,
+                },
+              );
             }
           },
           child: ClipRRect(
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
               child: Container(
-                height: 40,
+                height: 15.un(),
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 decoration: BoxDecoration(
                   color: AppColors.white.withValues(alpha: 0.1),
@@ -34,10 +32,13 @@ class ViewPrayerTimingsCard extends StatelessWidget {
                   children: [
                     Image(
                       image: AssetImage(StaticAssets.prayingPerson),
-                      height: 30,
+                      height: 12.un(),
                     ),
-                    const SizedBox(width: 10),
-                    Text('View All Prayer Timings', style: AppText.b2),
+                    Space.x.t10,
+                    Text(
+                      'View All Prayer Timings',
+                      style: AppText.b2 + AppColors.white,
+                    ),
                     const Spacer(),
                     const Icon(
                       Icons.arrow_forward_ios,

@@ -30,7 +30,7 @@ class CustomTopBar extends StatelessWidget {
                     color: Colors.white.withValues(alpha: 0.6),
                     width: 1,
                   ),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: 10.radius(),
                 ),
                 child: Row(
                   children: [

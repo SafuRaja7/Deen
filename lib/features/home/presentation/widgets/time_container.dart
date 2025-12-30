@@ -7,14 +7,14 @@ class TimeContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: 20.radius(),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
         child: Container(
-          padding: const EdgeInsets.all(15),
+          padding: Space.a.t20,
           decoration: BoxDecoration(
             color: AppColors.white.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: 20.radius(),
             border: Border.all(color: AppColors.white.withValues(alpha: 0.2)),
           ),
           child: Row(
@@ -33,9 +33,15 @@ class TimeContainer extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Image(image: AssetImage(prayerEnum.img), height: 26),
-                        const SizedBox(height: 4),
-                        Text(prayerEnum.displayName, style: AppText.b2),
-                        Text(AppUtils.convertTo12Hour(time), style: AppText.b2),
+                        Space.y.t10,
+                        Text(
+                          prayerEnum.displayName,
+                          style: AppText.b3 + AppColors.white,
+                        ),
+                        Text(
+                          AppUtils.convertTo12Hour(time),
+                          style: AppText.s1 + AppColors.white + FontWeight.w600,
+                        ),
                       ],
                     ),
                     if (!isLast)
@@ -44,7 +50,7 @@ class TimeContainer extends StatelessWidget {
                         width: 2,
                         decoration: BoxDecoration(
                           color: AppColors.white.withValues(alpha: 0.5),
-                          borderRadius: BorderRadius.circular(50),
+                          borderRadius: 50.radius(),
                         ),
                       ),
                   ];

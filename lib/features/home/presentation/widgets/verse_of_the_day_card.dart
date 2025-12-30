@@ -16,7 +16,7 @@ class VerseOfTheDayCard extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: AppColors.white,
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: 15.radius(),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withValues(alpha: 0.05),
@@ -60,7 +60,7 @@ class VerseOfTheDayCard extends StatelessWidget {
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   color: AppColors.white,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: 10.radius(),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,

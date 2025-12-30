@@ -15,7 +15,7 @@ class ParaCard extends StatelessWidget {
             padding: Space.a.t20,
             decoration: BoxDecoration(
               color: AppColors.background,
-              borderRadius: BorderRadius.circular(5),
+              borderRadius: 5.radius(),
             ),
             child: Center(
               child: Text(

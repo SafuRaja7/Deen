@@ -23,7 +23,7 @@ class _AudioPlayerSheetState extends State<AudioPlayerSheet> {
           margin: Space.a.t10,
           decoration: BoxDecoration(
             color: AppColors.background,
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: 30.radius(),
             border: Border.all(
               color: AppColors.black.withValues(alpha: 0.1),
               width: 1.5,
@@ -160,7 +160,7 @@ class _AudioPlayerSheetState extends State<AudioPlayerSheet> {
                               width: 80,
                               decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: BorderRadius.circular(4),
+                                borderRadius: 4.radius(),
                               ),
                             ),
                           )
@@ -215,7 +215,7 @@ class _WaveformVisual extends StatelessWidget {
               color: isActive
                   ? AppColors.primary
                   : AppColors.black.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(2),
+              borderRadius: 2.radius(),
             ),
           );
         }),

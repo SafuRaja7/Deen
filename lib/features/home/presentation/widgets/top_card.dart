@@ -38,11 +38,11 @@ class TopCard extends StatelessWidget {
         String timeLeftStr = "";
         if (state.timeLeft.inHours > 0) {
           timeLeftStr =
-              "Ends in ${state.timeLeft.inHours}h ${state.timeLeft.inMinutes % 60}m";
+              "${state.timeLeft.inHours}h ${state.timeLeft.inMinutes % 60}m";
         } else if (state.timeLeft.inMinutes > 0) {
-          timeLeftStr = "Ends in ${state.timeLeft.inMinutes} Minutes";
+          timeLeftStr = "${state.timeLeft.inMinutes} Minutes";
         } else {
-          timeLeftStr = "Ends in ${state.timeLeft.inSeconds} Seconds";
+          timeLeftStr = "${state.timeLeft.inSeconds} Seconds";
         }
 
         return Container(
@@ -125,14 +125,14 @@ class TopCard extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
                     color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(50),
+                    borderRadius: 50.radius(),
                   ),
                   child: Center(
                     child: Text(
                       hijri != null
                           ? '${hijri.day} ${hijri.month}, ${hijri.year}'
                           : '...',
-                      style: const TextStyle(color: Colors.white),
+                      style: AppText.b3 + AppColors.white,
                     ),
                   ),
                 ),
@@ -146,25 +146,36 @@ class TopCard extends StatelessWidget {
               ),
               Positioned(
                 top: 200,
-                child: Text(state.currentPrayer, style: AppText.b2),
+                child: Text(
+                  state.currentPrayer,
+                  style: AppText.h1 + AppColors.white + FontWeight.bold,
+                ),
               ),
               Positioned(
                 top: 240,
                 child: Text(
                   AppUtils.convertTo12Hour(currentTimeStr),
-                  style: AppText.b2,
+                  style: AppText.h1 + AppColors.white,
                 ),
               ),
               Positioned(
-                bottom: 200,
-                child: Text(timeLeftStr, style: AppText.b2),
+                top: 290,
+                child: Text.rich(
+                  TextSpan(
+                    text: 'Ends in ',
+                    style: AppText.b2 + AppColors.white,
+                    children: [
+                      TextSpan(
+                        text: timeLeftStr,
+                        style: AppText.b2 + AppColors.primary,
+                      ),
+                    ],
+                  ),
+                ),
               ),
+              Positioned(top: 320, child: AddressCard(address: state.address)),
               Positioned(
-                bottom: 160,
-                child: AddressCard(address: state.address),
-              ),
-              Positioned(
-                bottom: 60,
+                top: 360,
                 left: 20,
                 right: 20,
                 child: TimeContainer(timings: timings),

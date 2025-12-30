@@ -5,9 +5,9 @@ import 'package:deen/core/configs/configs.dart';
 import 'package:deen/core/constants/prayer_time.dart';
 import 'package:deen/core/models/ayah.dart';
 import 'package:deen/core/models/prayer_timings.dart';
+import 'package:deen/core/router/routes.dart';
 import 'package:deen/core/utils/app_utils.dart';
 import 'package:deen/core/utils/static_assets.dart';
-import 'package:deen/features/quran/presentation/quran_screen.dart';
 import 'package:deen/widgets/address_card.dart';
 import 'package:deen/widgets/skeleton.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +48,7 @@ class HomeScreen extends StatelessWidget {
         verseRepository: VerseOfTheDayRepository(),
         reflectionRepository: ReflectionRepository(),
       )..add(LoadHomeData()),
-      child: const Scaffold(body: QuranScreen()),
+      child: const Scaffold(body: HomeBody()),
     );
   }
 }
