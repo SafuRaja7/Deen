@@ -9,7 +9,7 @@ class TopBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: Space.a.t20 + Space.h.t20,
+      padding: Space.h.t30 + Space.v.t30,
       decoration: BoxDecoration(
         color: AppColors.background,
         boxShadow: [
@@ -32,8 +32,8 @@ class TopBar extends StatelessWidget {
             ),
           ),
           Image.asset(image, height: 10.un()),
-          Space.x.t15,
-          Text(title, style: AppText.b1.copyWith(fontWeight: FontWeight.bold)),
+          Space.x.t20,
+          Text(title, style: AppText.h3.copyWith(fontWeight: FontWeight.bold)),
         ],
       ),
     );
