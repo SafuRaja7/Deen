@@ -37,26 +37,28 @@ class SurahCard extends StatelessWidget {
               ),
             ),
             Space.x.t20,
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  surah.englishName,
-                  style: AppText.b1.copyWith(
-                    color: AppColors.black,
-                    fontWeight: FontWeight.bold,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    surah.englishName,
+                    style: AppText.b1.copyWith(
+                      color: AppColors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                Text(
-                  surah.englishNameTranslation,
-                  style: AppText.b2.copyWith(
-                    color: AppColors.textSub,
-                    fontWeight: FontWeight.w500,
+                  Text(
+                    surah.englishNameTranslation,
+                    style: AppText.b2.copyWith(
+                      color: AppColors.textSub,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            const Spacer(),
+            Space.x.t20,
             Text(
               surah.name,
               style: AppText.b1.copyWith(

@@ -10,6 +10,7 @@ class ParaCard extends StatelessWidget {
       padding: Space.a.t20,
       decoration: AppProps.card,
       child: Row(
+        mainAxisAlignment: .spaceBetween,
         children: [
           Container(
             padding: Space.a.t20,
@@ -25,26 +26,15 @@ class ParaCard extends StatelessWidget {
             ),
           ),
           Space.x.t20,
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                para['englishText'],
-                style: AppText.b1.copyWith(
-                  color: AppColors.black,
-                  fontWeight: FontWeight.bold,
-                ),
+          Expanded(
+            child: Text(
+              para['englishText'],
+              style: AppText.b1.copyWith(
+                color: AppColors.black,
+                fontWeight: FontWeight.bold,
               ),
-              Text(
-                para['englishTranslation'],
-                style: AppText.b2.copyWith(
-                  color: AppColors.textSub,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
+            ),
           ),
-          const Spacer(),
           Text(
             para['arabicText'],
             style: AppText.b1.copyWith(
