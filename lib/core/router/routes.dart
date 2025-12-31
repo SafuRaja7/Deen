@@ -4,7 +4,4 @@ abstract class AppRoutes {
   static const prayerTimings = '/prayer-timings';
   static const quran = '/quran';
   static const surahDetails = '/surah-details';
-
-  static const qiblaDirectionScreen = '/qibla-direction-screen';
-
 }

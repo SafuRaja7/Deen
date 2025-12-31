@@ -93,7 +93,7 @@ class TopCard extends StatelessWidget {
                 ),
               ),
               const Positioned(
-                top: 115,
+                top: 80,
                 right: 100,
                 left: 50,
                 child: Image(
@@ -102,7 +102,7 @@ class TopCard extends StatelessWidget {
                 ),
               ),
               const Positioned(
-                top: 130,
+                top: 100,
                 right: 90,
                 left: 40,
                 child: Image(
@@ -118,7 +118,7 @@ class TopCard extends StatelessWidget {
                 ),
               ),
               Positioned(
-                top: 75,
+                top: 40,
                 child: Container(
                   padding:
                       const EdgeInsets.all(5) +
@@ -138,28 +138,28 @@ class TopCard extends StatelessWidget {
                 ),
               ),
               Positioned(
-                top: 130,
+                top: 90,
                 child: Image(
                   image: AssetImage(currentPrayerEnum.img),
                   height: 70,
                 ),
               ),
               Positioned(
-                top: 200,
+                top: 160,
                 child: Text(
                   state.currentPrayer,
                   style: AppText.h1 + AppColors.white + FontWeight.bold,
                 ),
               ),
               Positioned(
-                top: 240,
+                top: 200,
                 child: Text(
                   AppUtils.convertTo12Hour(currentTimeStr),
                   style: AppText.h1 + AppColors.white,
                 ),
               ),
               Positioned(
-                top: 290,
+                top: 240,
                 child: Text.rich(
                   TextSpan(
                     text: 'Ends in ',
@@ -173,9 +173,9 @@ class TopCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(top: 320, child: AddressCard(address: state.address)),
+              Positioned(top: 270, child: AddressCard(address: state.address)),
               Positioned(
-                top: 360,
+                top: 310,
                 left: 20,
                 right: 20,
                 child: TimeContainer(timings: timings),
