@@ -93,7 +93,7 @@ class AppUtils {
     {
       'title': 'Qibla',
       'image': StaticAssets.qibla,
-      "onTap": AppRoutes.onboarding,
+      "onTap": AppRoutes.qiblaDirectionScreen,
     },
     {'title': 'Quran', 'image': StaticAssets.logo, "onTap": AppRoutes.quran},
     {'title': 'Dua', 'image': StaticAssets.dua, "onTap": AppRoutes.onboarding},

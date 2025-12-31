@@ -49,6 +49,7 @@ dependencies:
   audio_waveforms: ^2.0.1
   path_provider: ^2.1.5
   flutter_native_splash: ^2.4.4
+  flutter_compass: ^0.8.1
 
 dev_dependencies:
   flutter_test:
