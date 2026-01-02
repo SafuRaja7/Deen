@@ -12,13 +12,18 @@ class ParaCard extends StatelessWidget {
           context,
           AppRoutes.paraDetailsScreen,
           arguments: para['number'],
-        );
+        ).then((_) {
+          // Refresh Quran dashboard data when returning from a Para
+          if (context.mounted) {
+            context.read<QuranBloc>().add(LoadQuranData());
+          }
+        });
       },
       child: Container(
         padding: Space.a.t20,
         decoration: AppProps.card,
         child: Row(
-          mainAxisAlignment: .spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
               padding: Space.a.t20,

@@ -125,6 +125,29 @@ class SurahDetailsBloc extends Bloc<SurahDetailsEvent, SurahDetailsState> {
     Emitter<SurahDetailsState> emit,
   ) async {
     try {
+      // 1. Immediately save 'Last Played' metadata before any network/loading happens.
+      // This ensures if the user hits back while it's still loading, the card is updated.
+      if (state.surahDetail != null) {
+        int? resolvedNumberInSurah = event.numberInSurah;
+
+        // If numberInSurah isn't in the event, try to find it in the current loaded ayahs
+        if (resolvedNumberInSurah == null) {
+          final matchedAyah = state.surahDetail!.ayahs
+              .where((a) => a.number == event.ayahNumber)
+              .firstOrNull;
+          resolvedNumberInSurah = matchedAyah?.numberInSurah;
+        }
+
+        if (resolvedNumberInSurah != null) {
+          await _repository.saveLastPlayed(
+            surahNumber: state.surahDetail!.number,
+            surahName: state.surahDetail!.englishName,
+            ayahNumberInSurah: resolvedNumberInSurah,
+            globalAyahNumber: event.ayahNumber,
+          );
+        }
+      }
+
       await _audioPlayer.stop();
 
       emit(
@@ -161,16 +184,6 @@ class SurahDetailsBloc extends Bloc<SurahDetailsEvent, SurahDetailsState> {
           numberInSurah: numberInSurah,
         ),
       );
-
-      // Save Last Played
-      if (state.surahDetail != null && numberInSurah != null) {
-        await _repository.saveLastPlayed(
-          surahNumber: state.surahDetail!.number,
-          surahName: state.surahDetail!.englishName,
-          ayahNumberInSurah: numberInSurah,
-          globalAyahNumber: event.ayahNumber,
-        );
-      }
     } catch (e) {
       emit(state.copyWith(isAudioLoading: false));
     }
@@ -219,7 +232,12 @@ class SurahDetailsBloc extends Bloc<SurahDetailsEvent, SurahDetailsState> {
       );
 
       if (event.initialAyahNumber != null) {
-        add(PlayAyahAudio(event.initialAyahNumber!));
+        add(
+          PlayAyahAudio(
+            event.initialAyahNumber!,
+            numberInSurah: event.initialAyahNumberInSurah,
+          ),
+        );
       }
     } catch (e) {
       emit(

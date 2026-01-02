@@ -48,8 +48,28 @@ class QuranBody extends StatelessWidget {
                           flex: 1,
                           child: PrevRecordCard(
                             title: "Last Read",
-                            subtitle: "Al Bakarah 117",
-                            onTap: () {},
+                            subtitle: state.lastReadSurahName != null
+                                ? '${state.lastReadSurahName} ${state.lastReadAyahNumber}'
+                                : "None",
+                            onTap: () {
+                              if (state.lastReadSurahNumber != null) {
+                                Navigator.pushNamed(
+                                  context,
+                                  AppRoutes.surahDetails,
+                                  arguments: {
+                                    'surahNumber': state.lastReadSurahNumber,
+                                    'initialAyahNumberInSurah':
+                                        state.lastReadAyahNumber,
+                                  },
+                                ).then((_) {
+                                  if (context.mounted) {
+                                    context.read<QuranBloc>().add(
+                                      LoadQuranData(),
+                                    );
+                                  }
+                                });
+                              }
+                            },
                           ),
                         ),
                         Flexible(

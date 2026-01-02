@@ -221,7 +221,11 @@ class _SurahDetailsBodyState extends State<SurahDetailsBody> {
                                               context
                                                   .read<SurahDetailsBloc>()
                                                   .add(
-                                                    PlayAyahAudio(ayah.number),
+                                                    PlayAyahAudio(
+                                                      ayah.number,
+                                                      numberInSurah:
+                                                          ayah.numberInSurah,
+                                                    ),
                                                   );
                                             }
                                           }

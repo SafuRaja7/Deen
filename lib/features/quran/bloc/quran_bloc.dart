@@ -22,11 +22,12 @@ class QuranBloc extends Bloc<QuranEvent, QuranState> {
     LoadQuranData event,
     Emitter<QuranState> emit,
   ) async {
-    emit(state.copyWith(status: QuranStatus.loading));
     try {
       final prefs = await SharedPreferences.getInstance();
+      // Force reload to get the latest data from Ayah audio sessions
+      await prefs.reload();
 
-      // Load last played
+      // Stage 1: Load metadata immediately from SharedPreferences
       final lastPlayedSurahName = prefs.getString('cached_surah_name');
       final lastPlayedSurahNumber = prefs.getInt('cached_surah_number');
       final lastPlayedAyahNumber = prefs.getInt('cached_ayah_number');
@@ -34,17 +35,14 @@ class QuranBloc extends Bloc<QuranEvent, QuranState> {
         'cached_global_ayah_number',
       );
 
-      // Load last read
       final lastReadSurahName = prefs.getString('last_read_surah_name');
       final lastReadAyahNumber = prefs.getInt('last_read_ayah_number');
       final lastReadSurahNumber = prefs.getInt('last_read_surah_number');
 
-      final surahs = await _quranRepository.fetchSurahs();
-
+      // Stage 2: Emit the metadata instantly.
+      // This ensures the cards update AS SOON AS the user returns to the screen.
       emit(
         state.copyWith(
-          status: QuranStatus.success,
-          surahs: surahs,
           lastPlayedSurahName: lastPlayedSurahName,
           lastPlayedSurahNumber: lastPlayedSurahNumber,
           lastPlayedAyahNumber: lastPlayedAyahNumber,
@@ -54,6 +52,16 @@ class QuranBloc extends Bloc<QuranEvent, QuranState> {
           lastReadAyahNumber: lastReadAyahNumber,
         ),
       );
+
+      // Stage 3: Fetch the full Surah list only if it's missing or if we want to confirm status
+      if (state.surahs.isEmpty) {
+        emit(state.copyWith(status: QuranStatus.loading));
+        final surahs = await _quranRepository.fetchSurahs();
+        emit(state.copyWith(status: QuranStatus.success, surahs: surahs));
+      } else {
+        // We already have surahs, but we emit success to finish the cycle
+        emit(state.copyWith(status: QuranStatus.success));
+      }
     } catch (e) {
       emit(state.copyWith(status: QuranStatus.failure, error: e.toString()));
     }
