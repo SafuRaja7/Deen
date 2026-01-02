@@ -1,69 +1,49 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:deen/core/models/ayah.dart';
+import 'package:deen/core/services/quran_data_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SurahDetailsRepository {
   static const String _baseUrl = 'https://api.alquran.cloud/v1';
+  final QuranDataService _dataService = QuranDataService();
 
   Future<SurahDetail> fetchSurahDetail(
     int number, {
     int offset = 0,
     int limit = 5,
   }) async {
-    final prefs = await SharedPreferences.getInstance();
-    final cacheKey = 'surah_detail_${number}_${offset}_$limit';
+    // Pull directly from the pre-loaded full Quran data service
+    final surah = await _dataService.getSurah(number);
+    if (surah == null) throw Exception('Surah $number not found in local data');
 
-    // Try to get from cache first
-    final cachedData = prefs.getString(cacheKey);
-    if (cachedData != null) {
-      try {
-        final decoded = json.decode(cachedData);
-        return SurahDetail.fromJson(decoded);
-      } catch (e) {
-        // Fallback
-      }
-    }
+    // Return the specific slice requested by the Bloc's pagination logic
+    final end = (offset + limit) > surah.ayahs.length
+        ? surah.ayahs.length
+        : (offset + limit);
+    final slicedAyahs = surah.ayahs.sublist(offset, end);
 
-    try {
-      final response = await http.get(
-        Uri.parse(
-          '$_baseUrl/surah/$number/editions/quran-uthmani,en.asad?offset=$offset&limit=$limit',
-        ),
-      );
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = json.decode(response.body);
-        final surahData = data['data'];
-
-        // Cache the result
-        await prefs.setString(cacheKey, json.encode(surahData));
-
-        return SurahDetail.fromJson(surahData);
-      } else {
-        throw Exception('Failed to load surah details');
-      }
-    } catch (e) {
-      if (cachedData != null) {
-        final decoded = json.decode(cachedData);
-        return SurahDetail.fromJson(decoded);
-      }
-      rethrow;
-    }
+    return SurahDetail(
+      number: surah.number,
+      name: surah.name,
+      englishName: surah.englishName,
+      englishNameTranslation: surah.englishNameTranslation,
+      revelationType: surah.revelationType,
+      numberOfAyahs: surah.numberOfAyahs,
+      ayahs: slicedAyahs,
+    );
   }
 
   Future<Map<String, dynamic>> fetchAyahAudio(int ayahNumber) async {
     final prefs = await SharedPreferences.getInstance();
     final cacheKey = 'ayah_audio_info_$ayahNumber';
 
-    // Try cache for metadata
     final cachedInfo = prefs.getString(cacheKey);
     if (cachedInfo != null) {
       try {
         final info = json.decode(cachedInfo);
-        // Check if local file exists
         if (info['localPath'] != null) {
           final file = File(info['localPath']);
           if (await file.exists()) {
@@ -82,13 +62,10 @@ class SurahDetailsRepository {
       final ayahData = data['data'];
       final audioUrl = ayahData['audio'];
 
-      // Download audio for offline use
       String? localPath;
       try {
         localPath = await _downloadAudio(audioUrl, ayahNumber);
-      } catch (e) {
-        // Continue with remote URL if download fails
-      }
+      } catch (e) {}
 
       final info = {
         'audio': audioUrl,
@@ -126,9 +103,31 @@ class SurahDetailsRepository {
         await file.writeAsBytes(response.bodyBytes);
         return filePath;
       }
-    } catch (e) {
-      // Log or handle error
-    }
+    } catch (e) {}
     return null;
+  }
+
+  Future<void> saveLastRead({
+    required int surahNumber,
+    required String surahName,
+    required int ayahNumber,
+  }) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('last_read_surah_number', surahNumber);
+    await prefs.setString('last_read_surah_name', surahName);
+    await prefs.setInt('last_read_ayah_number', ayahNumber);
+  }
+
+  Future<void> saveLastPlayed({
+    required int surahNumber,
+    required String surahName,
+    required int ayahNumberInSurah,
+    required int globalAyahNumber,
+  }) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('cached_surah_number', surahNumber);
+    await prefs.setString('cached_surah_name', surahName);
+    await prefs.setInt('cached_ayah_number', ayahNumberInSurah);
+    await prefs.setInt('cached_global_ayah_number', globalAyahNumber);
   }
 }

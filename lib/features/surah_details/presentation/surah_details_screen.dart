@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:deen/core/configs/configs.dart';
-import 'package:deen/core/router/routes.dart';
 import 'package:deen/core/utils/app_utils.dart';
 import 'package:deen/core/utils/static_assets.dart';
 import 'package:flutter/material.dart';
@@ -11,11 +10,9 @@ import 'package:deen/widgets/skeleton.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:shimmer/shimmer.dart';
 
-import 'package:deen/core/models/ayah.dart';
 import 'package:deen/features/surah_details/bloc/surah_details_bloc.dart';
 import 'package:deen/features/surah_details/bloc/surah_details_event.dart';
 import 'package:deen/features/surah_details/bloc/surah_details_state.dart';
-import 'package:deen/features/surah_details/data/surah_details_repository.dart';
 
 part 'widgets/custom_top_bar.dart';
 part 'widgets/surah_details_body.dart';

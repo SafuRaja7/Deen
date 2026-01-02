@@ -1,9 +1,7 @@
 import 'dart:ui';
 import 'package:deen/core/configs/configs.dart';
 import 'package:deen/core/constants/prayer_time.dart';
-import 'package:deen/core/models/ayah.dart';
 import 'package:deen/core/models/prayer_timings.dart';
-import 'package:deen/core/models/location_data.dart';
 import 'package:deen/core/router/routes.dart';
 import 'package:deen/core/utils/app_utils.dart';
 import 'package:deen/core/utils/static_assets.dart';

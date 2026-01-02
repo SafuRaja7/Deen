@@ -1,45 +1,23 @@
-import 'dart:convert';
 import 'package:deen/core/models/ayah.dart';
-import 'package:http/http.dart' as http;
+import 'package:deen/core/services/quran_data_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ParaRepository {
-  static final Map<int, List<AyahDetail>> _cache = {};
+  final QuranDataService _dataService = QuranDataService();
 
   Future<List<AyahDetail>> fetchPara(int paraNumber) async {
-    if (_cache.containsKey(paraNumber)) {
-      return _cache[paraNumber]!;
-    }
+    // Get Juz ayahs directly from the locally cached full Quran data service
+    return await _dataService.getJuzAyahs(paraNumber);
+  }
 
-    final url = Uri.parse('http://api.alquran.cloud/v1/quran/quran-uthmani');
-    final response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      final surahs = data['data']['surahs'] as List;
-
-      List<AyahDetail> allAyahs = [];
-      for (var surah in surahs) {
-        final ayahs = surah['ayahs'] as List;
-        for (var ayah in ayahs) {
-          if (ayah['juz'] == paraNumber) {
-            allAyahs.add(
-              AyahDetail(
-                number: ayah['number'],
-                text: ayah['text'],
-                translation: "", // This API doesn't provide translations
-                numberInSurah: ayah['numberInSurah'],
-                juz: ayah['juz'],
-                page: ayah['page'],
-              ),
-            );
-          }
-        }
-      }
-
-      _cache[paraNumber] = allAyahs;
-      return allAyahs;
-    } else {
-      throw Exception('Failed to fetch data');
-    }
+  Future<void> saveLastRead({
+    required int surahNumber,
+    required String surahName,
+    required int ayahNumber,
+  }) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('last_read_surah_number', surahNumber);
+    await prefs.setString('last_read_surah_name', surahName);
+    await prefs.setInt('last_read_ayah_number', ayahNumber);
   }
 }

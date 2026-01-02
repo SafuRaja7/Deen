@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:deen/core/models/ayah.dart';
 import 'package:deen/core/models/location_data.dart';
 import 'package:deen/core/models/prayer_timings.dart';
+import 'package:deen/core/services/quran_data_service.dart';
 import 'package:deen/core/utils/app_utils.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -252,6 +253,8 @@ class HomeRepository {
       await fetchPrayerTimings(address);
       await getVerseOfTheDay();
       await getReflectionOfTheDay();
+      // Pre-fetch and cache the entire Quran data layer
+      await QuranDataService().initializeData();
     } catch (e) {
       // Silently fail pre-fetch
     }

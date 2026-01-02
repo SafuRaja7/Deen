@@ -117,6 +117,9 @@ class SurahDetail {
             translation: englishAyahs[i]['text'],
             numberInSurah: arabicAyahs[i]['numberInSurah'],
             juz: arabicAyahs[i]['juz'],
+            page: arabicAyahs[i]['page'],
+            surahName: arabicSurah['englishName'],
+            surahNumber: arabicSurah['number'],
           ),
         );
       }
@@ -168,6 +171,8 @@ class AyahDetail {
   final int? page;
   final String? audio;
   final String? audioSecondary;
+  final String? surahName;
+  final int? surahNumber;
 
   AyahDetail({
     required this.number,
@@ -178,6 +183,8 @@ class AyahDetail {
     this.page,
     this.audio,
     this.audioSecondary,
+    this.surahName,
+    this.surahNumber,
   });
 
   factory AyahDetail.fromJson(Map<String, dynamic> json) {
@@ -190,6 +197,8 @@ class AyahDetail {
       page: json['page'],
       audio: json['audio'],
       audioSecondary: json['audioSecondary'],
+      surahName: json['surahName'],
+      surahNumber: json['surahNumber'],
     );
   }
 
@@ -203,6 +212,8 @@ class AyahDetail {
       'page': page,
       'audio': audio,
       'audioSecondary': audioSecondary,
+      'surahName': surahName,
+      'surahNumber': surahNumber,
     };
   }
 }

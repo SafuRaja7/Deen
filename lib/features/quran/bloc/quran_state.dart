@@ -12,6 +12,9 @@ class QuranState extends Equatable {
   final int? lastPlayedSurahNumber;
   final int? lastPlayedAyahNumber;
   final int? lastPlayedGlobalAyahNumber;
+  final String? lastReadSurahName;
+  final int? lastReadSurahNumber;
+  final int? lastReadAyahNumber;
 
   const QuranState({
     this.status = QuranStatus.initial,
@@ -22,6 +25,9 @@ class QuranState extends Equatable {
     this.lastPlayedSurahNumber,
     this.lastPlayedAyahNumber,
     this.lastPlayedGlobalAyahNumber,
+    this.lastReadSurahName,
+    this.lastReadSurahNumber,
+    this.lastReadAyahNumber,
   });
 
   QuranState copyWith({
@@ -33,6 +39,9 @@ class QuranState extends Equatable {
     int? lastPlayedSurahNumber,
     int? lastPlayedAyahNumber,
     int? lastPlayedGlobalAyahNumber,
+    String? lastReadSurahName,
+    int? lastReadSurahNumber,
+    int? lastReadAyahNumber,
   }) {
     return QuranState(
       status: status ?? this.status,
@@ -45,6 +54,9 @@ class QuranState extends Equatable {
       lastPlayedAyahNumber: lastPlayedAyahNumber ?? this.lastPlayedAyahNumber,
       lastPlayedGlobalAyahNumber:
           lastPlayedGlobalAyahNumber ?? this.lastPlayedGlobalAyahNumber,
+      lastReadSurahName: lastReadSurahName ?? this.lastReadSurahName,
+      lastReadSurahNumber: lastReadSurahNumber ?? this.lastReadSurahNumber,
+      lastReadAyahNumber: lastReadAyahNumber ?? this.lastReadAyahNumber,
     );
   }
 
@@ -58,5 +70,8 @@ class QuranState extends Equatable {
     lastPlayedSurahNumber,
     lastPlayedAyahNumber,
     lastPlayedGlobalAyahNumber,
+    lastReadSurahName,
+    lastReadSurahNumber,
+    lastReadAyahNumber,
   ];
 }

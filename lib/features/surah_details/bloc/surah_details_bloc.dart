@@ -152,13 +152,25 @@ class SurahDetailsBloc extends Bloc<SurahDetailsEvent, SurahDetailsState> {
 
       await _audioPlayer.play();
 
+      final numberInSurah = event.numberInSurah ?? audioInfo['numberInSurah'];
+
       emit(
         state.copyWith(
           audioFilePath: localPath,
           isAudioLoading: false,
-          numberInSurah: event.numberInSurah ?? audioInfo['numberInSurah'],
+          numberInSurah: numberInSurah,
         ),
       );
+
+      // Save Last Played
+      if (state.surahDetail != null && numberInSurah != null) {
+        await _repository.saveLastPlayed(
+          surahNumber: state.surahDetail!.number,
+          surahName: state.surahDetail!.englishName,
+          ayahNumberInSurah: numberInSurah,
+          globalAyahNumber: event.ayahNumber,
+        );
+      }
     } catch (e) {
       emit(state.copyWith(isAudioLoading: false));
     }
@@ -197,6 +209,13 @@ class SurahDetailsBloc extends Bloc<SurahDetailsEvent, SurahDetailsState> {
           surahDetail: surahDetail,
           hasMore: surahDetail.ayahs.length == loadLimit,
         ),
+      );
+
+      // Save Last Read
+      await _repository.saveLastRead(
+        surahNumber: surahDetail.number,
+        surahName: surahDetail.englishName,
+        ayahNumber: event.initialAyahNumberInSurah ?? 1,
       );
 
       if (event.initialAyahNumber != null) {
