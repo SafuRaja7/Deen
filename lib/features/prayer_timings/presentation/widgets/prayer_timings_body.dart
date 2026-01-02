@@ -6,7 +6,6 @@ class PrayerTimingsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    App.init(context);
     return BlocBuilder<PrayerTimingsBloc, PrayerTimingsState>(
       builder: (context, state) {
         return SingleChildScrollView(

@@ -22,7 +22,6 @@ class PrayerTimingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    App.init(context);
     final now = DateTime.now();
     final args =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
@@ -40,11 +39,16 @@ class PrayerTimingsScreen extends StatelessWidget {
               year: now.year,
             ),
           ),
-      child: Scaffold(
-        backgroundColor: AppColors.background,
-        body: SafeArea(
-          child: PrayerTimingsBody(timings: args['initialTimings']),
-        ),
+      child: Builder(
+        builder: (context) {
+          App.init(context);
+          return Scaffold(
+            backgroundColor: AppColors.background,
+            body: SafeArea(
+              child: PrayerTimingsBody(timings: args['initialTimings']),
+            ),
+          );
+        },
       ),
     );
   }
