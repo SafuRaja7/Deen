@@ -33,11 +33,19 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    App.init(context);
-    return BlocProvider(
-      create: (context) =>
-          HomeBloc(homeRepository: HomeRepository())..add(LoadHomeData()),
-      child: const Scaffold(body: HomeBody()),
+    return RepositoryProvider(
+      create: (context) => HomeRepository(),
+      child: Builder(
+        builder: (context) {
+          App.init(context);
+          return BlocProvider(
+            create: (context) =>
+                HomeBloc(homeRepository: context.read<HomeRepository>())
+                  ..add(LoadHomeData()),
+            child: const Scaffold(body: HomeBody()),
+          );
+        },
+      ),
     );
   }
 }

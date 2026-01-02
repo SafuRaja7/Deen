@@ -12,10 +12,14 @@ class OnboardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    App.init(context);
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(child: const OnboardingBody()),
+    return Builder(
+      builder: (context) {
+        App.init(context);
+        return Scaffold(
+          backgroundColor: AppColors.background,
+          body: SafeArea(child: const OnboardingBody()),
+        );
+      },
     );
   }
 }

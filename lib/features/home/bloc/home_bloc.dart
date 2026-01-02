@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:deen/features/home/data/home_repository.dart';
+import 'package:deen/features/home/bloc/home_event.dart';
+import 'package:deen/features/home/bloc/home_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'home_event.dart';
-import 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final HomeRepository _homeRepository;
@@ -33,9 +33,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       );
 
       if (entry != null && entry.timings.isNotEmpty) {
-        // We have cached timings for this location
         final timings = entry.timings.last;
-        // Also try to get cached verse and reflection
         final verse = await _homeRepository.getVerseOfTheDay();
         final reflection = await _homeRepository.getReflectionOfTheDay();
 
@@ -59,12 +57,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             final freshTimings = await _homeRepository.fetchPrayerTimings(
               freshAddress,
             );
-            emit(state.copyWith(address: freshAddress, timings: freshTimings));
-            add(UpdatePrayerTimer());
+            if (!isClosed) {
+              emit(
+                state.copyWith(address: freshAddress, timings: freshTimings),
+              );
+              add(UpdatePrayerTimer());
+            }
           }
-        } catch (_) {
-          // Stay with cache if refresh fails
-        }
+        } catch (_) {}
       } else {
         // No cache, force fetch
         final address = await _homeRepository.getCurrentAddress();
@@ -72,21 +72,22 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         final verse = await _homeRepository.getVerseOfTheDay();
         final reflection = await _homeRepository.getReflectionOfTheDay();
 
-        emit(
-          state.copyWith(
-            status: HomeStatus.success,
-            address: address,
-            timings: timings,
-            verseOfTheDay: verse,
-            reflectionOfTheDay: reflection,
-          ),
-        );
-
-        _startTimer();
-        add(UpdatePrayerTimer());
+        if (!isClosed) {
+          emit(
+            state.copyWith(
+              status: HomeStatus.success,
+              address: address,
+              timings: timings,
+              verseOfTheDay: verse,
+              reflectionOfTheDay: reflection,
+            ),
+          );
+          _startTimer();
+          add(UpdatePrayerTimer());
+        }
       }
     } catch (e) {
-      if (state.status != HomeStatus.success) {
+      if (!isClosed && state.status != HomeStatus.success) {
         emit(state.copyWith(status: HomeStatus.failure, error: e.toString()));
       }
     }
@@ -106,37 +107,43 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       final timeStr = state.timings!.timings[keys[i]];
       if (timeStr == null) continue;
 
-      final time = format.parse(timeStr);
-      final dateTime = DateTime(
-        now.year,
-        now.month,
-        now.day,
-        time.hour,
-        time.minute,
-      );
+      try {
+        final time = format.parse(timeStr);
+        final dateTime = DateTime(
+          now.year,
+          now.month,
+          now.day,
+          time.hour,
+          time.minute,
+        );
 
-      if (now.isBefore(dateTime)) {
-        nextTime = dateTime;
-        if (i > 0) {
-          current = keys[i - 1];
-        } else {
-          current = "Isha";
+        if (now.isBefore(dateTime)) {
+          nextTime = dateTime;
+          if (i > 0) {
+            current = keys[i - 1];
+          } else {
+            current = "Isha";
+          }
+          break;
         }
-        break;
-      }
+      } catch (_) {}
     }
 
     if (nextTime == null) {
-      final fajrStr = state.timings!.timings['Fajr']!;
-      final time = format.parse(fajrStr);
-      nextTime = DateTime(
-        now.year,
-        now.month,
-        now.day + 1,
-        time.hour,
-        time.minute,
-      );
-      current = "Isha";
+      try {
+        final fajrStr = state.timings!.timings['Fajr']!;
+        final time = format.parse(fajrStr);
+        nextTime = DateTime(
+          now.year,
+          now.month,
+          now.day + 1,
+          time.hour,
+          time.minute,
+        );
+        current = "Isha";
+      } catch (_) {
+        nextTime = now.add(const Duration(hours: 1));
+      }
     }
 
     emit(
@@ -150,7 +157,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   void _startTimer() {
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      add(UpdatePrayerTimer());
+      if (!isClosed) {
+        add(UpdatePrayerTimer());
+      } else {
+        timer.cancel();
+      }
     });
   }
 

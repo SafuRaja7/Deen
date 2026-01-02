@@ -14,9 +14,11 @@ void main() async {
 
   runApp(DeenApp(isFirstRun: isFirstRun));
 
-  // Remove splash after a short delay to allow UI to build
-  Future.delayed(const Duration(seconds: 1), () {
-    FlutterNativeSplash.remove();
+  // Remove splash after the app has had a chance to build its first frame
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    Future.delayed(const Duration(milliseconds: 500), () {
+      FlutterNativeSplash.remove();
+    });
   });
 }
 

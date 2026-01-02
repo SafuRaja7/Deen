@@ -88,11 +88,11 @@ class HomeRepository {
       }
     } catch (_) {
       final history = await getLocationHistory();
-      final entry = history.firstWhere(
+      final entry = history.cast<dynamic>().firstWhere(
         (e) => e.location == address,
-        orElse: () => throw Exception("No cached timings found for $address"),
+        orElse: () => null,
       );
-      if (entry.timings.isNotEmpty) {
+      if (entry != null && entry.timings.isNotEmpty) {
         return entry.timings.last;
       }
     }
