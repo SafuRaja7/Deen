@@ -13,17 +13,38 @@ class Ayah {
     required this.numberInSurah,
   });
 
-  factory Ayah.fromJson(List<dynamic> data) {
-    final arabicData = data[0];
-    final englishData = data[1];
+  factory Ayah.fromJson(dynamic data) {
+    if (data is List) {
+      final arabicData = data[0];
+      final englishData = data[1];
 
-    return Ayah(
-      number: arabicData['number'],
-      arabicText: arabicData['text'],
-      englishTranslation: englishData['text'],
-      surah: SurahInfo.fromJson(arabicData['surah']),
-      numberInSurah: arabicData['numberInSurah'],
-    );
+      return Ayah(
+        number: arabicData['number'],
+        arabicText: arabicData['text'],
+        englishTranslation: englishData['text'],
+        surah: SurahInfo.fromJson(arabicData['surah']),
+        numberInSurah: arabicData['numberInSurah'],
+      );
+    } else {
+      // From cache (Map)
+      return Ayah(
+        number: data['number'],
+        arabicText: data['arabicText'],
+        englishTranslation: data['englishTranslation'],
+        surah: SurahInfo.fromJson(data['surah']),
+        numberInSurah: data['numberInSurah'],
+      );
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'number': number,
+      'arabicText': arabicText,
+      'englishTranslation': englishTranslation,
+      'surah': surah.toJson(),
+      'numberInSurah': numberInSurah,
+    };
   }
 }
 
@@ -47,6 +68,15 @@ class SurahInfo {
       englishName: json['englishName'],
       englishNameTranslation: json['englishNameTranslation'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'number': number,
+      'name': name,
+      'englishName': englishName,
+      'englishNameTranslation': englishNameTranslation,
+    };
   }
 }
 
@@ -107,6 +137,7 @@ class AyahDetail {
   final String translation;
   final int numberInSurah;
   final int juz;
+  final int? page;
   final String? audio;
   final String? audioSecondary;
 
@@ -116,6 +147,7 @@ class AyahDetail {
     required this.translation,
     required this.numberInSurah,
     required this.juz,
+    this.page,
     this.audio,
     this.audioSecondary,
   });

@@ -1,16 +1,28 @@
 import 'package:deen/core/router/router.dart';
 import 'package:deen/features/home/presentation/home_screen.dart';
+import 'package:deen/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  runApp(const DeenApp());
+
+  final prefs = await SharedPreferences.getInstance();
+  final isFirstRun = prefs.getBool('is_first_run') ?? true;
+
+  runApp(DeenApp(isFirstRun: isFirstRun));
+
+  // Remove splash after a short delay to allow UI to build
+  Future.delayed(const Duration(seconds: 1), () {
+    FlutterNativeSplash.remove();
+  });
 }
 
 class DeenApp extends StatelessWidget {
-  const DeenApp({super.key});
+  final bool isFirstRun;
+  const DeenApp({super.key, required this.isFirstRun});
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +30,8 @@ class DeenApp extends StatelessWidget {
       title: 'Deen',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(useMaterial3: true),
-      home: const HomeScreen(),
-      routes: appRoutes,
+      home: isFirstRun ? const OnboardingScreen() : const HomeScreen(),
+      onGenerateRoute: onGenerateRoutes,
     );
   }
 }

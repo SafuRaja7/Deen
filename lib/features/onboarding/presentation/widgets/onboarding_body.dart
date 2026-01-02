@@ -11,6 +11,13 @@ class _OnboardingBodyState extends State<OnboardingBody> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
+  @override
+  void initState() {
+    super.initState();
+    // Pre-fetch data for home screen in background
+    HomeRepository().preFetchAll();
+  }
+
   final List<OnboardingData> _pages = [
     OnboardingData(
       title: "Your Very Own",
@@ -110,14 +117,18 @@ class _OnboardingBodyState extends State<OnboardingBody> {
                     ? "Get Started"
                     : "Continue",
                 trailingIcon: Icons.arrow_forward_ios,
-                onPressed: () {
+                onPressed: () async {
                   if (_currentPage < _pages.length - 1) {
                     _pageController.nextPage(
                       duration: const Duration(milliseconds: 300),
                       curve: Curves.easeInOut,
                     );
                   } else {
-                    AppRoutes.home.pushAndRemove(context);
+                    final prefs = await SharedPreferences.getInstance();
+                    await prefs.setBool('is_first_run', false);
+                    if (mounted) {
+                      AppRoutes.home.pushAndRemove(context);
+                    }
                   }
                 },
               ),

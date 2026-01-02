@@ -1,8 +1,9 @@
 import 'package:deen/core/configs/configs.dart';
-import 'package:deen/core/router/router.dart';
 import 'package:deen/core/router/routes.dart';
+import 'package:deen/features/home/data/home_repository.dart';
 import 'package:deen/widgets/app_button.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'widgets/onboarding_body.dart';
 

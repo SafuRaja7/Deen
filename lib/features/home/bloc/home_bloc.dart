@@ -1,19 +1,17 @@
-part of '../presentation/home_screen.dart';
+import 'dart:async';
+import 'package:deen/features/home/data/home_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'home_event.dart';
+import 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final PrayerRepository _prayerRepository;
-  final VerseOfTheDayRepository _verseRepository;
-  final ReflectionRepository _reflectionRepository;
+  final HomeRepository _homeRepository;
   Timer? _timer;
 
-  HomeBloc({
-    required PrayerRepository prayerRepository,
-    required VerseOfTheDayRepository verseRepository,
-    required ReflectionRepository reflectionRepository,
-  }) : _prayerRepository = prayerRepository,
-       _verseRepository = verseRepository,
-       _reflectionRepository = reflectionRepository,
-       super(const HomeState()) {
+  HomeBloc({required HomeRepository homeRepository})
+    : _homeRepository = homeRepository,
+      super(const HomeState()) {
     on<LoadHomeData>(_onLoadHomeData);
     on<UpdatePrayerTimer>(_onUpdatePrayerTimer);
   }
@@ -25,35 +23,72 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(state.copyWith(status: HomeStatus.loading));
 
     try {
-      final address = await _prayerRepository.getCurrentAddress();
+      // 1. Try to load from cache first for immediate display
+      final cachedLocation = await _homeRepository.getCachedLocation();
+      final history = await _homeRepository.getLocationHistory();
 
-      // Fetch data in parallel
-      final results = await Future.wait([
-        _prayerRepository.fetchPrayerTimings(address),
-        _verseRepository.getVerseOfTheDay(),
-        _reflectionRepository.getReflectionOfTheDay(),
-      ]);
-
-      final timings = results[0] as dynamic; // PrayerTimings
-      final verse = results[1] as dynamic; // Ayah
-      final reflection = results[2] as dynamic; // Ayah
-
-      emit(
-        state.copyWith(
-          status: HomeStatus.success,
-          address: address,
-          timings: timings,
-          verseOfTheDay: verse,
-          reflectionOfTheDay: reflection,
-        ),
+      final entry = history.cast<dynamic>().firstWhere(
+        (e) => e.location == cachedLocation,
+        orElse: () => null,
       );
 
-      _startTimer();
-      add(UpdatePrayerTimer());
-      FlutterNativeSplash.remove();
+      if (entry != null && entry.timings.isNotEmpty) {
+        // We have cached timings for this location
+        final timings = entry.timings.last;
+        // Also try to get cached verse and reflection
+        final verse = await _homeRepository.getVerseOfTheDay();
+        final reflection = await _homeRepository.getReflectionOfTheDay();
+
+        emit(
+          state.copyWith(
+            status: HomeStatus.success,
+            address: cachedLocation,
+            timings: timings,
+            verseOfTheDay: verse,
+            reflectionOfTheDay: reflection,
+          ),
+        );
+
+        _startTimer();
+        add(UpdatePrayerTimer());
+
+        // Background Refresh: Check if we actually moved
+        try {
+          final freshAddress = await _homeRepository.getCurrentAddress();
+          if (freshAddress != cachedLocation) {
+            final freshTimings = await _homeRepository.fetchPrayerTimings(
+              freshAddress,
+            );
+            emit(state.copyWith(address: freshAddress, timings: freshTimings));
+            add(UpdatePrayerTimer());
+          }
+        } catch (_) {
+          // Stay with cache if refresh fails
+        }
+      } else {
+        // No cache, force fetch
+        final address = await _homeRepository.getCurrentAddress();
+        final timings = await _homeRepository.fetchPrayerTimings(address);
+        final verse = await _homeRepository.getVerseOfTheDay();
+        final reflection = await _homeRepository.getReflectionOfTheDay();
+
+        emit(
+          state.copyWith(
+            status: HomeStatus.success,
+            address: address,
+            timings: timings,
+            verseOfTheDay: verse,
+            reflectionOfTheDay: reflection,
+          ),
+        );
+
+        _startTimer();
+        add(UpdatePrayerTimer());
+      }
     } catch (e) {
-      emit(state.copyWith(status: HomeStatus.failure, error: e.toString()));
-      FlutterNativeSplash.remove();
+      if (state.status != HomeStatus.success) {
+        emit(state.copyWith(status: HomeStatus.failure, error: e.toString()));
+      }
     }
   }
 

@@ -14,10 +14,14 @@ class HijriDate {
   factory HijriDate.fromJson(Map<String, dynamic> json) {
     return HijriDate(
       day: json['day'],
-      month: json['month']['en'],
+      month: json['month'] is Map ? json['month']['en'] : json['month'],
       year: json['year'],
-      full: json['date'],
+      full: json['date'] ?? json['full'] ?? "",
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'day': day, 'month': month, 'year': year, 'full': full};
   }
 }
 
@@ -29,10 +33,16 @@ class PrayerTimings {
 
   factory PrayerTimings.fromJson(Map<String, dynamic> data) {
     final timingsMap = Map<String, String>.from(data['timings']);
-    final hijriMap = data['date']['hijri'];
+    final hijriData = data['date'] != null
+        ? data['date']['hijri']
+        : data['hijri'];
     return PrayerTimings(
       timings: timingsMap,
-      hijri: HijriDate.fromJson(hijriMap),
+      hijri: HijriDate.fromJson(hijriData),
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'timings': timings, 'hijri': hijri.toJson()};
   }
 }
