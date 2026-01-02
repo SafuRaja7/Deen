@@ -1,117 +1,105 @@
-part of '../presentation/surah_details_screen.dart';
+import 'package:deen/core/models/ayah.dart';
+import 'package:equatable/equatable.dart';
 
 enum SurahDetailsStatus { initial, loading, success, failure }
 
 class SurahDetailsState extends Equatable {
-  final int? surahNumber;
-  final SurahDetail? surahDetail;
   final SurahDetailsStatus status;
+  final SurahDetail? surahDetail;
+  final String? error;
   final bool hasMore;
   final bool loadingMore;
-  final String? error;
+  final int? surahNumber;
+
+  // Audio related
   final int? playingAyahNumber;
-  final int? initialAyahNumberInSurah;
+  final int? numberInSurah;
   final bool isPlaying;
+  final bool isAudioLoading;
   final Duration position;
   final Duration duration;
-  final bool isAudioLoading;
-  final bool isDownloading;
   final String? audioFilePath;
-  final int? numberInSurah;
+  final int? initialAyahNumberInSurah;
 
   const SurahDetailsState({
-    this.surahNumber,
-    this.surahDetail,
     this.status = SurahDetailsStatus.initial,
+    this.surahDetail,
+    this.error,
     this.hasMore = true,
     this.loadingMore = false,
-    this.error,
+    this.surahNumber,
     this.playingAyahNumber,
-    this.initialAyahNumberInSurah,
+    this.numberInSurah,
     this.isPlaying = false,
+    this.isAudioLoading = false,
     this.position = Duration.zero,
     this.duration = Duration.zero,
-    this.isAudioLoading = false,
-    this.isDownloading = false,
     this.audioFilePath,
-    this.numberInSurah,
+    this.initialAyahNumberInSurah,
   });
 
-  bool get isAnyLoading => isAudioLoading || isDownloading;
-
   SurahDetailsState copyWith({
-    int? surahNumber,
-    SurahDetail? surahDetail,
     SurahDetailsStatus? status,
+    SurahDetail? surahDetail,
+    String? error,
     bool? hasMore,
     bool? loadingMore,
-    String? error,
+    int? surahNumber,
     int? playingAyahNumber,
-    int? initialAyahNumberInSurah,
+    int? numberInSurah,
     bool? isPlaying,
+    bool? isAudioLoading,
     Duration? position,
     Duration? duration,
-    bool? isAudioLoading,
-    bool? isDownloading,
     String? audioFilePath,
-    int? numberInSurah,
+    int? initialAyahNumberInSurah,
   }) {
     return SurahDetailsState(
-      surahNumber: surahNumber ?? this.surahNumber,
-      surahDetail: surahDetail ?? this.surahDetail,
       status: status ?? this.status,
+      surahDetail: surahDetail ?? this.surahDetail,
+      error: error ?? this.error,
       hasMore: hasMore ?? this.hasMore,
       loadingMore: loadingMore ?? this.loadingMore,
-      error: error ?? this.error,
+      surahNumber: surahNumber ?? this.surahNumber,
       playingAyahNumber: playingAyahNumber ?? this.playingAyahNumber,
-      initialAyahNumberInSurah:
-          initialAyahNumberInSurah ?? this.initialAyahNumberInSurah,
+      numberInSurah: numberInSurah ?? this.numberInSurah,
       isPlaying: isPlaying ?? this.isPlaying,
+      isAudioLoading: isAudioLoading ?? this.isAudioLoading,
       position: position ?? this.position,
       duration: duration ?? this.duration,
-      isAudioLoading: isAudioLoading ?? this.isAudioLoading,
-      isDownloading: isDownloading ?? this.isDownloading,
       audioFilePath: audioFilePath ?? this.audioFilePath,
-      numberInSurah: numberInSurah ?? this.numberInSurah,
+      initialAyahNumberInSurah:
+          initialAyahNumberInSurah ?? this.initialAyahNumberInSurah,
     );
   }
 
   SurahDetailsState clearPlayer() {
-    return SurahDetailsState(
-      surahNumber: surahNumber,
-      surahDetail: surahDetail,
-      status: status,
-      hasMore: hasMore,
-      loadingMore: loadingMore,
-      error: error,
+    return copyWith(
       playingAyahNumber: null,
-      initialAyahNumberInSurah: null,
+      numberInSurah: null,
       isPlaying: false,
+      isAudioLoading: false,
       position: Duration.zero,
       duration: Duration.zero,
-      isAudioLoading: false,
-      isDownloading: false,
       audioFilePath: null,
-      numberInSurah: numberInSurah,
     );
   }
 
   @override
   List<Object?> get props => [
-    surahNumber,
-    surahDetail,
     status,
+    surahDetail,
+    error,
     hasMore,
     loadingMore,
-    error,
+    surahNumber,
     playingAyahNumber,
-    initialAyahNumberInSurah,
+    numberInSurah,
     isPlaying,
+    isAudioLoading,
     position,
     duration,
-    isAudioLoading,
-    isDownloading,
     audioFilePath,
-    numberInSurah,
+    initialAyahNumberInSurah,
   ];
 }

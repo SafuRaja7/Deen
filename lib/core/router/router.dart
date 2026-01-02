@@ -5,7 +5,6 @@ import 'package:deen/features/prayer_timings/presentation/prayer_timings_screen.
 import 'package:flutter/material.dart';
 import 'package:deen/features/para_details_screen/presentation/para_details_screen_screen.dart';
 
-
 import 'package:deen/features/surah_details/presentation/surah_details_screen.dart';
 
 import 'package:deen/features/quran/presentation/quran_screen.dart';
@@ -30,6 +29,16 @@ Route<dynamic>? onGenerateRoutes(RouteSettings settings) {
       return FadeRoute(child: const OnboardingScreen(), settings: settings);
     case AppRoutes.prayerTimings:
       return FadeRoute(child: const PrayerTimingsScreen(), settings: settings);
+
+    case AppRoutes.quran:
+      return FadeRoute(child: const QuranScreen(), settings: settings);
+    case AppRoutes.surahDetails:
+      return FadeRoute(child: const SurahDetailsScreen(), settings: settings);
+    case AppRoutes.paraDetailsScreen:
+      return FadeRoute(
+        child: const ParaDetailsScreenScreen(),
+        settings: settings,
+      );
 
     default:
       return null;

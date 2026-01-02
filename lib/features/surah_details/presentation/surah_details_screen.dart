@@ -1,31 +1,24 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:developer';
-import 'dart:io';
-import 'dart:math' hide log;
 import 'dart:typed_data';
 
-import 'package:path_provider/path_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:deen/core/configs/configs.dart';
-import 'package:deen/core/models/ayah.dart';
+import 'package:deen/core/router/routes.dart';
 import 'package:deen/core/utils/app_utils.dart';
 import 'package:deen/core/utils/static_assets.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
 import 'package:deen/widgets/skeleton.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:shimmer/shimmer.dart';
 
+import 'package:deen/core/models/ayah.dart';
+import 'package:deen/features/surah_details/bloc/surah_details_bloc.dart';
+import 'package:deen/features/surah_details/bloc/surah_details_event.dart';
+import 'package:deen/features/surah_details/bloc/surah_details_state.dart';
+import 'package:deen/features/surah_details/data/surah_details_repository.dart';
+
 part 'widgets/custom_top_bar.dart';
 part 'widgets/surah_details_body.dart';
-part '../data/surah_details_repository.dart';
-part '../bloc/surah_details_bloc.dart';
-part '../bloc/surah_details_event.dart';
-part '../bloc/surah_details_state.dart';
 part 'widgets/surah_details_skeleton.dart';
 part 'widgets/audio_player_sheet.dart';
 

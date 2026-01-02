@@ -99,35 +99,63 @@ class SurahDetail {
     required this.ayahs,
   });
 
-  factory SurahDetail.fromJson(List<dynamic> data) {
-    final arabicSurah = data[0];
-    final englishSurah = data[1];
+  factory SurahDetail.fromJson(dynamic data) {
+    if (data is List) {
+      // From API
+      final arabicSurah = data[0];
+      final englishSurah = data[1];
 
-    final List<dynamic> arabicAyahs = arabicSurah['ayahs'];
-    final List<dynamic> englishAyahs = englishSurah['ayahs'];
+      final List<dynamic> arabicAyahs = arabicSurah['ayahs'];
+      final List<dynamic> englishAyahs = englishSurah['ayahs'];
 
-    final List<AyahDetail> combinedAyahs = [];
-    for (int i = 0; i < arabicAyahs.length; i++) {
-      combinedAyahs.add(
-        AyahDetail(
-          number: arabicAyahs[i]['number'],
-          text: arabicAyahs[i]['text'],
-          translation: englishAyahs[i]['text'],
-          numberInSurah: arabicAyahs[i]['numberInSurah'],
-          juz: arabicAyahs[i]['juz'],
-        ),
+      final List<AyahDetail> combinedAyahs = [];
+      for (int i = 0; i < arabicAyahs.length; i++) {
+        combinedAyahs.add(
+          AyahDetail(
+            number: arabicAyahs[i]['number'],
+            text: arabicAyahs[i]['text'],
+            translation: englishAyahs[i]['text'],
+            numberInSurah: arabicAyahs[i]['numberInSurah'],
+            juz: arabicAyahs[i]['juz'],
+          ),
+        );
+      }
+
+      return SurahDetail(
+        number: arabicSurah['number'],
+        name: arabicSurah['name'],
+        englishName: arabicSurah['englishName'],
+        englishNameTranslation: arabicSurah['englishNameTranslation'],
+        revelationType: arabicSurah['revelationType'],
+        numberOfAyahs: arabicSurah['numberOfAyahs'],
+        ayahs: combinedAyahs,
+      );
+    } else {
+      // From cache (Map)
+      return SurahDetail(
+        number: data['number'],
+        name: data['name'],
+        englishName: data['englishName'],
+        englishNameTranslation: data['englishNameTranslation'],
+        revelationType: data['revelationType'],
+        numberOfAyahs: data['numberOfAyahs'],
+        ayahs: (data['ayahs'] as List)
+            .map((e) => AyahDetail.fromJson(e))
+            .toList(),
       );
     }
+  }
 
-    return SurahDetail(
-      number: arabicSurah['number'],
-      name: arabicSurah['name'],
-      englishName: arabicSurah['englishName'],
-      englishNameTranslation: arabicSurah['englishNameTranslation'],
-      revelationType: arabicSurah['revelationType'],
-      numberOfAyahs: arabicSurah['numberOfAyahs'],
-      ayahs: combinedAyahs,
-    );
+  Map<String, dynamic> toJson() {
+    return {
+      'number': number,
+      'name': name,
+      'englishName': englishName,
+      'englishNameTranslation': englishNameTranslation,
+      'revelationType': revelationType,
+      'numberOfAyahs': numberOfAyahs,
+      'ayahs': ayahs.map((e) => e.toJson()).toList(),
+    };
   }
 }
 
@@ -151,4 +179,30 @@ class AyahDetail {
     this.audio,
     this.audioSecondary,
   });
+
+  factory AyahDetail.fromJson(Map<String, dynamic> json) {
+    return AyahDetail(
+      number: json['number'],
+      text: json['text'],
+      translation: json['translation'],
+      numberInSurah: json['numberInSurah'],
+      juz: json['juz'],
+      page: json['page'],
+      audio: json['audio'],
+      audioSecondary: json['audioSecondary'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'number': number,
+      'text': text,
+      'translation': translation,
+      'numberInSurah': numberInSurah,
+      'juz': juz,
+      'page': page,
+      'audio': audio,
+      'audioSecondary': audioSecondary,
+    };
+  }
 }

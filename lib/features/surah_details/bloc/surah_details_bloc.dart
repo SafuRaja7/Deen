@@ -1,12 +1,16 @@
-part of '../presentation/surah_details_screen.dart';
+import 'dart:async';
+import 'dart:developer';
+import 'dart:math' hide log;
+import 'package:deen/core/models/ayah.dart';
+import 'package:deen/features/surah_details/data/surah_details_repository.dart';
+import 'package:deen/features/surah_details/bloc/surah_details_event.dart';
+import 'package:deen/features/surah_details/bloc/surah_details_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:just_audio/just_audio.dart';
 
 class SurahDetailsBloc extends Bloc<SurahDetailsEvent, SurahDetailsState> {
   final SurahDetailsRepository _repository;
   final AudioPlayer _audioPlayer = AudioPlayer();
-
-  StreamSubscription? _positionSubscription;
-  StreamSubscription? _durationSubscription;
-  StreamSubscription? _playerStateSubscription;
 
   SurahDetailsBloc({SurahDetailsRepository? repository})
     : _repository = repository ?? SurahDetailsRepository(),
@@ -64,7 +68,6 @@ class SurahDetailsBloc extends Bloc<SurahDetailsEvent, SurahDetailsState> {
 
       log("Audio State: $processingState, Playing: $playing");
 
-      // When completed, we force position to zero and isPlaying/isLoading to false
       add(
         UpdateAudioProgress(
           position: completed ? Duration.zero : _audioPlayer.position,
@@ -78,9 +81,6 @@ class SurahDetailsBloc extends Bloc<SurahDetailsEvent, SurahDetailsState> {
 
   @override
   Future<void> close() {
-    _positionSubscription?.cancel();
-    _durationSubscription?.cancel();
-    _playerStateSubscription?.cancel();
     _audioPlayer.dispose();
     return super.close();
   }
@@ -137,57 +137,26 @@ class SurahDetailsBloc extends Bloc<SurahDetailsEvent, SurahDetailsState> {
         ),
       );
 
-      final prefs = await SharedPreferences.getInstance();
-      Uint8List? audioBytes;
-      int? numberInSurah = event.numberInSurah;
+      final audioInfo = await _repository.fetchAyahAudio(event.ayahNumber);
+      final audioUrl = audioInfo['audio'] ?? audioInfo['audioSecondary'];
+      final localPath = audioInfo['localPath'];
 
-      final cachedGlobalNumber = prefs.getInt('cached_global_ayah_number');
-      final cachedBase64 = prefs.getString('cached_audio_base64');
-
-      if (cachedGlobalNumber == event.ayahNumber && cachedBase64 != null) {
-        audioBytes = base64Decode(cachedBase64);
-        numberInSurah ??= prefs.getInt('cached_ayah_number');
+      if (localPath != null) {
+        await _audioPlayer.setFilePath(localPath);
+      } else if (audioUrl != null) {
+        await _audioPlayer.setUrl(audioUrl);
       } else {
-        final audioInfo = await _repository.fetchAyahAudio(event.ayahNumber);
-        final audioUrl = audioInfo['audio'] ?? audioInfo['audioSecondary'];
-
-        if (audioUrl == null) {
-          emit(state.copyWith(isAudioLoading: false));
-          return;
-        }
-
-        numberInSurah ??= audioInfo['numberInSurah'];
-
-        final response = await http.get(Uri.parse(audioUrl));
-
-        if (response.statusCode == 200) {
-          audioBytes = response.bodyBytes;
-
-          await prefs.setInt('cached_ayah_number', numberInSurah ?? 0);
-          await prefs.setInt('cached_global_ayah_number', event.ayahNumber);
-          await prefs.setString(
-            'cached_surah_name',
-            state.surahDetail?.englishName ?? "",
-          );
-          await prefs.setString(
-            'cached_audio_base64',
-            base64Encode(audioBytes),
-          );
-        } else {
-          throw Exception("Failed to download audio");
-        }
+        emit(state.copyWith(isAudioLoading: false));
+        return;
       }
 
-      final filePath = await _saveAudioToTempFile(audioBytes, event.ayahNumber);
-
-      await _audioPlayer.setFilePath(filePath);
       await _audioPlayer.play();
 
       emit(
         state.copyWith(
-          audioFilePath: filePath,
+          audioFilePath: localPath,
           isAudioLoading: false,
-          numberInSurah: numberInSurah,
+          numberInSurah: event.numberInSurah ?? audioInfo['numberInSurah'],
         ),
       );
     } catch (e) {
@@ -284,12 +253,5 @@ class SurahDetailsBloc extends Bloc<SurahDetailsEvent, SurahDetailsState> {
     } catch (e) {
       emit(state.copyWith(loadingMore: false, error: e.toString()));
     }
-  }
-
-  Future<String> _saveAudioToTempFile(Uint8List bytes, int ayahNumber) async {
-    final dir = await getTemporaryDirectory();
-    final file = File('${dir.path}/ayah_$ayahNumber.mp3');
-    await file.writeAsBytes(bytes, flush: true);
-    return file.path;
   }
 }

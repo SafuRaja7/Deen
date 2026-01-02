@@ -1,4 +1,4 @@
-part of '../presentation/surah_details_screen.dart';
+import 'package:equatable/equatable.dart';
 
 abstract class SurahDetailsEvent extends Equatable {
   const SurahDetailsEvent();
@@ -11,6 +11,7 @@ class LoadSurahDetailsData extends SurahDetailsEvent {
   final int surahNumber;
   final int? initialAyahNumber;
   final int? initialAyahNumberInSurah;
+
   const LoadSurahDetailsData(
     this.surahNumber, {
     this.initialAyahNumber,
@@ -39,6 +40,14 @@ class PlayAyahAudio extends SurahDetailsEvent {
 
 class ToggleAyahAudio extends SurahDetailsEvent {}
 
+class SeekAudio extends SurahDetailsEvent {
+  final Duration position;
+  const SeekAudio(this.position);
+
+  @override
+  List<Object?> get props => [position];
+}
+
 class UpdateAudioProgress extends SurahDetailsEvent {
   final Duration position;
   final Duration duration;
@@ -54,14 +63,6 @@ class UpdateAudioProgress extends SurahDetailsEvent {
 
   @override
   List<Object?> get props => [position, duration, isPlaying, isAudioLoading];
-}
-
-class SeekAudio extends SurahDetailsEvent {
-  final Duration position;
-  const SeekAudio(this.position);
-
-  @override
-  List<Object?> get props => [position];
 }
 
 class CloseAudioPlayer extends SurahDetailsEvent {}
