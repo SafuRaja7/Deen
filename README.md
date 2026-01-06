@@ -1,3 +1,4 @@
+<img src="screenshots/deen.png" />
 # Deen 🕌
 
 Deen App is a modern Islamic mobile application built with Flutter, designed to help Muslims stay connected with their faith through Qur’an recitation, daily Islamic utilities, and meaningful content — all with offline support.
@@ -71,7 +72,7 @@ flutter run
 ```
 ---
 
-👤 Author
+## 👤 Author
 Muhammad Saif Waheed Raja
-Flutter Developer | QA Automation Engineer
-GitHub: https://github.com/SaFuRaja7
+- Flutter Developer | QA Automation Engineer
+- GitHub: https://github.com/SafuRaja7
