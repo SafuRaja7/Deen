@@ -1,3 +1,4 @@
+import 'package:deen/core/models/ayah.dart';
 import 'package:deen/core/models/surah.dart';
 import 'package:equatable/equatable.dart';
 
@@ -15,6 +16,7 @@ class QuranState extends Equatable {
   final String? lastReadSurahName;
   final int? lastReadSurahNumber;
   final int? lastReadAyahNumber;
+  final List<AyahDetail> bookmarkedAyahs;
 
   const QuranState({
     this.status = QuranStatus.initial,
@@ -28,6 +30,7 @@ class QuranState extends Equatable {
     this.lastReadSurahName,
     this.lastReadSurahNumber,
     this.lastReadAyahNumber,
+    this.bookmarkedAyahs = const [],
   });
 
   QuranState copyWith({
@@ -42,6 +45,7 @@ class QuranState extends Equatable {
     String? lastReadSurahName,
     int? lastReadSurahNumber,
     int? lastReadAyahNumber,
+    List<AyahDetail>? bookmarkedAyahs,
   }) {
     return QuranState(
       status: status ?? this.status,
@@ -57,6 +61,7 @@ class QuranState extends Equatable {
       lastReadSurahName: lastReadSurahName ?? this.lastReadSurahName,
       lastReadSurahNumber: lastReadSurahNumber ?? this.lastReadSurahNumber,
       lastReadAyahNumber: lastReadAyahNumber ?? this.lastReadAyahNumber,
+      bookmarkedAyahs: bookmarkedAyahs ?? this.bookmarkedAyahs,
     );
   }
 
@@ -73,5 +78,6 @@ class QuranState extends Equatable {
     lastReadSurahName,
     lastReadSurahNumber,
     lastReadAyahNumber,
+    bookmarkedAyahs,
   ];
 }

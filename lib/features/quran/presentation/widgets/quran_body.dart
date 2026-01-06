@@ -155,7 +155,82 @@ class QuranBody extends StatelessWidget {
                           padding: Space.v.t10,
                           child: ParaCard(para: para),
                         );
-                      }),
+                      })
+                    else if (state.selectedIndex == 2)
+                      state.bookmarkedAyahs.isEmpty
+                          ? Padding(
+                              padding: Space.v.t100,
+                              child: Center(
+                                child: Text(
+                                  "No Bookmarks yet",
+                                  style: AppText.b1,
+                                ),
+                              ),
+                            )
+                          : ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: state.bookmarkedAyahs.length,
+                              itemBuilder: (context, index) {
+                                final ayah = state.bookmarkedAyahs[index];
+                                return Padding(
+                                  padding: Space.v.t10,
+                                  child: Container(
+                                    width: double.infinity,
+                                    decoration: AppProps.card,
+                                    padding: Space.a.t20,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "${ayah.surahName} : ${ayah.numberInSurah}",
+                                              style: AppText.b1.copyWith(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            IconButton(
+                                              icon: const Icon(
+                                                Icons.bookmark,
+                                                color: AppColors.primary,
+                                              ),
+                                              onPressed: () {
+                                                context.read<QuranBloc>().add(
+                                                  ToggleBookmark(
+                                                    ayah.surahNumber ?? 0,
+                                                    ayah.numberInSurah,
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                        Space.y.t10,
+                                        Text(
+                                          ayah.text,
+                                          textAlign: TextAlign.right,
+                                          style: AppText.h3.copyWith(
+                                            color: AppColors.black,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Space.y.t10,
+                                        Text(
+                                          ayah.translation,
+                                          style: AppText.b2.copyWith(
+                                            color: AppColors.black,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
                   ],
                 ),
               ),

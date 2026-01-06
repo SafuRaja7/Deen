@@ -1,3 +1,4 @@
+import 'package:deen/core/models/ayah.dart';
 import 'package:deen/core/models/surah.dart';
 import 'package:deen/core/services/quran_data_service.dart';
 
@@ -20,5 +21,13 @@ class QuranRepository {
           ),
         )
         .toList();
+  }
+
+  Future<List<AyahDetail>> fetchBookmarkedAyahs() async {
+    return _dataService.getBookmarkedAyahs();
+  }
+
+  Future<void> toggleBookmark(int surahNumber, int ayahNumberInSurah) async {
+    return _dataService.toggleBookmark(surahNumber, ayahNumberInSurah);
   }
 }

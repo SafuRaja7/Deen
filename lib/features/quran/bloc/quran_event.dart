@@ -16,3 +16,12 @@ class ChangeQuranTab extends QuranEvent {
   @override
   List<Object?> get props => [index];
 }
+
+class ToggleBookmark extends QuranEvent {
+  final int surahNumber;
+  final int ayahNumberInSurah;
+  const ToggleBookmark(this.surahNumber, this.ayahNumberInSurah);
+
+  @override
+  List<Object?> get props => [surahNumber, ayahNumberInSurah];
+}

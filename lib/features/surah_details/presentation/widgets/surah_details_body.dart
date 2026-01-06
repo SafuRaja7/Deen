@@ -228,6 +228,16 @@ class _SurahDetailsBodyState extends State<SurahDetailsBody> {
                                                     ),
                                                   );
                                             }
+                                          } else if (e['icon'] ==
+                                              Icons.bookmark) {
+                                            context
+                                                .read<SurahDetailsBloc>()
+                                                .add(
+                                                  ToggleBookmark(
+                                                    surah.number,
+                                                    ayah.numberInSurah,
+                                                  ),
+                                                );
                                           }
                                         },
                                         child: Container(
@@ -246,7 +256,15 @@ class _SurahDetailsBodyState extends State<SurahDetailsBody> {
                                                         state.isAudioLoading))
                                                 ? Icons.pause
                                                 : e['icon'],
-                                            color: AppColors.primary,
+                                            color:
+                                                (e['icon'] == Icons.bookmark &&
+                                                    ayah.isBookmarked)
+                                                ? AppColors.primary
+                                                : (e['icon'] == Icons.bookmark)
+                                                ? AppColors.primary.withValues(
+                                                    alpha: .5,
+                                                  )
+                                                : AppColors.primary,
                                           ),
                                         ),
                                       ),

@@ -1,7 +1,7 @@
 part of '../configs.dart';
 
 abstract class AppColors {
-  static const primary = Color(0xFFC58C24);
+  static const primary = Color(0xFFC48428);
   static const tertiary = Color(0xFFE5B152);
 
   //

@@ -172,4 +172,41 @@ class QuranDataService {
     }
     return juzAyahs;
   }
+
+  Future<List<AyahDetail>> getBookmarkedAyahs() async {
+    await initializeData();
+    List<AyahDetail> bookmarkedAyahs = [];
+    if (_cachedQuran != null) {
+      for (var surah in _cachedQuran!) {
+        for (var ayah in surah.ayahs) {
+          if (ayah.isBookmarked) {
+            bookmarkedAyahs.add(ayah);
+          }
+        }
+      }
+    }
+    return bookmarkedAyahs;
+  }
+
+  Future<void> toggleBookmark(int surahNumber, int ayahNumberInSurah) async {
+    await initializeData();
+    if (_cachedQuran == null) return;
+
+    final surahIndex = _cachedQuran!.indexWhere((s) => s.number == surahNumber);
+    if (surahIndex == -1) return;
+
+    final ayahIndex = _cachedQuran![surahIndex].ayahs.indexWhere(
+      (a) => a.numberInSurah == ayahNumberInSurah,
+    );
+    if (ayahIndex == -1) return;
+
+    final currentAyah = _cachedQuran![surahIndex].ayahs[ayahIndex];
+    final updatedAyah = currentAyah.copyWith(
+      isBookmarked: !currentAyah.isBookmarked,
+    );
+
+    _cachedQuran![surahIndex].ayahs[ayahIndex] = updatedAyah;
+
+    await _saveToLocal(_cachedQuran!);
+  }
 }

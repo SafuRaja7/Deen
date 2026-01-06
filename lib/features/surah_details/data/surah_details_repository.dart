@@ -130,4 +130,8 @@ class SurahDetailsRepository {
     await prefs.setInt('cached_ayah_number', ayahNumberInSurah);
     await prefs.setInt('cached_global_ayah_number', globalAyahNumber);
   }
+
+  Future<void> toggleBookmark(int surahNumber, int ayahNumberInSurah) async {
+    return _dataService.toggleBookmark(surahNumber, ayahNumberInSurah);
+  }
 }

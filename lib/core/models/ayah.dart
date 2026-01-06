@@ -4,6 +4,7 @@ class Ayah {
   final String englishTranslation;
   final SurahInfo surah;
   final int numberInSurah;
+  final bool isBookmarked;
 
   Ayah({
     required this.number,
@@ -11,6 +12,7 @@ class Ayah {
     required this.englishTranslation,
     required this.surah,
     required this.numberInSurah,
+    this.isBookmarked = false,
   });
 
   factory Ayah.fromJson(dynamic data) {
@@ -24,6 +26,7 @@ class Ayah {
         englishTranslation: englishData['text'],
         surah: SurahInfo.fromJson(arabicData['surah']),
         numberInSurah: arabicData['numberInSurah'],
+        isBookmarked: arabicData['isBookmarked'] ?? false,
       );
     } else {
       // From cache (Map)
@@ -33,6 +36,7 @@ class Ayah {
         englishTranslation: data['englishTranslation'],
         surah: SurahInfo.fromJson(data['surah']),
         numberInSurah: data['numberInSurah'],
+        isBookmarked: data['isBookmarked'] ?? false,
       );
     }
   }
@@ -44,7 +48,26 @@ class Ayah {
       'englishTranslation': englishTranslation,
       'surah': surah.toJson(),
       'numberInSurah': numberInSurah,
+      'isBookmarked': isBookmarked,
     };
+  }
+
+  Ayah copyWith({
+    int? number,
+    String? arabicText,
+    String? englishTranslation,
+    SurahInfo? surah,
+    int? numberInSurah,
+    bool? isBookmarked,
+  }) {
+    return Ayah(
+      number: number ?? this.number,
+      arabicText: arabicText ?? this.arabicText,
+      englishTranslation: englishTranslation ?? this.englishTranslation,
+      surah: surah ?? this.surah,
+      numberInSurah: numberInSurah ?? this.numberInSurah,
+      isBookmarked: isBookmarked ?? this.isBookmarked,
+    );
   }
 }
 
@@ -120,6 +143,7 @@ class SurahDetail {
             page: arabicAyahs[i]['page'],
             surahName: arabicSurah['englishName'],
             surahNumber: arabicSurah['number'],
+            isBookmarked: false,
           ),
         );
       }
@@ -173,6 +197,7 @@ class AyahDetail {
   final String? audioSecondary;
   final String? surahName;
   final int? surahNumber;
+  final bool isBookmarked;
 
   AyahDetail({
     required this.number,
@@ -185,6 +210,7 @@ class AyahDetail {
     this.audioSecondary,
     this.surahName,
     this.surahNumber,
+    this.isBookmarked = false,
   });
 
   factory AyahDetail.fromJson(Map<String, dynamic> json) {
@@ -199,6 +225,7 @@ class AyahDetail {
       audioSecondary: json['audioSecondary'],
       surahName: json['surahName'],
       surahNumber: json['surahNumber'],
+      isBookmarked: json['isBookmarked'] ?? false,
     );
   }
 
@@ -214,6 +241,35 @@ class AyahDetail {
       'audioSecondary': audioSecondary,
       'surahName': surahName,
       'surahNumber': surahNumber,
+      'isBookmarked': isBookmarked,
     };
+  }
+
+  AyahDetail copyWith({
+    int? number,
+    String? text,
+    String? translation,
+    int? numberInSurah,
+    int? juz,
+    int? page,
+    String? audio,
+    String? audioSecondary,
+    String? surahName,
+    int? surahNumber,
+    bool? isBookmarked,
+  }) {
+    return AyahDetail(
+      number: number ?? this.number,
+      text: text ?? this.text,
+      translation: translation ?? this.translation,
+      numberInSurah: numberInSurah ?? this.numberInSurah,
+      juz: juz ?? this.juz,
+      page: page ?? this.page,
+      audio: audio ?? this.audio,
+      audioSecondary: audioSecondary ?? this.audioSecondary,
+      surahName: surahName ?? this.surahName,
+      surahNumber: surahNumber ?? this.surahNumber,
+      isBookmarked: isBookmarked ?? this.isBookmarked,
+    );
   }
 }

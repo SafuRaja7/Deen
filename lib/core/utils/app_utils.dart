@@ -98,9 +98,9 @@ class AppUtils {
     {'title': 'Quran', 'image': StaticAssets.logo, "onTap": AppRoutes.quran},
     {'title': 'Dua', 'image': StaticAssets.dua, "onTap": AppRoutes.onboarding},
     {
-      'title': 'Prayer',
+      'title': 'Hadith',
       'image': StaticAssets.prayer,
-      "onTap": AppRoutes.onboarding,
+      "onTap": AppRoutes.hadith,
     },
   ];
 
@@ -299,6 +299,36 @@ class AppUtils {
       "englishText": "Amma",
       "arabicText": "عم",
       "englishTranslation": "About what?",
+    },
+  ];
+
+  static final List<Map<String, dynamic>> hadithBooks = [
+    {
+      "book": "Sahih Bukhari",
+      "arabic": "صحيح البخاري",
+      "slug": "sahih-bukhari",
+    },
+    {"book": "Sahih Muslim", "arabic": "صحيح مسلم", "slug": "sahih-muslim"},
+    {
+      "book": "Jami' Al-Tirmidhi",
+      "arabic": "جامع الترمذي",
+      "slug": "al-tirmidhi",
+    },
+    {
+      "book": "Sunan Abu Dawood",
+      "arabic": "سنن أبي داود",
+      "slug": "abu-dawood",
+    },
+    {
+      "book": "Sunan Ibn-e-Majah",
+      "arabic": "سنن ابن ماجه",
+      "slug": "ibn-e-majah",
+    },
+    {"book": "Sunan An-Nasa`i", "arabic": "سنن النسائي", "slug": "sunan-nasai"},
+    {
+      "book": "Mishkat Al-Masabih",
+      "arabic": "مشكاة المصابيح",
+      "slug": "mishkat",
     },
   ];
 }

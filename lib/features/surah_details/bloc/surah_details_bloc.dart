@@ -22,6 +22,7 @@ class SurahDetailsBloc extends Bloc<SurahDetailsEvent, SurahDetailsState> {
     on<SeekAudio>(_onSeekAudio);
     on<UpdateAudioProgress>(_onUpdateAudioProgress);
     on<CloseAudioPlayer>(_onCloseAudioPlayer);
+    on<ToggleBookmark>(_onToggleBookmark);
 
     _audioPlayer.positionStream.listen((pos) {
       if (!isClosed &&
@@ -290,5 +291,39 @@ class SurahDetailsBloc extends Bloc<SurahDetailsEvent, SurahDetailsState> {
     } catch (e) {
       emit(state.copyWith(loadingMore: false, error: e.toString()));
     }
+  }
+
+  Future<void> _onToggleBookmark(
+    ToggleBookmark event,
+    Emitter<SurahDetailsState> emit,
+  ) async {
+    if (state.surahDetail == null) return;
+
+    await _repository.toggleBookmark(
+      event.surahNumber,
+      event.ayahNumberInSurah,
+    );
+
+    // Update the local state to reflect the toggle
+    final updatedAyahs = state.surahDetail!.ayahs.map((ayah) {
+      if (ayah.numberInSurah == event.ayahNumberInSurah) {
+        return ayah.copyWith(isBookmarked: !ayah.isBookmarked);
+      }
+      return ayah;
+    }).toList();
+
+    emit(
+      state.copyWith(
+        surahDetail: SurahDetail(
+          number: state.surahDetail!.number,
+          name: state.surahDetail!.name,
+          englishName: state.surahDetail!.englishName,
+          englishNameTranslation: state.surahDetail!.englishNameTranslation,
+          revelationType: state.surahDetail!.revelationType,
+          numberOfAyahs: state.surahDetail!.numberOfAyahs,
+          ayahs: updatedAyahs,
+        ),
+      ),
+    );
   }
 }

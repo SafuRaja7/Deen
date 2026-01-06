@@ -66,3 +66,12 @@ class UpdateAudioProgress extends SurahDetailsEvent {
 }
 
 class CloseAudioPlayer extends SurahDetailsEvent {}
+
+class ToggleBookmark extends SurahDetailsEvent {
+  final int surahNumber;
+  final int ayahNumberInSurah;
+  const ToggleBookmark(this.surahNumber, this.ayahNumberInSurah);
+
+  @override
+  List<Object?> get props => [surahNumber, ayahNumberInSurah];
+}

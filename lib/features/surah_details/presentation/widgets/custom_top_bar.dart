@@ -42,26 +42,35 @@ class CustomTopBar extends StatelessWidget {
                               );
                             }
                           : null,
-                      child: Icon(Icons.arrow_left, color: Colors.white),
+                      child: Padding(
+                        padding: Space.h.t20,
+                        child: Icon(Icons.arrow_left, color: Colors.white),
+                      ),
                     ),
-                    Container(
-                      width: 1,
+                    SizedBox(
                       height: 19.un(),
-                      color: Colors.white.withValues(alpha: 0.6),
+                      child: VerticalDivider(
+                        color: Colors.white.withValues(alpha: 0.6),
+                        thickness: 1,
+                        width: 1,
+                      ),
                     ),
                     Space.x.t30,
                     Text(
-                      title,
+                      '$currentSurahNumber- $title',
                       style: AppText.b1.copyWith(
                         color: AppColors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Space.x.t30,
-                    Container(
-                      width: 1,
+                    SizedBox(
                       height: 19.un(),
-                      color: Colors.white.withValues(alpha: 0.6),
+                      child: VerticalDivider(
+                        color: Colors.white.withValues(alpha: 0.6),
+                        thickness: 1,
+                        width: 1,
+                      ),
                     ),
                     InkWell(
                       onTap: currentSurahNumber < 114
@@ -71,7 +80,10 @@ class CustomTopBar extends StatelessWidget {
                               );
                             }
                           : null,
-                      child: Icon(Icons.arrow_right, color: Colors.white),
+                      child: Padding(
+                        padding: Space.h.t20,
+                        child: Icon(Icons.arrow_right, color: Colors.white),
+                      ),
                     ),
                   ],
                 ),

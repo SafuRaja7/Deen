@@ -3,6 +3,12 @@ import 'package:deen/features/home/presentation/home_screen.dart';
 import 'package:deen/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:deen/features/prayer_timings/presentation/prayer_timings_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:deen/features/hadith/bloc/hadith_bloc.dart';
+import 'package:deen/features/hadith/presentation/hadith_screen.dart';
+import 'package:deen/features/hadith/presentation/hadith_chapters_screen.dart';
+import 'package:deen/features/hadith/presentation/hadith_list_screen.dart';
+
 import 'package:deen/features/para_details_screen/presentation/para_details_screen_screen.dart';
 
 import 'package:deen/features/surah_details/presentation/surah_details_screen.dart';
@@ -10,6 +16,8 @@ import 'package:deen/features/surah_details/presentation/surah_details_screen.da
 import 'package:deen/features/quran/presentation/quran_screen.dart';
 
 final appRoutes = {
+  AppRoutes.hadith: (_) => const HadithScreen(),
+
   AppRoutes.paraDetailsScreen: (_) => const ParaDetailsScreenScreen(),
 
   AppRoutes.surahDetails: (_) => const SurahDetailsScreen(),
@@ -37,6 +45,33 @@ Route<dynamic>? onGenerateRoutes(RouteSettings settings) {
     case AppRoutes.paraDetailsScreen:
       return FadeRoute(
         child: const ParaDetailsScreenScreen(),
+        settings: settings,
+      );
+    case AppRoutes.hadith:
+      return FadeRoute(child: const HadithScreen(), settings: settings);
+    case AppRoutes.hadithChapters:
+      final args = settings.arguments as Map<String, dynamic>;
+      return FadeRoute(
+        child: BlocProvider(
+          create: (context) => HadithBloc(),
+          child: HadithChaptersScreen(
+            bookSlug: args['bookSlug'],
+            bookName: args['bookName'],
+          ),
+        ),
+        settings: settings,
+      );
+    case AppRoutes.hadithList:
+      final args = settings.arguments as Map<String, dynamic>;
+      return FadeRoute(
+        child: BlocProvider(
+          create: (context) => HadithBloc(),
+          child: HadithListScreen(
+            bookSlug: args['bookSlug'],
+            chapterNumber: args['chapterNumber'],
+            chapterName: args['chapterName'],
+          ),
+        ),
         settings: settings,
       );
 

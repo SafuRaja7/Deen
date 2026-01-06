@@ -12,6 +12,7 @@ class QuranBloc extends Bloc<QuranEvent, QuranState> {
       super(const QuranState()) {
     on<LoadQuranData>(_onLoadQuranData);
     on<ChangeQuranTab>(_onChangeQuranTab);
+    on<ToggleBookmark>(_onToggleBookmark);
   }
 
   void _onChangeQuranTab(ChangeQuranTab event, Emitter<QuranState> emit) {
@@ -50,6 +51,7 @@ class QuranBloc extends Bloc<QuranEvent, QuranState> {
           lastReadSurahName: lastReadSurahName,
           lastReadSurahNumber: lastReadSurahNumber,
           lastReadAyahNumber: lastReadAyahNumber,
+          bookmarkedAyahs: await _quranRepository.fetchBookmarkedAyahs(),
         ),
       );
 
@@ -65,5 +67,17 @@ class QuranBloc extends Bloc<QuranEvent, QuranState> {
     } catch (e) {
       emit(state.copyWith(status: QuranStatus.failure, error: e.toString()));
     }
+  }
+
+  Future<void> _onToggleBookmark(
+    ToggleBookmark event,
+    Emitter<QuranState> emit,
+  ) async {
+    await _quranRepository.toggleBookmark(
+      event.surahNumber,
+      event.ayahNumberInSurah,
+    );
+    final bookmarks = await _quranRepository.fetchBookmarkedAyahs();
+    emit(state.copyWith(bookmarkedAyahs: bookmarks));
   }
 }
