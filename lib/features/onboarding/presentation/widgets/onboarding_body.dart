@@ -14,7 +14,6 @@ class _OnboardingBodyState extends State<OnboardingBody> {
   @override
   void initState() {
     super.initState();
-    // Pre-fetch data for home screen in background
     HomeRepository().preFetchAll();
   }
 
@@ -57,7 +56,7 @@ class _OnboardingBodyState extends State<OnboardingBody> {
                   children: [
                     Image.asset(_pages[index].image, fit: BoxFit.contain),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      padding: Space.h.t30,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: .end,
@@ -86,7 +85,7 @@ class _OnboardingBodyState extends State<OnboardingBody> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          padding: Space.h.t30,
           child: Column(
             children: [
               Row(
@@ -96,7 +95,7 @@ class _OnboardingBodyState extends State<OnboardingBody> {
                     AnimatedContainer(
                       duration: const Duration(milliseconds: 300),
                       margin: const EdgeInsets.symmetric(horizontal: 4),
-                      height: 8,
+                      height: 3.un(),
                       width: _currentPage == i ? 24 : 8,
                       decoration: BoxDecoration(
                         color: _currentPage == i
@@ -107,7 +106,7 @@ class _OnboardingBodyState extends State<OnboardingBody> {
                     ),
                 ],
               ),
-              const SizedBox(height: 32),
+              Space.y.t20,
               AppButton(
                 variant: _currentPage == _pages.length - 1
                     ? AppButtonVariant.filled

@@ -12,7 +12,7 @@ class AppButton extends StatelessWidget {
   final bool isLoading;
   final bool fullWidth;
   final double? width;
-  final double height;
+  final double? height;
   final double borderRadius;
 
   const AppButton({
@@ -25,7 +25,7 @@ class AppButton extends StatelessWidget {
     this.isLoading = false,
     this.fullWidth = true,
     this.width,
-    this.height = 56,
+    this.height,
     this.borderRadius = 16,
   });
 
@@ -35,7 +35,7 @@ class AppButton extends StatelessWidget {
 
     return SizedBox(
       width: fullWidth ? double.infinity : width,
-      height: height,
+      height: height ?? 20.un(),
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(

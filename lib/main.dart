@@ -31,7 +31,7 @@ class DeenApp extends StatelessWidget {
       title: 'Deen',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(useMaterial3: true),
-      home: isFirstRun ? const OnboardingScreen() : const HomeScreen(),
+      home: OnboardingScreen(),
       onGenerateRoute: onGenerateRoutes,
     );
   }
